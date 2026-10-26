@@ -91,3 +91,7 @@ All metrics, tasks, projects, credit values and activity are illustrative and ex
 No dependencies were added. Existing M3/M4 tests remain; M5 adds route/search integrity and dashboard interaction tests across 320, 375, 430, 768, 1024, 1280, 1440 and 1920px. Screenshots: `/workspace/artifacts/kenny-m5/dashboard-1440-dark.png`, `dashboard-375-dark.png` and matching light-theme captures. See [M5 implementation](docs/M5_IMPLEMENTATION.md) and [acceptance evidence](PHASE_1_ACCEPTANCE.md).
 
 **M6 is not implemented.** AI Workspace is a Coming Soon shell in M5. No database, authentication, tenant enforcement, live notifications, subscriptions or AI execution is connected.
+
+### Verified M5 release
+
+M5 application commit `e43469dee8fc946c7a5292c8245015ee151259a5` deployed successfully in [Actions run 40289692770](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40289692770). Application source fingerprint: `f537d72042be56942add24ca7d8e4eee805451a9`. The public verifier passed against the actual HTTPS site: exact M5 metadata, dashboard, all fifteen module shells, preserved routes and 24 referenced assets. Normal/cache-busted landing responses matched. All 15 unit tests and 32 local production-browser scenarios passed; Pages export/static-host interaction checks passed separately. Later documentation-only revisions may update the deployed SHA; `deployment.json` identifies the current release. See the acceptance report for bounded browser coverage and unrun checks.

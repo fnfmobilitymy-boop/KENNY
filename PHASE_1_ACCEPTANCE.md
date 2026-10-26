@@ -85,3 +85,17 @@ Next is M6 only after user review/approval. M5 does not implement the AI Workspa
 The Pages build passed with `/KENNY` base path and trailing slashes. Chromium smoke testing of the actual export passed all fifteen module routes (HTTP 200), the landing dashboard entry, collapse-state persistence, module navigation, empty workspace, command-search navigation, mobile drawer and error recovery. No failed HTTP assets or uncaught page errors were observed.
 
 The public verifier now checks M5 revision metadata, the preserved landing/design system/auth/onboarding/legal routes, the Command Center, all fifteen module shells and the union of referenced static assets. Deployment/public evidence is reported separately after publication; do not infer a live revision solely from an existing URL. Cloud startup instructions were saved as an M5 draft and are separate from website deployment. No M6 work is included.
+
+## Verified M5 application release
+
+- Tested application commit: `e43469dee8fc946c7a5292c8245015ee151259a5` on `fnfmobilitymy-boop/KENNY`, branch `main`.
+- Application source tree: `f537d72042be56942add24ca7d8e4eee805451a9`.
+- Actions run `40289692770`: build and deploy jobs **success**. Pages deployment `7326892913` references the same commit.
+- Dashboard URL: `https://fnfmobilitymy-boop.github.io/KENNY/app/`.
+- Public `deployment.json` identified M5, the exact SHA, repository, branch and matching source tree.
+- `python3 scripts/verify-public-deployment.py e43469dee8fc946c7a5292c8245015ee151259a5` passed against the actual public HTTPS host with TLS verification enabled and the configured proxy retained.
+- The dashboard, all fifteen Coming Soon module routes, seven M4/legal routes, preserved landing/design system and **24** referenced static assets returned HTTP 200 with expected content/base paths.
+- Normal/cache-busted landing HTML were byte-identical; the dashboard entry link and full M3 landing content were present. No obsolete foundation marker was served in these checks.
+- Public evidence file: `/workspace/artifacts/kenny-m5/public-verification.json`. Local production-browser suite: **32 passed**; static-export Chromium smoke also passed. Public Chromium interactions are not claimed; the earlier proxy-CA browser trust limitation remains separate from successful public HTTPS verification.
+
+Documentation-only follow-ups may change the deployment SHA without changing the tested application tree. The final delivery identifies the latest successful deployment and public metadata revision. **Stop after M5; M6 requires user approval.**
