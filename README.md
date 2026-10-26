@@ -1,8 +1,8 @@
 # Kenny AI Business Studio
 
-A Next.js App Router + React + strict TypeScript frontend. M1, refined M2 and the M3 landing page are implemented for review. Stop before M4.
+Next.js App Router + React + strict TypeScript frontend. M1–M3 and M4 authentication/organization setup UI are implemented. **Stop after M4; M5 requires user review.** No authentication, AI, payments or backend service is connected.
 
-## Local development
+## Run locally
 
 Validated toolchain: Node.js 24.19.0 / npm 11.9.0. Use the existing checkout; do not create a Git worktree unless explicitly requested.
 
@@ -12,14 +12,20 @@ npm ci --cache /workspace/.npm-cache --no-audit --no-fund
 npm run dev
 ```
 
-## Routes
+## Implemented routes
 
-| Route            | Content                                                                                                      |
-| ---------------- | ------------------------------------------------------------------------------------------------------------ |
-| `/`              | M3 public landing page: orb, product illustration, planned modules, process, use cases, pricing preview, FAQ |
-| `/design-system` | Preserved and refined M2 component showcase, themes, form, modal and keyboard tabs                           |
+| Route                | Content                                                                        |
+| -------------------- | ------------------------------------------------------------------------------ |
+| `/`                  | Preserved M3 landing plus Login/Get Started links                              |
+| `/design-system`     | Existing design tokens and component showcase                                  |
+| `/login`             | Split-screen demo login, local validation, password visibility, Remember me UI |
+| `/signup`            | Registration UI, password/confirmation rules, demo acknowledgement             |
+| `/forgot-password`   | Reset explanation and email-format checks; no email sent                       |
+| `/verify-email`      | Pending/expired/error previews; resend not connected                           |
+| `/onboarding`        | Eight-step in-memory organization setup and completion preview                 |
+| `/terms`, `/privacy` | Clearly marked legal placeholders; not final legal documents                   |
 
-Landing CTAs navigate to implemented sections or the design system. No dead sign-up, login or checkout actions. The interactive dashboard is a marketing illustration, not an implemented M5 dashboard.
+GitHub Pages prefixes these paths with `/KENNY/`, with trailing slashes. Landing exploration CTAs remain; Get Started opens registration. Auth screens also link directly to the organization setup preview. No sign-in is needed to review it.
 
 ## Quality checks
 
@@ -32,47 +38,30 @@ npm run build
 npm run test:browser
 ```
 
-Browser tests use the **production build**, start their own server on port 3100, and use system Chromium at `/usr/bin/chromium`. Set `CHROMIUM_PATH` if installed elsewhere. On a machine without Chromium, install a supported browser or report browser checks as pending; do not treat a missing browser as a pass. Run the build before browser tests. Test results and screenshots go outside the checkout at `/workspace/artifacts/kenny-m3/`.
+Use a normal production build before browser tests or `npm run start`. Playwright starts an isolated production server on port 3100; do not reuse a stale server while rebuilding. Chromium defaults to `/usr/bin/chromium`; override `CHROMIUM_PATH` on other machines. Missing browsers must be reported as an unrun check. Screenshots are in `/workspace/artifacts/kenny-m4/`; browser traces/results are under its `test-results/` directory. The preserved M3 suite writes landing screenshots to `/workspace/artifacts/kenny-m3/`.
 
-For production startup use `npm run start` after a normal build. Servers must restart in new tasks; processes do not survive snapshots reliably.
+M4 browser coverage includes 320, 375, 430, 768, 1024 and 1440px, local validation, password visibility, disconnected-action feedback, verification states, wizard forward/backward/review editing, optional interests, theme rendering and accessibility scans. Unit tests exercise format/selection validation and both-theme contrast.
 
-## Preview deployment
+## Demo boundaries and privacy
 
-[GitHub Pages preview](https://fnfmobilitymy-boop.github.io/KENNY/)
+Use sample information and a disposable demo password. No form action sends an authentication request or creates an account/organization. “Remember me” is UI-only. No password, token, email, name or wizard data is written to localStorage/sessionStorage. Only the pre-existing theme preference is stored. Passwords clear after a valid local form check. Wizard choices remain in memory while moving between steps; refreshing/leaving clears them. Completion is explicitly a preview, not server-side creation.
 
-The existing `.github/workflows/pages.yml` runs lint, typecheck, unit tests and a Pages production build on pushes to `main`. GitHub Pages uses GitHub Actions as its source. `KENNY_PAGES=1 npm run build` exports to `out/` with `/KENNY` base path and trailing slashes. Use a normal build before `npm run start`; a static export is served by the Pages host instead.
+Terms/Privacy are navigation placeholders. Supabase, sessions, verification emails, password resets, authorization, RLS, organization membership and billing enforcement remain later backend work. Do not treat frontend validation as a security boundary.
 
-The workflow does not run local browser tests because it does not install system Chromium; browser checks are run separately in the development environment. Verify the deployment run status before assuming a pushed change is live.
+## Structure
 
-## Structure and data honesty
+Routes and static layouts live in `src/app`; shared brand/UI/layout components in `src/components`; auth/onboarding/landing features in `src/features`; semantic tokens in `src/design-tokens`; demo catalogs in `src/demo`; types in `src/types`; pure validation in `src/lib`; future adapters in `src/services`. M4 reuses Inter, Space Grotesk, dark/light themes, native form controls and the existing primitives. No animation framework or runtime font CDN was added.
 
-- `src/app`: routes, root layout and styles.
-- `src/components`: shared UI, brand, layout and theme behavior.
-- `src/features`: landing and design-system features.
-- `src/design-tokens`: semantic colors, typography, motion and sizing.
-- `src/demo`: explicitly marked presentation fixtures.
-- `src/types`, `src/services`, `src/lib`: future typed integration contracts, adapters and utilities.
+## GitHub Pages deployment
 
-Static page sections are server components. Small client components handle navigation, theme, preview tabs and motion control. The orb is CSS artwork with finite motion, pause control and reduced-motion/slow-device overrides. No animation library, WebGL or runtime image downloads are required. Fonts are self-hosted and preloaded through Next.js local-font optimization with metric-adjusted fallbacks.
+[Website](https://fnfmobilitymy-boop.github.io/KENNY/) · [Login](https://fnfmobilitymy-boop.github.io/KENNY/login/) · [Onboarding](https://fnfmobilitymy-boop.github.io/KENNY/onboarding/)
 
-All module capabilities are planned; demo figures and statuses are clearly labeled. Prices and usage limits are not finalized. No account creation, AI execution, payment, file storage or tenant isolation is implemented. See [backend requirements](src/services/README.md), [architecture](docs/ARCHITECTURE.md), [M2 refinement](docs/M2_REFINEMENT.md) and [acceptance report](PHASE_1_ACCEPTANCE.md).
-
-## M3 public-deployment audit
-
-The tested M3 application commit is `9a7c5e9fe0c9375b636264b517f3efc7fb514559` on `fnfmobilitymy-boop/KENNY`, branch `main`. Actions run [40281440728](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40281440728) completed build and deploy successfully. Pages deployment `7325739329` records that same SHA and the preview URL above. The M3 application source tree is `b97402260786cbc958a390323fff991cd73dbbd4`.
-
-These GitHub records and the earlier local static-host/browser checks do **not** by themselves prove the response currently served to a public browser. The latest audit initially could not fetch the public URL because the cloud HTTPS proxy denied the `fnfmobilitymy-boop.github.io` destination. The required domain has been saved in the environment configuration draft; public HTML, cache and asset checks remain pending until that network change is applied. The cause of the user's old-page observation is not established.
-
-New deployments write `/KENNY/deployment.json` from the CI commit SHA, so future checks can identify the exact build. This metadata is a revision aid, not a security guarantee. After a successful deployment and with the public host allowed, run:
+The preserved workflow deploys `main` from `fnfmobilitymy-boop/KENNY`. `KENNY_PAGES=1 npm run build` generates static `out/` with `/KENNY` base path. The workflow writes `deployment.json` identifying its exact SHA, application source tree and M4 milestone before artifact upload. Inspect that marker and the successful Actions run rather than assuming an existing URL serves the latest code.
 
 ```sh
-python3 scripts/verify-public-deployment.py <full-deployed-commit-sha>
+python3 scripts/verify-public-deployment.py <full-successful-deployment-sha>
 ```
 
-The check compares normal/cache-busted HTML, verifies the complete M3 section set, rejects the obsolete M2 marker, checks `/KENNY/_next/` assets and the design-system route, and verifies the public revision metadata. It preserves TLS verification and uses the configured proxy. For browser-cache diagnosis, use a fresh private window and compare the same URL; do not assume a hard refresh resolves a deployment defect. No service worker is registered by this application.
+The verifier checks the M3 landing, M4 routes, static assets, cache-busted responses and exact revision metadata through the configured HTTPS proxy. Direct public-host checks require `fnfmobilitymy-boop.github.io` to be allowed in the environment network settings. A pending allowlist draft does not establish public verification. Deployment API evidence, local static-browser checks and actual public HTTP checks are reported separately in the acceptance report.
 
-**M4 remains blocked on public M3 verification and user review.**
-
-### Verification deployment result
-
-The revision-metadata/audit release `85b219c460a5e82cec3624a9a5a9f00848855ea6` completed successfully in [Actions run 40282247615](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40282247615), Pages deployment `7325845967`. Its application source, public files, configuration, dependency files and tests are identical to the tested M3 commit above. A subsequent public URL retry still failed at the cloud proxy CONNECT stage, before contacting Pages. Public content/caching verification remains blocked, not passed. Documentation-only follow-up commits may update the release SHA; use the latest successful Pages record and public `deployment.json` when access is restored.
+See [M4 implementation](docs/M4_IMPLEMENTATION.md), [acceptance results](PHASE_1_ACCEPTANCE.md), [architecture](docs/ARCHITECTURE.md), [historical M3 audit](docs/M3_DEPLOYMENT_AUDIT.md), and [backend requirements](src/services/README.md).

@@ -33,6 +33,9 @@ export function LandingPage() {
               your ideas, your team and your next possibility into one orbit.
             </p>
             <div className="hero-actions">
+              <ButtonLink href="/signup">
+                Get Started <Icon name="diagonal" />
+              </ButtonLink>
               <ButtonLink href="#product-preview">
                 Explore the studio <Icon name="diagonal" />
               </ButtonLink>
@@ -41,7 +44,8 @@ export function LandingPage() {
               </ButtonLink>
             </div>
             <p className="hero-note">
-              An early look at what we’re building. No sign-up required.
+              An early look at what we’re building. No sign-up required to
+              explore.
             </p>
           </div>
           <AiOrb />

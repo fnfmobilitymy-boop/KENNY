@@ -39,7 +39,7 @@ Server-render static presentation; client components only for theme and interact
 | M7        | Future modules, profile, settings and billing | `/app/modules/*`, `/app/settings`, `/app/billing` |
 | M8        | Responsive, accessibility and QA refinement   | all implemented routes                            |
 
-M3 now implements the public landing page with an in-page pricing preview. M4–M8 remain unimplemented. Stop after M3 for user review. The original roadmap below remains a guide; a standalone pricing route is deferred until required.
+M3 now implements the public landing page with an in-page pricing preview. M4 now adds frontend-only authentication and organization onboarding. M5–M8 remain unimplemented. Stop after M4 for user review. The original roadmap below remains a guide; a standalone pricing route is deferred until required.
 
 ## Phase 2 backend dependencies
 
@@ -52,3 +52,7 @@ Required at each milestone: ESLint, strict TypeScript, configured automated test
 ## M3 implementation boundaries
 
 `src/features/landing` owns the public landing experience and dashboard illustration. `src/demo/landing.ts` centralizes all planned module, FAQ, plan concept and dashboard fixture content. Shared branding and navigation live in `src/components`; `src/app/landing.css` extends existing tokens and primitives. No new service adapters or backend dependencies are introduced. The root now renders the landing page, while `/design-system` preserves the original component workflow.
+
+## M4 extension
+
+Authentication uses a static route-group layout and feature client components; onboarding uses a typed, in-memory wizard. Shared tokens, Brand, Field, Button and ButtonLink are reused. See `docs/M4_IMPLEMENTATION.md`. No Supabase or backend adapter is installed. The prior M3 review stop was superseded by explicit user authorization for M4.

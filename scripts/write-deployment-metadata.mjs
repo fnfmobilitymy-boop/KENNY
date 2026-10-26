@@ -10,7 +10,7 @@ writeFileSync(
   JSON.stringify(
     {
       product: "Kenny AI Business Studio",
-      milestone: "M3",
+      milestone: "M4",
       commit: sha,
       sourceTree: execFileSync("git", ["rev-parse", "HEAD:src"], {
         encoding: "utf8",
@@ -23,4 +23,4 @@ writeFileSync(
     2,
   ) + "\n",
 );
-console.log(`Pages metadata written for M3 commit ${sha}.`);
+console.log(`Pages metadata written for M4 commit ${sha}.`);

@@ -1,102 +1,84 @@
-# Phase 1 acceptance — M2 refinement and M3 landing
+# Phase 1 acceptance — M4 authentication UI and organization onboarding
 
-Date: 2026-10-26. Product: **Kenny AI Business Studio**. M1, refined M2 and M3 are implemented. **Stop before M4 for user review.** This report supersedes the earlier M1/M2-only report retained in Git history.
+Date: 2026-10-26. Product: **Kenny AI Business Studio**. M1–M3 are preserved; M4 adds frontend-only authentication and organization onboarding. **Stop after M4; do not implement M5 without user approval.** Historical M3 results are retained in `docs/M3_ACCEPTANCE_HISTORY.md`.
 
-## M2 refinement report
+## Changed files
 
-**Files changed:** `src/design-tokens/tokens.css`, `src/app/{layout.tsx,globals.css,design-system/page.tsx}`, `src/components/brand/brand.tsx`, `src/components/ui/{button-link.tsx,icon.tsx}`, `src/demo/design-system.ts`, `src/features/design-system/showcase.tsx`, dependency manifest/lockfile, `tests/foundation.test.mjs`, and `docs/M2_REFINEMENT.md`.
+- Auth routes: `src/app/(auth)/layout.tsx` and `src/app/(auth)/{login,signup,forgot-password,verify-email}/page.tsx`.
+- Setup/legal routes: `src/app/{onboarding,terms,privacy}/page.tsx`.
+- M4 styles: `src/app/account.css`, reusing the existing semantic tokens, fonts, radii and motion settings.
+- Auth feature: `src/features/auth/{auth-shell,auth-form,verification-preview,legal-placeholder}.tsx`.
+- Wizard: `src/features/onboarding/onboarding-wizard.tsx`.
+- Shared components: existing `src/components/ui/field.tsx` extended with error association; new `password-field.tsx`.
+- Landing integration: `src/components/layout/site-header.tsx` and `src/features/landing/landing-page.tsx`; all existing landing sections and exploration actions remain.
+- Types/catalog/validation: `src/types/{auth,onboarding}.ts`, `src/demo/onboarding.ts`, `src/lib/{auth-validation,onboarding-validation}.ts`.
+- Tests: `tests/auth-validation.test.mjs`, `tests/browser/auth-onboarding.spec.ts`, `playwright.config.ts` (new result directory only).
+- Deployment: `scripts/write-deployment-metadata.mjs` now identifies M4; `scripts/verify-public-deployment.py` also checks all M4 routes. Existing Pages workflow/base path remain.
+- Documentation: README, architecture, this report, `docs/M4_IMPLEMENTATION.md`, and archived M3 history.
 
-**Implemented:** shared full product branding; preserved K symbol; violet-blue gradients; semantic glass/glow/input-boundary tokens; self-hosted Inter body and Space Grotesk headings; reliable system fallbacks; consistent button/link styling; SVG icons; improved modal keyboard focus containment. Existing component examples and typed future service contracts are preserved.
+No dependencies were added for M4. No private business data or credentials are included.
 
-**Commands:** `npm install` for Fontsource dependencies and browser test tools; `npm run lint`; `npm run typecheck`; `npm test`; `npm run build`; `npm run test:browser`; `npm run format:check`.
+## Implemented routes
 
-**Outcomes:** required checks pass. Six token tests cover text/status/blue colors >=4.5:1 on canvas, surface and raised backgrounds, gradient button endpoints >=4.5:1, and focus/input boundaries >=3:1 in both themes. Browser regression covers the existing dialog, form, tabs, empty state and themes. See typography evaluation in `docs/M2_REFINEMENT.md`.
+| Route                | Behavior                                                                                                                                                            |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/login`             | Desktop split-screen, labeled email/password, show/hide, Remember me UI, reset/registration links, local validation, pending/error/validation-complete presentation |
+| `/signup`            | Name/email/password/confirmation, clear demo requirements, validation, placeholder legal links, login and verification-preview links                                |
+| `/forgot-password`   | Email validation and reset explanation; explicitly no reset email sent                                                                                              |
+| `/verify-email`      | Pending/expired/error preview selector; resend reports not connected/no email sent                                                                                  |
+| `/onboarding`        | Eight-step organization setup, progress, Back/Next, validation, review edits and demo completion                                                                    |
+| `/terms`, `/privacy` | Clearly marked legal placeholders, with return to registration                                                                                                      |
 
-**Limits:** automated contrast and axe checks do not establish complete WCAG 2.2 AA conformance. The fonts contain normal Latin glyphs; other scripts fall back to installed system fonts. Primary WOFF2 payload is 70,544 bytes total, before HTTP compression. Font licenses are included under `public/fonts`.
+GitHub Pages uses `/KENNY/` before each route and trailing slashes. `/` and `/design-system` remain implemented. Login/Get Started navigate to `/login` and `/signup`; no authentication is needed to inspect onboarding.
 
-**Next:** M3, implemented below.
+## UI and data boundaries
 
-## M3 milestone report
+M4 uses the existing dark/light tokens, Inter/Space Grotesk, K symbol and UI primitives. Desktop auth uses a static orbital brand panel; mobile prioritizes the form. No additional theme system or animation library was introduced. Reduced motion disables the local indicator animation through the existing policy.
 
-**Files added:**
+Forms perform local input checks only. The short pending state is explicitly local, not a simulated backend request. Successful input checks state that no login, account creation, reset or email occurred. Passwords clear after a valid local check. No passwords, tokens, email/name/form contents or wizard data are written to localStorage/sessionStorage. Remember me is UI-only; only the existing theme preference is persisted.
 
-- `src/features/landing/{landing-page.tsx,ai-orb.tsx,dashboard-preview.tsx}`.
-- `src/demo/landing.ts`, containing explicit planned-module, plan-concept, FAQ and dashboard fixtures.
-- `src/components/layout/site-header.tsx`, `src/app/landing.css`, `src/app/icon.svg`.
-- `playwright.config.ts`, `tests/browser/landing.spec.ts`.
-- `public/fonts/LICENSE-Inter.txt`, `public/fonts/LICENSE-Space-Grotesk.txt`.
+Wizard steps: Welcome → Workspace name → Industry → Team size → Goals → optional AI module interests → Review → Completion preview. Required steps validate before advancing. All selections survive Back/Next and review editing. Refreshing/leaving clears this in-memory draft, with an explicit notice. Completion states that no organization was created and Supabase is not connected. Industry and module catalogs match the requested lists exactly.
 
-**Files updated:** `src/app/page.tsx`, `next.config.ts`, `README.md`, `docs/ARCHITECTURE.md`, this report, manifest and lockfile. `AGENTS.md` was generated by Next.js during development and is retained as requested by its instructions.
+## Commands and results
 
-**Implemented:**
+Required commands: `npm run lint`, `npm run typecheck`, `npm test`, `npm run format:check`, `npm run build`, `npm run test:browser`, and `KENNY_PAGES=1 npm run build`. Final outcomes and deployment evidence are recorded below after validation.
 
-- Responsive navigation with mobile disclosure, Escape/outside dismissal and focus handling.
-- Futuristic hero, clear concept-exploration CTAs and K-inspired CSS orb. Finite transform/opacity motion, pause control, reduced-motion and slow-update overrides; no WebGL or animation library.
-- Interactive illustrative dashboard with keyboard-accessible Overview, Creative studio and Workflows tabs. This is a landing illustration, not an implemented M5 application.
-- Overview of 12 proposed/planned modules; how it works; founder, creative-team and growing-business use cases.
-- Pricing concepts with no invented prices, usage limits, trial promises or checkout. Native keyboard-operable FAQ, closing section and footer.
-- Dark/light rendering throughout, local fonts, semantic headings, skip link, accessible labels and visible focus.
+Unit suite: six preserved token/contrast tests plus six auth/onboarding validation tests. New tests reject missing inputs, weak/mismatched passwords, missing demo acknowledgement, malformed/overlong emails/names and invalid wizard choices, and permit optional module interests. Login does not impose new-password composition rules on existing passwords.
 
-**Routes:** `/` is the M3 landing. `/design-system` preserves the M2 showcase. Pricing is an in-page preview, not a separate `/pricing` route. Pages deployment adds `/KENNY/` to both routes.
+Browser suite: four preserved M3/design-system scenarios plus twelve M4 scenarios. Six widths (320, 375, 430, 768, 1024, 1440px) across all seven M4/placeholder routes; dark/light axe scans on key auth/onboarding routes; field bounds and page overflow; error summary focus; password visibility; no credential persistence or authentication POST; signup/placeholder links; disconnected reset/resend; all verification states; full wizard validation/back/next/edit/completion; optional interests; keyboard focus; landing integration.
 
-**Commands and final outcomes:**
+First pass: all six responsive scenarios, initial dark/light scans, reset/verification, optional interests, landing links and M3 regressions passed. Three functional tests encountered Next.js's additional route-announcement alert, making a broad alert selector ambiguous. Validation summaries now have explicit accessible names, and tests target those names. A radio aria-invalid lint warning was resolved by associating the group error with its fieldset. No assertions or accessibility rules were disabled.
 
-| Check                         | Outcome                                                                     |
-| ----------------------------- | --------------------------------------------------------------------------- |
-| `npm run lint`                | Passed                                                                      |
-| `npm run typecheck`           | Passed                                                                      |
-| `npm test`                    | 6 passed; 0 failed/skipped                                                  |
-| `npm run format:check`        | Passed                                                                      |
-| `npm run build`               | Passed; routes prerendered                                                  |
-| `npm run test:browser`        | 4 scenarios passed; 0 failed/skipped, against an isolated production server |
-| `KENNY_PAGES=1 npm run build` | See deployment verification note below                                      |
+## Screenshots and review instructions
 
-**Chromium browser coverage:**
+Open `/login`, `/signup`, `/forgot-password`, `/verify-email` and `/onboarding` using the deployed website, or use the normal dev server documented in README. Use disposable/sample inputs. Verification has an explicitly labeled state selector. Onboarding needs no login; review eight steps, Back, optional modules and Edit controls.
 
-1. Desktop: CTA anchor, 12 module cards, keyboard tabs (arrows/Home/End), FAQ Enter, theme toggle/persistence across reload, primary font loading, motion pause and no uncaught page errors.
-2. Mobile: menu open/close, Escape and return focus, section navigation, outside dismissal; no horizontal page overflow at 320, 390, 768 and 1024px; reduced-motion CSS; long-heading wrapping; light/dark screenshots.
-3. M2 regression: native dialog initial/Tab focus, Escape and return focus, keyboard tabs, empty state, invalid email and successful demo validation, small-screen layout.
-4. Font failure: blocked font requests leave content and theme navigation usable at small width.
+Screenshots under `/workspace/artifacts/kenny-m4/`: auth, onboarding and legal pages at 375px and 1440px; key pages in light theme; verification states; wizard review and completion. Existing M3 screenshots remain under `/workspace/artifacts/kenny-m3/`. Browser traces/results go to `/workspace/artifacts/kenny-m4/test-results`.
 
-Axe scans use WCAG 2 A/AA, 2.1 AA and 2.2 AA tags. No violations were found in the tested landing desktop themes, mobile light view, and design-system desktop themes. This is bounded automated coverage, not an accessibility certification.
+## Known limitations
 
-**Visual evidence:** screenshots under `/workspace/artifacts/kenny-m3/`: desktop and mobile landing in both themes, plus mobile design-system light. Desktop and mobile captures were reviewed for hierarchy, spacing and clipping. Screenshots are generated artifacts outside the checkout, not source files.
+Frontend only. No real authentication, Supabase, session persistence, authorization/RLS, verification tokens/emails, reset service, organization creation, invitations, payments or AI execution. Client validation is not a security guarantee. Legal pages are placeholders, not production policies. The wizard intentionally loses data when refreshed or left.
 
-**Failures investigated and resolved:** unsupported Fontsource subset import replaced by `next/font/local`; native dialog Tab focus escape corrected; test default color scheme made explicit; font-loading assertion updated to inspect loaded primary faces rather than unavailable system fallback font files; stale production-server reuse disabled; navigation target sizes improved. No assertions or accessibility rules were disabled to pass.
+Chromium automation does not establish full WCAG conformance. Safari/Firefox, physical devices, manual screen readers and measured Core Web Vitals remain untested. CI runs its existing lint/typecheck/unit/build gates; local Chromium browser checks are separate.
 
-**Known limitations/unrun checks:** Safari, Firefox, actual mobile hardware, screen readers, throttled low-power hardware, full assistive-technology audit, and measured field Core Web Vitals remain untested. No real provider/network error flows exist yet. No AI, authentication, payments, storage, authorization or tenant isolation is implemented. Module descriptions and plan concepts remain subject to product review. Backend requirements remain documented in `src/services/README.md`.
+The cloud network has previously blocked direct requests to the public Pages hostname. A saved domain addition is not an applied policy. GitHub deployment status, local static-host checks and direct public verification must be reported separately; no public-response verification is claimed unless actually performed.
 
-**Next milestone:** M4 authentication and organization onboarding screens, only after review. No M4 work is included.
+## Final validation and deployment evidence
 
-## Reusable environment instructions
+| Check                      | Final result                                                                                              |
+| -------------------------- | --------------------------------------------------------------------------------------------------------- |
+| ESLint                     | Passed, no lint warnings                                                                                  |
+| Strict TypeScript          | Passed                                                                                                    |
+| Unit tests                 | 12 passed; zero failed/skipped                                                                            |
+| Formatting                 | Passed                                                                                                    |
+| Normal production build    | Passed; all routes prerendered                                                                            |
+| Chromium suite             | 16 passed; zero failed/skipped                                                                            |
+| Pages static export        | Passed with `/KENNY` base path and trailing slashes                                                       |
+| Static-host Chromium smoke | Passed for landing, design system and all seven M4/legal routes; no failed assets or uncaught page errors |
+| Deployment helpers         | JavaScript/Python syntax checks passed                                                                    |
 
-Updated `start_skill` in the environment configuration draft for M3 routes, checks, browser setup and the M4 review stop. Save was confirmed; it does not apply or publish the cloud environment. The user can review/save and publish that draft in environment settings when desired. This is separate from the GitHub Pages website deployment. Existing installation commands remain valid.
+Static-host smoke additionally exercised the mobile Login link, auth-to-onboarding navigation, local checking/disabled/aria-busy/status presentation using a controlled browser clock, and initial wizard transitions. This verified the pending state without representing an authentication network call. Screenshots were visually inspected for auth split-screen hierarchy, mobile wizard spacing, light theme and completion disclosure.
 
-## Deployment verification
+No dependencies were changed. Node emits an informational module-format warning when directly running TypeScript validation helpers in the unit runner; all tests execute and pass. No warning suppression was added.
 
-`KENNY_PAGES=1 npm run build` passed. The exported website was served under the real `/KENNY/` prefix and checked in Chromium: both routes, local fonts/scripts/styles, dashboard tab switching, mobile navigation, design-system navigation and the modal passed. No failed HTTP resources or uncaught page errors were observed in that static-host smoke check.
-
-Local acceptance and public deployment are distinct. The final delivery reports the GitHub Actions deployment status and preview URL after publication. Do not infer a new live revision solely from an existing URL. The existing Pages workflow performs its own required build checks on `main`; browser validation above ran locally against this implementation.
-
-## Public deployment investigation — 2026-10-26
-
-- Repository: `fnfmobilitymy-boop/KENNY`; deployment branch: `main`.
-- Tested M3 SHA, local HEAD, remote main, successful Actions run, artifact metadata and Pages deployment all agree on `9a7c5e9fe0c9375b636264b517f3efc7fb514559`.
-- App source-tree SHA: `b97402260786cbc958a390323fff991cd73dbbd4`.
-- Actions run: `40281440728`; build/deploy jobs successful. Deployment ID: `7325739329`; latest status `success`, with environment URL `https://fnfmobilitymy-boop.github.io/KENNY/`.
-- Pages artifact: ID `12632154190`, name `github-pages`, digest `sha256:aa9b1f0448dc3a43792f12b306e28d9edc2e53d3a80be9e1964225fa8c0b607f`; its workflow metadata names the tested M3 SHA. Downloading its bytes was blocked at GitHub's artifact storage host, so artifact-content inspection is **not completed**.
-- Local root route imports `LandingPage`. Obsolete “Landing Page Coming in M3” text is absent from current `src/` and `public/`. No application service-worker registration or Cache API usage was found.
-- Pages uses workflow deployment, base path `/KENNY`, trailing slashes and the correct public URL. Prior local static checks passed; live public response remains a separate required check.
-- Public request failed at the cloud proxy's CONNECT stage with 403; this is not an HTTP response from GitHub Pages. Root HTML, public assets, public routing and cache headers remain **unverified**. No cache root cause is claimed.
-- Saved the public hostname addition to the environment draft. User review/save/publication is required to apply it; no secret is needed.
-- Added a CI-generated `deployment.json` revision marker and a reusable public-deployment verification script. No product UI, M4 or backend changes are included in this investigation.
-
-Earlier “deployment successful” evidence referred to GitHub's deployment record plus local testing. It did not establish that the public URL was serving M3. Do not advance M4 until the public verification result below is completed.
-
-### Verification release outcome
-
-Verification release `85b219c460a5e82cec3624a9a5a9f00848855ea6`: Actions run `40282247615` build and deploy both **success**; Pages deployment `7325845967`. This adds revision metadata and audit tooling, with no changes to the tested M3 application. `git diff --quiet` confirmed that `src/`, `public/`, `next.config.ts`, package manifest/lockfile, browser tests and token tests match `9a7c5e9fe0c9375b636264b517f3efc7fb514559` exactly. The source fingerprint remains `b97402260786cbc958a390323fff991cd73dbbd4`.
-
-Validation for audit changes: ESLint passed; the metadata generator executed successfully against the existing static export and wrote the expected SHA/source fingerprint; Python verifier syntax compiled. The CI run also passed required lint/typecheck/unit tests and production export. Public verification script execution remains blocked on the destination allowlist, so no public HTML/asset/cache success is claimed.
-
-Post-deployment public URL recheck again returned a cloud-proxy CONNECT 403. Runtime still reports only `api.github.com` as its custom allowed domain; the saved addition `fnfmobilitymy-boop.github.io` has not been applied. The old-page report remains unexplained. **M4 is not started and public M3 acceptance remains pending.**
+Deployment is performed by the preserved GitHub Actions workflow on `main`. The final delivery identifies its actual deployed commit/run. `/KENNY/deployment.json` contains the exact CI SHA/source fingerprint and M4 milestone. API deployment success must not be confused with direct public HTML verification: the current cloud network still needs the saved public-host domain applied before that request can be completed. No M5 work is included.
