@@ -23,7 +23,7 @@ const entries = [
     href: `/app/${m.slug}`,
     name: m.name,
     group: m.group,
-    description: `Coming soon · ${m.description}`,
+    description: `${m.availability === "prototype" ? "Local prototype" : "Coming soon"} · ${m.description}`,
   })),
 ];
 export function CommandSearch() {

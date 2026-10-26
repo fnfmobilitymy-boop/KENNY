@@ -1,5 +1,14 @@
 import type { SVGProps } from "react";
 const paths = {
+  plus: "M12 4v16M4 12h16",
+  more: "M5 12h.01M12 12h.01M19 12h.01",
+  copy: "M8 8h12v13H8zM4 16H3V3h13v1",
+  send: "m3 3 19 9-19 9 4-9-4-9zm4 9h15",
+  stop: "M5 5h14v14H5z",
+  history: "M3 10a9 9 0 1 1 2 8M3 4v6h6m3-4v6l4 2",
+  attachment: "m8 13 7-7a3 3 0 0 1 4 4l-9 9a5 5 0 0 1-7-7l10-10m-7 12 8-8",
+  reset: "M4 10a8 8 0 1 1 1 8M4 4v6h6",
+
   search: "M16 10a6 6 0 1 1-12 0 6 6 0 0 1 12 0zm-2 4 6 6",
   bell: "M5 17h14l-2-3V9a5 5 0 0 0-10 0v5l-2 3zm5 3h4",
   menu: "M4 6h16M4 12h16M4 18h16",

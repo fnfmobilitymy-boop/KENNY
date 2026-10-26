@@ -1,101 +1,59 @@
-# Phase 1 acceptance — M5 AI Command Center
+# Phase 1 acceptance — M6 AI Workspace
 
-Date: 2026-10-26. Product: **Kenny AI Business Studio**. M1–M4 are preserved. M5 adds the frontend Command Center, shared app shell and planned module pages. **Stop after M5; no M6 implementation is included.** Historical M4 evidence is retained in `docs/M4_ACCEPTANCE_HISTORY.md`.
+Date: 2026-10-26. Product: **Kenny AI Business Studio**. M1–M5 are preserved. M6 replaces only the workspace Coming Soon shell with an interactive frontend prototype. **Stop after M6; do not begin M7 without user approval.** Historical M5 evidence is retained in `docs/M5_ACCEPTANCE_HISTORY.md`.
 
-## Deliverables and changed files
+## Delivered scope and changed files
 
-- `/app`: `src/app/app/{layout.tsx,page.tsx,studio.css}`.
-- Fifteen static Coming Soon pages: `src/app/app/[module]/page.tsx`, `src/features/modules/coming-soon.tsx`.
-- Shared shell: `src/features/app-shell/{app-shell,app-sidebar,app-topbar,app-context,dropdown,workspace-switcher,command-search,notification-menu,user-menu}.tsx`.
-- Dashboard: `src/features/dashboard/{dashboard-home,components,approval-card,getting-started-checklist}.tsx`.
-- Typed centralized demo catalog: `src/demo/dashboard.ts`, `src/types/dashboard.ts`.
-- Shared utilities: `src/lib/{app-navigation,dialog-focus}.ts`; extended existing `src/components/ui/icon.tsx`.
-- Entry links: existing public header, auth exploration area and onboarding completion now link to the Command Center demo without removing prior actions.
-- Tests: `tests/app-navigation.test.mjs`, `tests/browser/dashboard.spec.ts`; Playwright output directory updated for M5.
-- Deployment helpers identify M5 and verify the dashboard, module shells and referenced assets; the static export/base path/hosting workflow are preserved.
-- README, architecture, M5 implementation guide and this report updated; M4 report archived.
+The working route is `/app/workspace`, publicly `/KENNY/app/workspace/`. It retains the shared global sidebar, topbar, breadcrumbs, workspace selector and dark/light themes. Fourteen other planned modules retain their existing Coming Soon pages. All landing, authentication demo, onboarding and dashboard routes remain.
 
-No dependencies, API adapters, database writes or authentication gate were added. See `docs/M5_IMPLEMENTATION.md` for the repository audit and architecture decisions.
+Features include independently collapsible history/inspector, responsive modal panels, new/search/switch/rename/delete/reset conversations, local per-thread drafts, six fixed scenario previews, safe formatted samples, copy/fallback selection, Enter/Shift+Enter composition, attachment metadata previews, duplicate-submit protection, stop/retry/failure states, four inspector tabs, structured sample results and local approval decisions. Empty/search/disconnected states and destructive confirmations are explicit.
 
-## Routes
+Changed files and state architecture are listed in `docs/M6_IMPLEMENTATION.md`. Main additions are `src/app/app/workspace`, `src/features/workspace`, `src/demo/workspace.ts`, `src/types/workspace.ts`, `src/lib/workspace-state.ts` and M6 unit/browser tests. Existing catalog/sidebar/search/dashboard labels distinguish the prototype from planned tools. No packages, backend connections or hosting changes were added.
 
-Dashboard: `/app`.
+## Demo honesty and privacy
 
-Module shells: `/app/workspace`, `/app/analytics`, `/app/website-builder`, `/app/image-studio`, `/app/video-studio`, `/app/documents`, `/app/marketing`, `/app/seo-ads`, `/app/sales`, `/app/crm`, `/app/booking`, `/app/ecommerce`, `/app/automations`, `/app/billing`, `/app/settings`.
+The simulator returns deterministic prewritten samples unrelated to prompt or attachment contents. Queued/running/complete/failed/canceled preview statuses never represent real AI execution. The provider is Not connected. Approval/rejection is local only and performs no action. Artifact previews create no files. No real client/business performance records are represented; Kenny Studio is an illustrative pilot workspace.
 
-All fifteen modules are **Coming Soon**, with planned capabilities and working navigation. AI Workspace is not an M6 prototype. Existing landing, design-system, auth, legal-placeholder and onboarding routes remain. GitHub Pages prefixes paths with `/KENNY` and trailing slashes.
+Prompts, conversations, drafts, attachment metadata and decisions remain only in React memory. No local/session storage or network request stores them. Only the pre-existing theme preference persists. Files are metadata only (TXT/MD/PDF, three files, 5 MB each); their contents are never read/uploaded/processed. Refreshing, leaving the route or switching demo workspaces clears this local session. No authentication, Supabase, database, billing, cloud upload, actual AI or autonomous action is implemented.
 
-## Components and interactions
+## Engineering verification
 
-Reusable components include AppSidebar, AppTopbar, WorkspaceSwitcher, CommandSearch, NotificationMenu, UserMenu, DashboardHeader, QuickActionCard, MetricCard, ToolLauncherCard, AgentStatusCard, TaskList, ActivityFeed, UsageCard, ApprovalCard, GettingStartedChecklist, EmptyState, SkeletonLoader and ResponsiveDashboardGrid.
+| Command / check | Actual result |
+| --- | --- |
+| `npm run lint` | Passed |
+| `npm run typecheck` | Passed |
+| `npm test` | 23 passed, 0 failed |
+| `npm run format:check` | Passed |
+| `npm run build` | Passed; explicit static workspace + fourteen module shells |
+| Targeted M6 Chromium suite | 17 passed, 0 failed |
+| `npm run test:browser` | 49 passed, 0 failed (32 preserved M3–M5 + 17 M6) |
+| `KENNY_PAGES=1 npm run build` | Passed; `/KENNY` base path, trailing slashes and `out/` retained |
+| Pages static-host interaction check | Passed; workspace send/stop/retry, rename/delete, mobile panels/focus, 24 additional routes; 0 page errors/failed HTTP/external requests |
+| Public exact-revision/routes/assets check | Pending deployment |
 
-Desktop sidebar collapse/expand survives app-route navigation in the shared layout. Mobile uses a native modal drawer, with Escape, focus containment/return, expanded-state reporting and navigation dismissal. Topbar menus/listbox support Arrow/Home/End navigation and Escape/outside dismissal. Search supports Ctrl/Cmd+K, local filtering, keyboard result selection and no-results recovery. Theme uses the existing accessible toggle and tokens.
+The initial browser pass found three M6 test failures (one ambiguous selector and two dialog-timing failures under a paused test clock). The selector was scoped and dialog opening now follows committed state in an effect. Targeted rerun passed all 17 without disabling tests. Existing M5 route assertions were updated only to recognize the now-implemented workspace; all prior scenarios remain.
 
-The dashboard prioritizes identity and quick actions, with nonfinancial sample counts, planned tools, disconnected agent profiles, sample tasks/reviews/projects, illustrative credits, local checklist and sample timeline. Blank workspace exposes empty states. Preview state exposes explicitly non-network loading and error examples, with recovery. Reviewed labels, notifications and checklist state are local only, not persisted.
+M6 browser coverage includes all eight requested widths (320, 375, 430, 768, 1024, 1280, 1440, 1920 px), both themes, reduced motion, responsive panel collapse/drawers, focus return, axe scans at representative widths and mobile dialogs, conversation lifecycle/search/confirmation, all six fixed outputs, inspector keyboard tabs and local decisions, Enter/Shift+Enter, duplicate prevention, cancel/stale timers/retry/failure, long conversations/filenames/4,000-character input, reader-controlled scrolling, clipboard success/fallback and refresh privacy. M3–M5 regression coverage remains in the full suite. Node reports its existing typeless-package warning; it does not fail the unit suite.
 
-## Data honesty and backend boundaries
+## Screenshots and review
 
-Kenny Studio is an illustrative pilot workspace, not private customer data. Workspace switching changes fixture presentation and does not enforce tenant isolation. Visitor menu states that no session is signed in. No agent/model/job runs. No real sales, revenue, customer performance or financial trends are represented. Credit values are not an actual balance or subscription allowance.
+Desktop: `/workspace/artifacts/kenny-m6/workspace-1440-dark.png` and matching light capture. Mobile: `/workspace/artifacts/kenny-m6/workspace-375-dark.png` and matching light capture. Additional 1920 px screenshots and Playwright traces/results are in the same artifact directory.
 
-No authentication, Supabase, authorization/RLS, database writes, payments, live notifications or AI calls were implemented. Fixtures are separate from future service contracts. No fallback pretends to be a production API. No dashboard state or business data is stored in localStorage; the pre-existing theme preference remains.
+Review the public workspace, open History/Inspector on mobile, create/rename/delete a local conversation, enter a nonsensitive prompt and run a fixed sample, stop/retry, select Sample failure, inspect all tabs, approve/reject a local sample and try an unsupported file. Select Blank workspace for empty-state review. Reload to verify local content clears. No login is required; this is not a protected tenant workspace.
 
-## Final engineering checks
+## Limitations and unrun checks
 
-| Command                       | Result                                              |
-| ----------------------------- | --------------------------------------------------- |
-| `npm run lint`                | Passed, no lint warnings                            |
-| `npm run typecheck`           | Passed                                              |
-| `npm test`                    | 15 passed; zero failures/skips                      |
-| `npm run format:check`        | Passed                                              |
-| `npm run build`               | Passed; dashboard and all module routes prerendered |
-| `npm run test:browser`        | 32 passed; zero failures/skips                      |
-| `KENNY_PAGES=1 npm run build` | Passed; all 16 app routes exported under `/KENNY`   |
+This is a frontend foundation, not a deployed AI service. No cross-device persistence, streaming, real file parsing, generated/downloadable artifacts or server approval enforcement exists. Future contracts are typed but unimplemented. Automated axe checks and keyboard scenarios do not establish complete WCAG conformance. Physical devices, actual mobile keyboards, Safari, Firefox and manual screen-reader review have not been tested.
 
-The 15 unit tests include the existing validation/contrast suites plus module-route/catalog integrity, fixture-reference validity, page search and path normalization. The existing Node unit runner emits informational module-format warnings for direct TypeScript helper imports; tests execute successfully and no warning suppression was added.
+Direct public Chromium browsing in this environment previously failed proxy-CA trust; TLS verification is not disabled. Public HTTPS/asset checks and local production/static-export browser checks are reported separately. No browser failure will be described as successful visual verification.
 
-## Browser coverage
+## Deployment
 
-- Dashboard widths: **320, 375, 430, 768, 1024, 1280, 1440, 1920px**, both themes; no horizontal page overflow and key controls/cards stay within viewport bounds.
-- Axe WCAG 2 A/AA, 2.1 AA and 2.2 AA scans on dashboard themes at representative small/tablet/wide sizes; search/approval overlays, empty and error states. No violations in tested states. Not a full accessibility certification.
-- Sidebar collapse across navigation, active links and all fifteen module routes; mobile drawer keyboard containment/Escape/navigation.
-- Workspace listbox keyboard selection, blank data and memory-only switching.
-- Search shortcut, focus, no results, clearing and keyboard route selection.
-- Notification clearing, outside dismissal, visitor-menu session honesty and focus return.
-- Approval inspection/local reviewed label, checklist/reset behavior, explicit loading/error recovery.
-- Small-screen menu bounds at 320, 375 and 430px.
-- Reduced-motion rendering, visible focus and injected long headline wrapping.
-- All sixteen pre-existing M3/M4 browser scenarios remain and pass, including auth/demo honesty, onboarding state/review validation, placeholder links, design-system dialog/tabs, themes, reduced motion and font fallback.
+Local M6 QA is complete; public deployment verification is pending. The existing main-branch GitHub Pages workflow and `/KENNY` static export are preserved. Exact application commit, source-tree fingerprint, successful Actions run and public revision/asset checks will be recorded after deployment. Do not infer deployment from an existing URL.
 
-Initial findings resolved: render-prop/ref lint warning replaced with event-delegated popup dismissal; reserved module variable renamed; preview-state select/error region given unambiguous accessible labels; notification popup anchored within small-screen bounds; operational text sizes refined. No assertions or accessibility rules were disabled.
 
-## Screenshots and preview instructions
+## Local evidence and environment instructions
 
-Open the deployed `/KENNY/app/` route. Public navigation, auth exploration and onboarding completion also offer explicitly labeled dashboard demo links; no login is required. Switch workspaces for the empty state. Use Preview state for loading/error. Inspect approval examples, toggle checklist items and open planned modules.
+Full Chromium run: `/tmp/kenny-m6-full-browser.log` (49 passed). Static-export report: `/workspace/artifacts/kenny-m6/static-export-verification.json`; mobile export capture: `workspace-pages-375-dark.png`. An initial static-smoke assertion matched multiple status badges; it was scoped to the chat header and rerun successfully. No application changes were needed after the final full browser run.
 
-Screenshots: `/workspace/artifacts/kenny-m5/dashboard-1440-dark.png`, `dashboard-1440-light.png`, `dashboard-375-dark.png`, `dashboard-375-light.png`, 1920px captures, module-mobile and loading-preview captures. Full browser traces/results: `/workspace/artifacts/kenny-m5/test-results/`. Desktop/mobile/light screenshots were reviewed for hierarchy, spacing and clipping.
-
-## Known limitations and next milestone
-
-Frontend demo only. All planned module pages are shells. No operational service or security enforcement is connected. Local preview state resets on refresh; it is not persistence. Manual screen-reader testing, Safari/Firefox, physical devices and measured Core Web Vitals remain unrun. Prior direct public Chromium checks encountered the cloud proxy CA trust issue; local production Chromium coverage and direct public HTTPS checks must be distinguished.
-
-Next is M6 only after user review/approval. M5 does not implement the AI Workspace prototype or any real AI functionality.
-
-## Static export and deployment verification
-
-The Pages build passed with `/KENNY` base path and trailing slashes. Chromium smoke testing of the actual export passed all fifteen module routes (HTTP 200), the landing dashboard entry, collapse-state persistence, module navigation, empty workspace, command-search navigation, mobile drawer and error recovery. No failed HTTP assets or uncaught page errors were observed.
-
-The public verifier now checks M5 revision metadata, the preserved landing/design system/auth/onboarding/legal routes, the Command Center, all fifteen module shells and the union of referenced static assets. Deployment/public evidence is reported separately after publication; do not infer a live revision solely from an existing URL. Cloud startup instructions were saved as an M5 draft and are separate from website deployment. No M6 work is included.
-
-## Verified M5 application release
-
-- Tested application commit: `e43469dee8fc946c7a5292c8245015ee151259a5` on `fnfmobilitymy-boop/KENNY`, branch `main`.
-- Application source tree: `f537d72042be56942add24ca7d8e4eee805451a9`.
-- Actions run `40289692770`: build and deploy jobs **success**. Pages deployment `7326892913` references the same commit.
-- Dashboard URL: `https://fnfmobilitymy-boop.github.io/KENNY/app/`.
-- Public `deployment.json` identified M5, the exact SHA, repository, branch and matching source tree.
-- `python3 scripts/verify-public-deployment.py e43469dee8fc946c7a5292c8245015ee151259a5` passed against the actual public HTTPS host with TLS verification enabled and the configured proxy retained.
-- The dashboard, all fifteen Coming Soon module routes, seven M4/legal routes, preserved landing/design system and **24** referenced static assets returned HTTP 200 with expected content/base paths.
-- Normal/cache-busted landing HTML were byte-identical; the dashboard entry link and full M3 landing content were present. No obsolete foundation marker was served in these checks.
-- Public evidence file: `/workspace/artifacts/kenny-m5/public-verification.json`. Local production-browser suite: **32 passed**; static-export Chromium smoke also passed. Public Chromium interactions are not claimed; the earlier proxy-CA browser trust limitation remains separate from successful public HTTPS verification.
-
-Documentation-only follow-ups may change the deployment SHA without changing the tested application tree. The final delivery identifies the latest successful deployment and public metadata revision. **Stop after M5; M6 requires user approval.**
+Updated M6 cloud startup instructions were saved successfully as an environment configuration draft. This does not publish or restart the cloud environment. Review/save/publish in environment settings activates that separate configuration; it is not required for the GitHub Pages deployment. Existing install script, repository membership, network rules and credentials were preserved.

@@ -4,7 +4,9 @@ import { plannedModules } from "@/demo/dashboard";
 import { ComingSoon } from "@/features/modules/coming-soon";
 export const dynamicParams = false;
 export function generateStaticParams() {
-  return plannedModules.map((module) => ({ module: module.slug }));
+  return plannedModules
+    .filter((entry) => entry.slug !== "workspace")
+    .map((entry) => ({ module: entry.slug }));
 }
 export async function generateMetadata({
   params,

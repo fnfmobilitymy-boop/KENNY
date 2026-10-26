@@ -11,6 +11,7 @@ import type {
 export const plannedModules = [
   {
     slug: "workspace",
+    availability: "prototype",
     name: "AI Workspace",
     group: "OVERVIEW",
     icon: "workspace",
@@ -24,6 +25,7 @@ export const plannedModules = [
   },
   {
     slug: "analytics",
+    availability: "planned",
     name: "Analytics",
     group: "OVERVIEW",
     icon: "insights",
@@ -37,6 +39,7 @@ export const plannedModules = [
   },
   {
     slug: "website-builder",
+    availability: "planned",
     name: "AI Website Builder",
     group: "CREATE",
     icon: "website",
@@ -50,6 +53,7 @@ export const plannedModules = [
   },
   {
     slug: "image-studio",
+    availability: "planned",
     name: "AI Image Studio",
     group: "CREATE",
     icon: "image",
@@ -62,6 +66,7 @@ export const plannedModules = [
   },
   {
     slug: "video-studio",
+    availability: "planned",
     name: "AI Video Studio",
     group: "CREATE",
     icon: "video",
@@ -74,6 +79,7 @@ export const plannedModules = [
   },
   {
     slug: "documents",
+    availability: "planned",
     name: "AI Documents",
     group: "CREATE",
     icon: "knowledge",
@@ -86,6 +92,7 @@ export const plannedModules = [
   },
   {
     slug: "marketing",
+    availability: "planned",
     name: "AI Marketing Studio",
     group: "GROW",
     icon: "marketing",
@@ -98,6 +105,7 @@ export const plannedModules = [
   },
   {
     slug: "seo-ads",
+    availability: "planned",
     name: "AI SEO & Ads",
     group: "GROW",
     icon: "search",
@@ -110,6 +118,7 @@ export const plannedModules = [
   },
   {
     slug: "sales",
+    availability: "planned",
     name: "AI Sales Agent",
     group: "GROW",
     icon: "sales",
@@ -122,6 +131,7 @@ export const plannedModules = [
   },
   {
     slug: "crm",
+    availability: "planned",
     name: "AI CRM",
     group: "GROW",
     icon: "contacts",
@@ -134,6 +144,7 @@ export const plannedModules = [
   },
   {
     slug: "booking",
+    availability: "planned",
     name: "AI Booking",
     group: "MANAGE",
     icon: "calendar",
@@ -146,6 +157,7 @@ export const plannedModules = [
   },
   {
     slug: "ecommerce",
+    availability: "planned",
     name: "AI E-Commerce",
     group: "MANAGE",
     icon: "commerce",
@@ -158,6 +170,7 @@ export const plannedModules = [
   },
   {
     slug: "automations",
+    availability: "planned",
     name: "AI Automations",
     group: "MANAGE",
     icon: "workflow",
@@ -170,6 +183,7 @@ export const plannedModules = [
   },
   {
     slug: "billing",
+    availability: "planned",
     name: "Billing",
     group: "ACCOUNT",
     icon: "billing",
@@ -182,6 +196,7 @@ export const plannedModules = [
   },
   {
     slug: "settings",
+    availability: "planned",
     name: "Settings",
     group: "ACCOUNT",
     icon: "settings",

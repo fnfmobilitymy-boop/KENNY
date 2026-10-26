@@ -100,7 +100,7 @@ test("desktop sidebar collapse persists across routes, every planned route resol
   );
   await page
     .getByRole("navigation", { name: "Studio navigation" })
-    .getByRole("link", { name: "AI Workspace · Coming soon", exact: true })
+    .getByRole("link", { name: "AI Workspace · Demo", exact: true })
     .click();
   await expect(page).toHaveURL(/\/app\/workspace$/);
   await expect(
@@ -110,9 +110,14 @@ test("desktop sidebar collapse persists across routes, every planned route resol
   for (const slug of slugs) {
     const response = await page.goto(`/app/${slug}`);
     expect(response?.status()).toBe(200);
-    await expect(
-      page.getByText("Coming soon · Frontend shell", { exact: true }),
-    ).toBeVisible();
+    if (slug === "workspace")
+      await expect(
+        page.getByRole("heading", { name: "AI Workspace", exact: true }),
+      ).toBeVisible();
+    else
+      await expect(
+        page.getByText("Coming soon · Frontend shell", { exact: true }),
+      ).toBeVisible();
     await expect(
       page
         .getByRole("navigation", { name: "Studio navigation" })

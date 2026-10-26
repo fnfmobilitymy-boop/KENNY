@@ -80,7 +80,7 @@ export function DashboardHome() {
           <QuickActionCard
             href="/app/workspace"
             title="Think with context"
-            description="Explore AI Workspace · Coming soon"
+            description="AI Workspace · Local demo"
             icon="workspace"
             primary
           />
@@ -131,11 +131,11 @@ export function DashboardHome() {
               icon="check"
             />
             <MetricCard
-              label="Planned AI tools"
+              label="AI tools"
               value={String(
                 plannedModules.filter((m) => m.group !== "ACCOUNT").length,
               )}
-              detail="All coming soon"
+              detail="1 prototype · 12 planned"
               icon="sparkle"
             />
           </section>
@@ -147,7 +147,7 @@ export function DashboardHome() {
                     <p className="eyebrow">YOUR CREATIVE & BUSINESS TOOLKIT</p>
                     <h2>One studio. Many possibilities.</h2>
                   </div>
-                  <DemoBadge>Planned</DemoBadge>
+                  <DemoBadge>Preview & planned</DemoBadge>
                 </div>
                 <p className="panel-description">
                   Choose a module to see its direction. No AI generation is

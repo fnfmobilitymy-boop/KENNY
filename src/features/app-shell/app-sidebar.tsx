@@ -39,8 +39,8 @@ export function AppSidebar({ onNavigate }: { onNavigate?: () => void }) {
                   <li key={module.slug}>
                     <Link
                       href={`/app/${module.slug}`}
-                      title={`${module.name} · Coming soon`}
-                      aria-label={`${module.name} · Coming soon`}
+                      title={`${module.name} · ${module.availability === "prototype" ? "Demo" : "Coming soon"}`}
+                      aria-label={`${module.name} · ${module.availability === "prototype" ? "Demo" : "Coming soon"}`}
                       aria-current={
                         pathname === `/app/${module.slug}` ? "page" : undefined
                       }

@@ -17,6 +17,7 @@ export type ModuleSlug =
   | "settings";
 export interface PlannedModule {
   slug: ModuleSlug;
+  availability: "prototype" | "planned";
   name: string;
   group: "OVERVIEW" | "CREATE" | "GROW" | "MANAGE" | "ACCOUNT";
   icon: IconName;

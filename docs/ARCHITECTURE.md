@@ -60,3 +60,8 @@ Authentication uses a static route-group layout and feature client components; o
 ## M5 extension
 
 `src/app/app` adds a shared app layout and statically enumerated module shells. `src/features/app-shell`, `dashboard` and `modules` reuse the existing UI system. Typed fixture/view-model boundaries are in `src/demo/dashboard.ts` and `src/types/dashboard.ts`. Workspace, search, notifications, review and checklist behavior remain local demo controls. See `docs/M5_IMPLEMENTATION.md`; no real adapter, auth gate, tenant isolation or AI execution is introduced. The M4 review stop was superseded by explicit M5 authorization.
+
+
+## M6 frontend workspace extension
+
+`/app/workspace` is an explicit static route inside the existing app layout; dynamic module generation excludes it. Fourteen future module shells remain unchanged. `src/features/workspace` owns interactive local UI; `src/demo/workspace.ts` contains independent fixed samples; `src/lib/workspace-state.ts` implements pure transitions/validation; `src/types/workspace.ts` defines thread/message/task/output/attachment/approval and provider-neutral future contracts. No service implementation or dependency is added. Browser storage is never used for workspace content. See `docs/M6_IMPLEMENTATION.md` for the current boundary and QA evidence; preceding milestone sections are historical.

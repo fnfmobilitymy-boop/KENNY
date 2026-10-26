@@ -1,6 +1,6 @@
 # Kenny AI Business Studio
 
-Next.js App Router + React + strict TypeScript frontend. M1–M4 and the M5 Command Center dashboard are implemented. **Stop after M5; M6 requires user review.** No authentication, AI, payments or backend service is connected.
+Next.js App Router + React + strict TypeScript frontend. M1–M5 and the M6 AI Workspace frontend prototype are implemented. **Stop after M6; M7 requires user review.** No authentication, AI, payments or backend service is connected.
 
 ## Run locally
 
@@ -27,9 +27,9 @@ npm run dev
 | `/onboarding`        | Eight-step in-memory organization setup and completion preview                 |
 | `/terms`, `/privacy` | Clearly marked legal placeholders; not final legal documents                   |
 
-M5 adds `/app` with a shared responsive shell. All fifteen module routes are generated as **Coming Soon** pages:
+M5 adds `/app` with a shared responsive shell. `/app/workspace` is now the M6 interactive prototype. The other fourteen module routes remain **Coming Soon**:
 
-- Overview: `/app/workspace`, `/app/analytics`.
+- Overview: `/app/analytics`.
 - Create: `/app/website-builder`, `/app/image-studio`, `/app/video-studio`, `/app/documents`.
 - Grow: `/app/marketing`, `/app/seo-ads`, `/app/sales`, `/app/crm`.
 - Manage: `/app/booking`, `/app/ecommerce`, `/app/automations`.
@@ -48,7 +48,7 @@ npm run build
 npm run test:browser
 ```
 
-Use a normal production build before browser tests or `npm run start`. Playwright starts an isolated production server on port 3100; do not reuse a stale server while rebuilding. Chromium defaults to `/usr/bin/chromium`; override `CHROMIUM_PATH` on other machines. Missing browsers must be reported as an unrun check. Screenshots are in `/workspace/artifacts/kenny-m4/`; M5 dashboard captures and current traces/results are under `/workspace/artifacts/kenny-m5/`. The preserved M3 suite writes landing screenshots to `/workspace/artifacts/kenny-m3/`.
+Use a normal production build before browser tests or `npm run start`. Playwright starts an isolated production server on port 3100; do not reuse a stale server while rebuilding. Chromium defaults to `/usr/bin/chromium`; override `CHROMIUM_PATH` on other machines. Missing browsers must be reported as an unrun check. Screenshots are in `/workspace/artifacts/kenny-m4/`; M5 dashboard captures and M5 traces/results are under `/workspace/artifacts/kenny-m5/`; current M6 captures and test results are under `/workspace/artifacts/kenny-m6/`. The preserved M3 suite writes landing screenshots to `/workspace/artifacts/kenny-m3/`.
 
 M4 browser coverage includes 320, 375, 430, 768, 1024 and 1440px, local validation, password visibility, disconnected-action feedback, verification states, wizard forward/backward/review editing, optional interests, theme rendering and accessibility scans. Unit tests exercise format/selection validation and both-theme contrast.
 
@@ -66,13 +66,13 @@ Routes and static layouts live in `src/app`; shared brand/UI/layout components i
 
 [Website](https://fnfmobilitymy-boop.github.io/KENNY/) · [Login](https://fnfmobilitymy-boop.github.io/KENNY/login/) · [Onboarding](https://fnfmobilitymy-boop.github.io/KENNY/onboarding/)
 
-The preserved workflow deploys `main` from `fnfmobilitymy-boop/KENNY`. `KENNY_PAGES=1 npm run build` generates static `out/` with `/KENNY` base path. The workflow writes `deployment.json` identifying its exact SHA, application source tree and M5 milestone before artifact upload. Inspect that marker and the successful Actions run rather than assuming an existing URL serves the latest code.
+The preserved workflow deploys `main` from `fnfmobilitymy-boop/KENNY`. `KENNY_PAGES=1 npm run build` generates static `out/` with `/KENNY` base path. The workflow writes `deployment.json` identifying its exact SHA, application source tree and M6 milestone before artifact upload. Inspect that marker and the successful Actions run rather than assuming an existing URL serves the latest code.
 
 ```sh
 python3 scripts/verify-public-deployment.py <full-successful-deployment-sha>
 ```
 
-The verifier checks the M3 landing, M4 routes, M5 dashboard, all fifteen module shells, referenced static assets, cache-busted responses and exact M5 revision metadata through the configured HTTPS proxy. Direct public-host checks require `fnfmobilitymy-boop.github.io` to be allowed in the environment network settings. A pending allowlist draft does not establish public verification. Deployment API evidence, local static-browser checks and actual public HTTP checks are reported separately in the acceptance report.
+The verifier checks the M3 landing, M4 routes, M5 dashboard, the M6 workspace, fourteen planned module shells, referenced static assets, cache-busted responses and exact M6 revision metadata through the configured HTTPS proxy. Direct public-host checks require `fnfmobilitymy-boop.github.io` to be allowed in the environment network settings. A pending allowlist draft does not establish public verification. Deployment API evidence, local static-browser checks and actual public HTTP checks are reported separately in the acceptance report.
 
 See [M4 implementation](docs/M4_IMPLEMENTATION.md), [acceptance results](PHASE_1_ACCEPTANCE.md), [architecture](docs/ARCHITECTURE.md), [historical M3 audit](docs/M3_DEPLOYMENT_AUDIT.md), and [backend requirements](src/services/README.md).
 
@@ -90,8 +90,17 @@ All metrics, tasks, projects, credit values and activity are illustrative and ex
 
 No dependencies were added. Existing M3/M4 tests remain; M5 adds route/search integrity and dashboard interaction tests across 320, 375, 430, 768, 1024, 1280, 1440 and 1920px. Screenshots: `/workspace/artifacts/kenny-m5/dashboard-1440-dark.png`, `dashboard-375-dark.png` and matching light-theme captures. See [M5 implementation](docs/M5_IMPLEMENTATION.md) and [acceptance evidence](PHASE_1_ACCEPTANCE.md).
 
-**M6 is not implemented.** AI Workspace is a Coming Soon shell in M5. No database, authentication, tenant enforcement, live notifications, subscriptions or AI execution is connected.
+The M5 release originally kept AI Workspace as a Coming Soon shell; M6 replaces only that shell with the local frontend prototype. No database, authentication, tenant enforcement, live notifications, subscriptions or AI execution is connected.
 
 ### Verified M5 release
 
 M5 application commit `e43469dee8fc946c7a5292c8245015ee151259a5` deployed successfully in [Actions run 40289692770](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40289692770). Application source fingerprint: `f537d72042be56942add24ca7d8e4eee805451a9`. The public verifier passed against the actual HTTPS site: exact M5 metadata, dashboard, all fifteen module shells, preserved routes and 24 referenced assets. Normal/cache-busted landing responses matched. All 15 unit tests and 32 local production-browser scenarios passed; Pages export/static-host interaction checks passed separately. Later documentation-only revisions may update the deployed SHA; `deployment.json` identifies the current release. See the acceptance report for bounded browser coverage and unrun checks.
+
+
+## M6 workspace review
+
+[Open AI Workspace](https://fnfmobilitymy-boop.github.io/KENNY/app/workspace/). The existing app shell, themes and M1–M5 routes are preserved. Independent history and inspector panels surround the conversation at desktop widths; smaller screens use keyboard-accessible modal panels. New/search/switch/rename/delete conversations, per-thread drafts, fixed scenario previews, stop/retry, inspector tabs and local approval decisions are functional in memory.
+
+Six deterministic samples cover marketing, website requirements, follow-up messages, SEO, translation and document summary. **Preview simulator is not AI**: outputs never depend on prompt/file contents. Sample failure, cancellation, disconnected provider, empty and zero-search states are explicitly labeled. Selected TXT/MD/PDF attachments retain only name/type/size metadata (three files, 5 MB each); no contents are read, uploaded or processed. Prompts are limited to 4,000 characters. No workspace messages, drafts, files or approval state enter browser storage. Reload, leaving the route or switching demo workspaces clears this session.
+
+Run the commands above plus `KENNY_PAGES=1 npm run build`. See [M6 implementation](docs/M6_IMPLEMENTATION.md) and [current acceptance report](PHASE_1_ACCEPTANCE.md) for file changes, test evidence, screenshots, future API contracts and deployment status. Desktop/mobile screenshots are under `/workspace/artifacts/kenny-m6/`.
