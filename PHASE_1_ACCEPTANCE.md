@@ -77,3 +77,18 @@ Updated `start_skill` in the environment configuration draft for M3 routes, chec
 `KENNY_PAGES=1 npm run build` passed. The exported website was served under the real `/KENNY/` prefix and checked in Chromium: both routes, local fonts/scripts/styles, dashboard tab switching, mobile navigation, design-system navigation and the modal passed. No failed HTTP resources or uncaught page errors were observed in that static-host smoke check.
 
 Local acceptance and public deployment are distinct. The final delivery reports the GitHub Actions deployment status and preview URL after publication. Do not infer a new live revision solely from an existing URL. The existing Pages workflow performs its own required build checks on `main`; browser validation above ran locally against this implementation.
+
+## Public deployment investigation — 2026-10-26
+
+- Repository: `fnfmobilitymy-boop/KENNY`; deployment branch: `main`.
+- Tested M3 SHA, local HEAD, remote main, successful Actions run, artifact metadata and Pages deployment all agree on `9a7c5e9fe0c9375b636264b517f3efc7fb514559`.
+- App source-tree SHA: `b97402260786cbc958a390323fff991cd73dbbd4`.
+- Actions run: `40281440728`; build/deploy jobs successful. Deployment ID: `7325739329`; latest status `success`, with environment URL `https://fnfmobilitymy-boop.github.io/KENNY/`.
+- Pages artifact: ID `12632154190`, name `github-pages`, digest `sha256:aa9b1f0448dc3a43792f12b306e28d9edc2e53d3a80be9e1964225fa8c0b607f`; its workflow metadata names the tested M3 SHA. Downloading its bytes was blocked at GitHub's artifact storage host, so artifact-content inspection is **not completed**.
+- Local root route imports `LandingPage`. Obsolete “Landing Page Coming in M3” text is absent from current `src/` and `public/`. No application service-worker registration or Cache API usage was found.
+- Pages uses workflow deployment, base path `/KENNY`, trailing slashes and the correct public URL. Prior local static checks passed; live public response remains a separate required check.
+- Public request failed at the cloud proxy's CONNECT stage with 403; this is not an HTTP response from GitHub Pages. Root HTML, public assets, public routing and cache headers remain **unverified**. No cache root cause is claimed.
+- Saved the public hostname addition to the environment draft. User review/save/publication is required to apply it; no secret is needed.
+- Added a CI-generated `deployment.json` revision marker and a reusable public-deployment verification script. No product UI, M4 or backend changes are included in this investigation.
+
+Earlier “deployment successful” evidence referred to GitHub's deployment record plus local testing. It did not establish that the public URL was serving M3. Do not advance M4 until the public verification result below is completed.

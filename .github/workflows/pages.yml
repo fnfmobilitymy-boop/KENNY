@@ -24,6 +24,8 @@ jobs:
       - run: npm run build
         env:
           KENNY_PAGES: "1"
+      - name: Record exact deployed revision
+        run: node scripts/write-deployment-metadata.mjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
