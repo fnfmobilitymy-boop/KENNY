@@ -4,7 +4,7 @@ export default defineConfig({
   workers: 1,
   timeout: 30000,
   reporter: "list",
-  outputDir: "/workspace/artifacts/kenny-m4/test-results",
+  outputDir: "/workspace/artifacts/kenny-m5/test-results",
   use: {
     baseURL: "http://127.0.0.1:3100",
     headless: true,

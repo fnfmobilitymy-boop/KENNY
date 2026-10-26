@@ -1,5 +1,17 @@
 import type { SVGProps } from "react";
 const paths = {
+  search: "M16 10a6 6 0 1 1-12 0 6 6 0 0 1 12 0zm-2 4 6 6",
+  bell: "M5 17h14l-2-3V9a5 5 0 0 0-10 0v5l-2 3zm5 3h4",
+  menu: "M4 6h16M4 12h16M4 18h16",
+  collapse: "M3 4h18v16H3zM9 4v16m7-12-4 4 4 4",
+  close: "m6 6 12 12M6 18 18 6",
+  chevron: "m6 9 6 6 6-6",
+  contacts:
+    "M10 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-8 12v-2a5 5 0 0 1 10 0v2m2-12a3 3 0 0 1 5 2 3 3 0 0 1-2 3m-2 2a5 5 0 0 1 7 4v1",
+  calendar: "M4 5h16v16H4zM4 10h16M8 3v4m8-4v4M8 14h.01m4 0h.01m4 0h.01",
+  commerce: "M3 4h2l3 12h11l2-8H6m4 12h.01m7 0h.01",
+  billing: "M3 5h18v14H3zM3 10h18M7 15h4",
+
   arrow: "M5 12h14m-6-6 6 6-6 6",
   diagonal: "M6 18 18 6M6 6h12v12",
   down: "M12 4v16m-6-6 6 6 6-6",

@@ -266,6 +266,9 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
       )}
       <div className="auth-explore">
         <span className="muted">Prefer to look around first?</span>
+        <ButtonLink href="/app" variant="secondary">
+          Explore Command Center · Demo
+        </ButtonLink>
         <ButtonLink href="/onboarding" variant="ghost">
           Explore organization setup · Demo
         </ButtonLink>

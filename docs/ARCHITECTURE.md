@@ -39,7 +39,7 @@ Server-render static presentation; client components only for theme and interact
 | M7        | Future modules, profile, settings and billing | `/app/modules/*`, `/app/settings`, `/app/billing` |
 | M8        | Responsive, accessibility and QA refinement   | all implemented routes                            |
 
-M3 now implements the public landing page with an in-page pricing preview. M4 now adds frontend-only authentication and organization onboarding. M5–M8 remain unimplemented. Stop after M4 for user review. The original roadmap below remains a guide; a standalone pricing route is deferred until required.
+M3 now implements the public landing page with an in-page pricing preview. M4 now adds frontend-only authentication and organization onboarding. M5 now implements the frontend Command Center and app shell, with planned module routes. M6–M8 remain unimplemented. Stop after M5 for user review. The original roadmap below remains a guide; a standalone pricing route is deferred until required.
 
 ## Phase 2 backend dependencies
 
@@ -56,3 +56,7 @@ Required at each milestone: ESLint, strict TypeScript, configured automated test
 ## M4 extension
 
 Authentication uses a static route-group layout and feature client components; onboarding uses a typed, in-memory wizard. Shared tokens, Brand, Field, Button and ButtonLink are reused. See `docs/M4_IMPLEMENTATION.md`. No Supabase or backend adapter is installed. The prior M3 review stop was superseded by explicit user authorization for M4.
+
+## M5 extension
+
+`src/app/app` adds a shared app layout and statically enumerated module shells. `src/features/app-shell`, `dashboard` and `modules` reuse the existing UI system. Typed fixture/view-model boundaries are in `src/demo/dashboard.ts` and `src/types/dashboard.ts`. Workspace, search, notifications, review and checklist behavior remain local demo controls. See `docs/M5_IMPLEMENTATION.md`; no real adapter, auth gate, tenant isolation or AI execution is introduced. The M4 review stop was superseded by explicit M5 authorization.

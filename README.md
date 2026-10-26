@@ -1,6 +1,6 @@
 # Kenny AI Business Studio
 
-Next.js App Router + React + strict TypeScript frontend. M1–M3 and M4 authentication/organization setup UI are implemented. **Stop after M4; M5 requires user review.** No authentication, AI, payments or backend service is connected.
+Next.js App Router + React + strict TypeScript frontend. M1–M4 and the M5 Command Center dashboard are implemented. **Stop after M5; M6 requires user review.** No authentication, AI, payments or backend service is connected.
 
 ## Run locally
 
@@ -14,6 +14,8 @@ npm run dev
 
 ## Implemented routes
 
+[Open the Command Center demo](https://fnfmobilitymy-boop.github.io/KENNY/app/) — no login required; this is not an authenticated workspace.
+
 | Route                | Content                                                                        |
 | -------------------- | ------------------------------------------------------------------------------ |
 | `/`                  | Preserved M3 landing plus Login/Get Started links                              |
@@ -24,6 +26,14 @@ npm run dev
 | `/verify-email`      | Pending/expired/error previews; resend not connected                           |
 | `/onboarding`        | Eight-step in-memory organization setup and completion preview                 |
 | `/terms`, `/privacy` | Clearly marked legal placeholders; not final legal documents                   |
+
+M5 adds `/app` with a shared responsive shell. All fifteen module routes are generated as **Coming Soon** pages:
+
+- Overview: `/app/workspace`, `/app/analytics`.
+- Create: `/app/website-builder`, `/app/image-studio`, `/app/video-studio`, `/app/documents`.
+- Grow: `/app/marketing`, `/app/seo-ads`, `/app/sales`, `/app/crm`.
+- Manage: `/app/booking`, `/app/ecommerce`, `/app/automations`.
+- Account: `/app/billing`, `/app/settings`.
 
 GitHub Pages prefixes these paths with `/KENNY/`, with trailing slashes. Landing exploration CTAs remain; Get Started opens registration. Auth screens also link directly to the organization setup preview. No sign-in is needed to review it.
 
@@ -38,7 +48,7 @@ npm run build
 npm run test:browser
 ```
 
-Use a normal production build before browser tests or `npm run start`. Playwright starts an isolated production server on port 3100; do not reuse a stale server while rebuilding. Chromium defaults to `/usr/bin/chromium`; override `CHROMIUM_PATH` on other machines. Missing browsers must be reported as an unrun check. Screenshots are in `/workspace/artifacts/kenny-m4/`; browser traces/results are under its `test-results/` directory. The preserved M3 suite writes landing screenshots to `/workspace/artifacts/kenny-m3/`.
+Use a normal production build before browser tests or `npm run start`. Playwright starts an isolated production server on port 3100; do not reuse a stale server while rebuilding. Chromium defaults to `/usr/bin/chromium`; override `CHROMIUM_PATH` on other machines. Missing browsers must be reported as an unrun check. Screenshots are in `/workspace/artifacts/kenny-m4/`; M5 dashboard captures and current traces/results are under `/workspace/artifacts/kenny-m5/`. The preserved M3 suite writes landing screenshots to `/workspace/artifacts/kenny-m3/`.
 
 M4 browser coverage includes 320, 375, 430, 768, 1024 and 1440px, local validation, password visibility, disconnected-action feedback, verification states, wizard forward/backward/review editing, optional interests, theme rendering and accessibility scans. Unit tests exercise format/selection validation and both-theme contrast.
 
@@ -56,13 +66,13 @@ Routes and static layouts live in `src/app`; shared brand/UI/layout components i
 
 [Website](https://fnfmobilitymy-boop.github.io/KENNY/) · [Login](https://fnfmobilitymy-boop.github.io/KENNY/login/) · [Onboarding](https://fnfmobilitymy-boop.github.io/KENNY/onboarding/)
 
-The preserved workflow deploys `main` from `fnfmobilitymy-boop/KENNY`. `KENNY_PAGES=1 npm run build` generates static `out/` with `/KENNY` base path. The workflow writes `deployment.json` identifying its exact SHA, application source tree and M4 milestone before artifact upload. Inspect that marker and the successful Actions run rather than assuming an existing URL serves the latest code.
+The preserved workflow deploys `main` from `fnfmobilitymy-boop/KENNY`. `KENNY_PAGES=1 npm run build` generates static `out/` with `/KENNY` base path. The workflow writes `deployment.json` identifying its exact SHA, application source tree and M5 milestone before artifact upload. Inspect that marker and the successful Actions run rather than assuming an existing URL serves the latest code.
 
 ```sh
 python3 scripts/verify-public-deployment.py <full-successful-deployment-sha>
 ```
 
-The verifier checks the M3 landing, M4 routes, static assets, cache-busted responses and exact revision metadata through the configured HTTPS proxy. Direct public-host checks require `fnfmobilitymy-boop.github.io` to be allowed in the environment network settings. A pending allowlist draft does not establish public verification. Deployment API evidence, local static-browser checks and actual public HTTP checks are reported separately in the acceptance report.
+The verifier checks the M3 landing, M4 routes, M5 dashboard, all fifteen module shells, referenced static assets, cache-busted responses and exact M5 revision metadata through the configured HTTPS proxy. Direct public-host checks require `fnfmobilitymy-boop.github.io` to be allowed in the environment network settings. A pending allowlist draft does not establish public verification. Deployment API evidence, local static-browser checks and actual public HTTP checks are reported separately in the acceptance report.
 
 See [M4 implementation](docs/M4_IMPLEMENTATION.md), [acceptance results](PHASE_1_ACCEPTANCE.md), [architecture](docs/ARCHITECTURE.md), [historical M3 audit](docs/M3_DEPLOYMENT_AUDIT.md), and [backend requirements](src/services/README.md).
 
@@ -71,3 +81,13 @@ See [M4 implementation](docs/M4_IMPLEMENTATION.md), [acceptance results](PHASE_1
 The M4 application release `d6b93597b824758dcddc13c71c5e22783438de4f` deployed successfully in [Actions run 40285425010](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40285425010). Its source fingerprint is `87ce5e45781a324c74360b87b0b7dc6f70ef3ae2`. Actual public HTTPS checks passed for revision metadata, all seven M4/legal routes, the preserved landing/design system and eleven static assets. Normal and cache-busted landing responses matched. GitHub Pages advertised a 600-second cache lifetime; no stale-root mismatch was observed.
 
 All 16 local Chromium scenarios passed. A separate public Chromium attempt could not establish trust in the cloud proxy CA; no TLS checks were disabled. Public browser interactions remain pending, separately from the successful public HTTPS and local production-browser checks. See the acceptance report for evidence and limitations. Later documentation-only revisions can change the deployed commit SHA; consult `/KENNY/deployment.json` and the latest successful Actions run for the current revision.
+
+## M5 dashboard review
+
+The responsive app shell has desktop collapse/expand, mobile modal navigation, workspace demo switching, local page search (Ctrl/Cmd+K), notifications and visitor menus, breadcrumbs and the shared theme toggle. Kenny Studio is an illustrative pilot workspace; Blank workspace shows useful empty states. Workspace switching is not tenant isolation.
+
+All metrics, tasks, projects, credit values and activity are illustrative and explicitly labeled. No real business performance or revenue is represented, and every agent is Not connected. Review buttons and checklist checkmarks only change local state; nothing is saved. The Preview state select exposes static loading/error examples with an honest explanation and recovery control.
+
+No dependencies were added. Existing M3/M4 tests remain; M5 adds route/search integrity and dashboard interaction tests across 320, 375, 430, 768, 1024, 1280, 1440 and 1920px. Screenshots: `/workspace/artifacts/kenny-m5/dashboard-1440-dark.png`, `dashboard-375-dark.png` and matching light-theme captures. See [M5 implementation](docs/M5_IMPLEMENTATION.md) and [acceptance evidence](PHASE_1_ACCEPTANCE.md).
+
+**M6 is not implemented.** AI Workspace is a Coming Soon shell in M5. No database, authentication, tenant enforcement, live notifications, subscriptions or AI execution is connected.

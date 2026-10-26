@@ -59,6 +59,7 @@ export function SiteHeader() {
           <Link href="/design-system">
             Design system <Icon name="diagonal" />
           </Link>
+          <Link href="/app">Dashboard demo</Link>
           <Link href="/login">Login</Link>
           <Link className="nav-cta" href="/signup">
             Get Started <Icon name="diagonal" />

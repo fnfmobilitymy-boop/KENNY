@@ -432,6 +432,9 @@ export function OnboardingWizard() {
                 )}
                 {step === 7 && (
                   <div className="completion-actions">
+                    <ButtonLink href="/app">
+                      Open Command Center · Demo
+                    </ButtonLink>
                     <ButtonLink href="/" variant="secondary">
                       Back to website
                     </ButtonLink>
