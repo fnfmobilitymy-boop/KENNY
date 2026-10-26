@@ -29,7 +29,7 @@ Prompts, conversations, drafts, attachment metadata and decisions remain only in
 | `npm run test:browser` | 49 passed, 0 failed (32 preserved M3–M5 + 17 M6) |
 | `KENNY_PAGES=1 npm run build` | Passed; `/KENNY` base path, trailing slashes and `out/` retained |
 | Pages static-host interaction check | Passed; workspace send/stop/retry, rename/delete, mobile panels/focus, 24 additional routes; 0 page errors/failed HTTP/external requests |
-| Public exact-revision/routes/assets check | Pending deployment |
+| Public exact-revision/routes/assets check | Passed; exact M6 SHA/source tree, normal/fresh root and workspace, preserved routes and 28 assets |
 
 The initial browser pass found three M6 test failures (one ambiguous selector and two dialog-timing failures under a paused test clock). The selector was scoped and dialog opening now follows committed state in an effect. Targeted rerun passed all 17 without disabling tests. Existing M5 route assertions were updated only to recognize the now-implemented workspace; all prior scenarios remain.
 
@@ -37,7 +37,7 @@ M6 browser coverage includes all eight requested widths (320, 375, 430, 768, 102
 
 ## Screenshots and review
 
-Desktop: `/workspace/artifacts/kenny-m6/workspace-1440-dark.png` and matching light capture. Mobile: `/workspace/artifacts/kenny-m6/workspace-375-dark.png` and matching light capture. Additional 1920 px screenshots and Playwright traces/results are in the same artifact directory.
+Desktop: `/workspace/artifacts/kenny-m6/workspace-1440-dark.png` and matching light capture. Mobile: `/workspace/artifacts/kenny-m6/workspace-375-dark.png` and matching light capture. Additional 1920 px screenshots, desktop Results (`workspace-results-1440-dark.png`), mobile Approvals (`workspace-approvals-375-dark.png`) and Playwright results are in the same artifact directory.
 
 Review the public workspace, open History/Inspector on mobile, create/rename/delete a local conversation, enter a nonsensitive prompt and run a fixed sample, stop/retry, select Sample failure, inspect all tabs, approve/reject a local sample and try an unsupported file. Select Blank workspace for empty-state review. Reload to verify local content clears. No login is required; this is not a protected tenant workspace.
 
@@ -49,7 +49,12 @@ Direct public Chromium browsing in this environment previously failed proxy-CA t
 
 ## Deployment
 
-Local M6 QA is complete; public deployment verification is pending. The existing main-branch GitHub Pages workflow and `/KENNY` static export are preserved. Exact application commit, source-tree fingerprint, successful Actions run and public revision/asset checks will be recorded after deployment. Do not infer deployment from an existing URL.
+M6 application commit `fe28e74fc01bb2b0d8abf55367e271c897c746fa` was pushed to `fnfmobilitymy-boop/KENNY` on `main` and deployed successfully by [Actions run 40306991141](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40306991141). Its tested application source fingerprint is `8fc0827179281841d7e20636696942db5a9b2149`.
+
+Actual public HTTPS verification passed for [AI Workspace](https://fnfmobilitymy-boop.github.io/KENNY/app/workspace/), exact M6 commit/source metadata, preserved landing/design system, seven M4/legal routes, M5 dashboard, all fourteen planned module shells and **28 referenced static assets**. All asset paths use `/KENNY/_next/` and returned HTTP 200. Normal and cache-busted landing/workspace responses matched; Pages advertised a 600-second cache lifetime. No stale-shell response was observed. Source metadata was compared with the local committed source tree, not merely checked for a SHA-shaped string.
+
+The application was tested before that commit; no application code changed after the passing 49-test production-browser run. This evidence is recorded by a subsequent documentation-only commit, which can update the public commit SHA without changing the application source fingerprint. Consult `/KENNY/deployment.json` and the latest successful Actions run for the current deployment revision. Public verification output is `/workspace/artifacts/kenny-m6/public-deployment-application.json`.
+
 
 
 ## Local evidence and environment instructions

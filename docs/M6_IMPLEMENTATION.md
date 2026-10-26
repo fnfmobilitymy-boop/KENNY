@@ -62,3 +62,11 @@ At 1280 px and above, history and inspector independently collapse around a flex
 Current command results, screenshot paths, deployment SHA and unresolved limitations are recorded in `PHASE_1_ACCEPTANCE.md`. Historical M5 evidence is in `docs/M5_ACCEPTANCE_HISTORY.md`. The workflow and static export configuration remain intact. The public verifier checks exact M6 commit metadata, preserved routes, the actual workspace HTML and all referenced asset paths/HTTP responses, including cache-busted root responses. Local Chromium interaction coverage and public HTTPS verification are distinct evidence.
 
 M6 stops here. M7 and all real AI/backend features require a later authorized milestone.
+
+## Verified application release
+
+M6 application commit `fe28e74fc01bb2b0d8abf55367e271c897c746fa` was pushed to `fnfmobilitymy-boop/KENNY` on `main` and deployed successfully by [Actions run 40306991141](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40306991141). Its tested application source fingerprint is `8fc0827179281841d7e20636696942db5a9b2149`.
+
+Actual public HTTPS verification passed for [AI Workspace](https://fnfmobilitymy-boop.github.io/KENNY/app/workspace/), exact M6 commit/source metadata, preserved landing/design system, seven M4/legal routes, M5 dashboard, all fourteen planned module shells and **28 referenced static assets**. All asset paths use `/KENNY/_next/` and returned HTTP 200. Normal and cache-busted landing/workspace responses matched; Pages advertised a 600-second cache lifetime. No stale-shell response was observed. Source metadata was compared with the local committed source tree, not merely checked for a SHA-shaped string.
+
+The application was tested before that commit; no application code changed after the passing 49-test production-browser run. This evidence is recorded by a subsequent documentation-only commit, which can update the public commit SHA without changing the application source fingerprint. Consult `/KENNY/deployment.json` and the latest successful Actions run for the current deployment revision. Public verification output is `/workspace/artifacts/kenny-m6/public-deployment-application.json`.
