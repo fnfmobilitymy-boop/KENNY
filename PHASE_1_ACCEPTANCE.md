@@ -92,3 +92,11 @@ Local acceptance and public deployment are distinct. The final delivery reports 
 - Added a CI-generated `deployment.json` revision marker and a reusable public-deployment verification script. No product UI, M4 or backend changes are included in this investigation.
 
 Earlier “deployment successful” evidence referred to GitHub's deployment record plus local testing. It did not establish that the public URL was serving M3. Do not advance M4 until the public verification result below is completed.
+
+### Verification release outcome
+
+Verification release `85b219c460a5e82cec3624a9a5a9f00848855ea6`: Actions run `40282247615` build and deploy both **success**; Pages deployment `7325845967`. This adds revision metadata and audit tooling, with no changes to the tested M3 application. `git diff --quiet` confirmed that `src/`, `public/`, `next.config.ts`, package manifest/lockfile, browser tests and token tests match `9a7c5e9fe0c9375b636264b517f3efc7fb514559` exactly. The source fingerprint remains `b97402260786cbc958a390323fff991cd73dbbd4`.
+
+Validation for audit changes: ESLint passed; the metadata generator executed successfully against the existing static export and wrote the expected SHA/source fingerprint; Python verifier syntax compiled. The CI run also passed required lint/typecheck/unit tests and production export. Public verification script execution remains blocked on the destination allowlist, so no public HTML/asset/cache success is claimed.
+
+Post-deployment public URL recheck again returned a cloud-proxy CONNECT 403. Runtime still reports only `api.github.com` as its custom allowed domain; the saved addition `fnfmobilitymy-boop.github.io` has not been applied. The old-page report remains unexplained. **M4 is not started and public M3 acceptance remains pending.**
