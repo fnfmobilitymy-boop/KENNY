@@ -61,7 +61,7 @@ Frontend only. No real authentication, Supabase, session persistence, authorizat
 
 Chromium automation does not establish full WCAG conformance. Safari/Firefox, physical devices, manual screen readers and measured Core Web Vitals remain untested. CI runs its existing lint/typecheck/unit/build gates; local Chromium browser checks are separate.
 
-The cloud network has previously blocked direct requests to the public Pages hostname. A saved domain addition is not an applied policy. GitHub deployment status, local static-host checks and direct public verification must be reported separately; no public-response verification is claimed unless actually performed.
+The cloud network initially blocked the public Pages hostname; direct verified HTTPS requests became available during final checks. Public HTTP evidence is recorded below separately from local browser coverage.
 
 ## Final validation and deployment evidence
 
@@ -81,4 +81,21 @@ Static-host smoke additionally exercised the mobile Login link, auth-to-onboardi
 
 No dependencies were changed. Node emits an informational module-format warning when directly running TypeScript validation helpers in the unit runner; all tests execute and pass. No warning suppression was added.
 
-Deployment is performed by the preserved GitHub Actions workflow on `main`. The final delivery identifies its actual deployed commit/run. `/KENNY/deployment.json` contains the exact CI SHA/source fingerprint and M4 milestone. API deployment success must not be confused with direct public HTML verification: the current cloud network still needs the saved public-host domain applied before that request can be completed. No M5 work is included.
+Deployment is performed by the preserved GitHub Actions workflow on `main`. The final delivery identifies its actual deployed commit/run. `/KENNY/deployment.json` contains the exact CI SHA/source fingerprint and M4 milestone. API deployment success is distinct from direct public HTTP and browser evidence. The direct public HTTP checks completed below; public Chromium encountered a trust-store limitation. No M5 work is included.
+
+## Verified M4 application release
+
+- Application commit: `d6b93597b824758dcddc13c71c5e22783438de4f`; repository `fnfmobilitymy-boop/KENNY`; branch `main`.
+- Source tree: `87ce5e45781a324c74360b87b0b7dc6f70ef3ae2`.
+- Actions run `40285425010`: build and deploy jobs **success**. Pages deployment `7326283108` names the same SHA.
+- Public URL: `https://fnfmobilitymy-boop.github.io/KENNY/`.
+- `python3 scripts/verify-public-deployment.py d6b93597b824758dcddc13c71c5e22783438de4f` passed against the actual public HTTPS host, with TLS verification enabled and the configured proxy retained.
+- Public `deployment.json` identified M4, the exact commit, repository, branch and matching application source-tree fingerprint.
+- Normal and cache-busted public landing HTML were byte-identical. SHA-256: `75941afd33a0e0a59ee810a9cef3a22c3f453b04317c3b45a2f6048ee382e22d`. The complete M3 landing sections remained present, with no obsolete foundation marker.
+- All seven M4/legal routes plus the design-system route returned HTTP 200 with expected content. Eleven referenced assets returned HTTP 200 with `/KENNY/_next/` paths.
+- Headers: `Cache-Control: max-age=600`, observed `Age: 0`. The response contained the current release; no stale-root discrepancy was observed in this check. Individual user-browser caches are not remotely inspectable.
+- Public response evidence: `/workspace/artifacts/kenny-m4/public-verification.json`. The same verifier also passed against the local static export and confirmed its revision metadata.
+
+A separate public-host Chromium attempt failed at TLS trust validation (`ERR_CERT_AUTHORITY_INVALID`) because Chromium did not trust the cloud proxy CA in that browser context. Certificate verification was not disabled. Public browser interactions therefore remain **unverified**, while public HTTPS content/assets/routes and all 16 local production-browser scenarios are verified. This is an execution-environment browser trust limitation, not evidence of a website certificate defect.
+
+Documentation-only follow-up revisions may change the deployment SHA without changing the tested application tree. The final delivery reports the latest deployment SHA/run; public `deployment.json` is the revision source of truth. **No M5 work is included.**

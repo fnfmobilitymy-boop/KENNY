@@ -65,3 +65,9 @@ python3 scripts/verify-public-deployment.py <full-successful-deployment-sha>
 The verifier checks the M3 landing, M4 routes, static assets, cache-busted responses and exact revision metadata through the configured HTTPS proxy. Direct public-host checks require `fnfmobilitymy-boop.github.io` to be allowed in the environment network settings. A pending allowlist draft does not establish public verification. Deployment API evidence, local static-browser checks and actual public HTTP checks are reported separately in the acceptance report.
 
 See [M4 implementation](docs/M4_IMPLEMENTATION.md), [acceptance results](PHASE_1_ACCEPTANCE.md), [architecture](docs/ARCHITECTURE.md), [historical M3 audit](docs/M3_DEPLOYMENT_AUDIT.md), and [backend requirements](src/services/README.md).
+
+## M4 release verification
+
+The M4 application release `d6b93597b824758dcddc13c71c5e22783438de4f` deployed successfully in [Actions run 40285425010](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40285425010). Its source fingerprint is `87ce5e45781a324c74360b87b0b7dc6f70ef3ae2`. Actual public HTTPS checks passed for revision metadata, all seven M4/legal routes, the preserved landing/design system and eleven static assets. Normal and cache-busted landing responses matched. GitHub Pages advertised a 600-second cache lifetime; no stale-root mismatch was observed.
+
+All 16 local Chromium scenarios passed. A separate public Chromium attempt could not establish trust in the cloud proxy CA; no TLS checks were disabled. Public browser interactions remain pending, separately from the successful public HTTPS and local production-browser checks. See the acceptance report for evidence and limitations. Later documentation-only revisions can change the deployed commit SHA; consult `/KENNY/deployment.json` and the latest successful Actions run for the current revision.
