@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Brand } from "@/components/brand/brand";
+import { ButtonLink } from "@/components/ui/button-link";
 import { ThemeToggle } from "@/components/providers/theme-provider";
 import { Orbit } from "@/components/brand/orbit";
 import { Card } from "@/components/ui/card";
@@ -8,26 +9,20 @@ export default function DesignSystem() {
   return (
     <div className="container">
       <header className="header">
-        <Link
-          className="brand"
-          href="/design-system"
-          aria-label="KENNY design foundation"
-        >
-          <span className="brand-mark" aria-hidden="true">
-            K
-          </span>
-          KENNY
-        </Link>
+        <Brand />
         <nav aria-label="Design system navigation">
           <a href="#foundation">Foundation</a>
           <a href="#components">Components</a>
+          <ButtonLink variant="ghost" href="/">
+            View website ↗
+          </ButtonLink>
           <ThemeToggle />
         </nav>
       </header>
       <main id="main">
         <section className="hero">
           <div>
-            <p className="eyebrow">The KENNY system / v0.1</p>
+            <p className="eyebrow">Kenny AI Business Studio / Design system</p>
             <h1>
               Intelligence,
               <br />
@@ -38,8 +33,8 @@ export default function DesignSystem() {
               luminous details, and clarity at the core.
             </p>
             <div className="meta">
-              <span>M1 + M2 / REVIEW PREVIEW</span>
-              <span>LANDING PAGE COMING IN M3</span>
+              <span>M2 / REFINED FOUNDATION</span>
+              <span>VIOLET + BLUE / SHARED TOKENS</span>
             </div>
           </div>
           <Orbit />
@@ -93,7 +88,8 @@ export default function DesignSystem() {
               <p className="eyebrow">Typography</p>
               <h3>Clarity comes first.</h3>
               <p className="muted">
-                System sans · no font download · fluid display sizing
+                Inter body · Space Grotesk headings · self-hosted Latin fonts ·
+                system fallbacks
               </p>
               <code className="token-code">
                 Display / Heading / Body / Mono
@@ -124,8 +120,8 @@ export default function DesignSystem() {
         </aside>
       </main>
       <footer className="footer">
-        KENNY © {new Date().getFullYear()} · Design foundation · Built for the
-        next chapter.
+        Kenny AI Business Studio © {new Date().getFullYear()} · Design
+        foundation · Built for the next chapter.
       </footer>
     </div>
   );

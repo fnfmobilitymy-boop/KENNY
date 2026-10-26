@@ -41,6 +41,7 @@ p {
 h1,
 h2,
 h3 {
+  font-family: var(--font-display);
   line-height: 1.12;
   letter-spacing: -0.045em;
 }
@@ -245,7 +246,7 @@ h3 {
   width: 100%;
   min-height: 46px;
   background: var(--bg);
-  border: 1px solid var(--border);
+  border: 1px solid var(--stroke);
   border-radius: var(--radius-sm);
   padding: 10px 12px;
   color: var(--text);
@@ -369,5 +370,30 @@ h3 {
   }
   .brand {
     font-size: 0.85rem;
+  }
+}
+
+.button {
+  text-decoration: none;
+}
+.field input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+html {
+  scroll-behavior: smooth;
+}
+button,
+input,
+summary {
+  touch-action: manipulation;
+}
+.header nav a {
+  min-height: 44px;
+  align-items: center;
+}
+@media (min-width: 801px) {
+  .header nav a {
+    display: inline-flex;
   }
 }

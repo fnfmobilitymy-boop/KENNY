@@ -30,12 +30,21 @@ for (const [index, block] of css.split("}").slice(0, 2).entries()) {
     ]),
   );
   test(`${index === 0 ? "dark" : "light"} theme: text and status contrast`, () => {
-    for (const fg of ["text", "muted", "accent", "pink", "success"])
+    for (const fg of ["text", "muted", "accent", "blue", "pink", "success"])
       for (const bg of ["bg", "surface", "raised"])
         assert.ok(
           contrast(tokens[fg], tokens[bg]) >= 4.5,
           `${fg} on ${bg} must reach 4.5:1`,
         );
+  });
+  test(`${index === 0 ? "dark" : "light"} theme: focus and input boundary contrast`, () => {
+    for (const bg of ["bg", "surface", "raised"]) {
+      assert.ok(contrast(tokens.focus, tokens[bg]) >= 3, `focus on ${bg}`);
+      assert.ok(
+        contrast(tokens.stroke, tokens[bg]) >= 3,
+        `input boundary on ${bg}`,
+      );
+    }
   });
   test(`${index === 0 ? "dark" : "light"} theme: gradient button endpoints`, () => {
     const gradient = [

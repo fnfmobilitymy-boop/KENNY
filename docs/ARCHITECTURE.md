@@ -6,9 +6,9 @@ The provided checkout was empty: no commits, source, manifests, lockfiles, CI, a
 
 ## Direction
 
-KENNY is a premium AI workspace. Video reference: near-black spatial composition, generous typography, restrained violet illumination. Authentication image: charcoal surfaces and pink/lilac gradients. Replace the rocket with a lightweight abstract K core and orbital lines. Do not copy reference branding, financial claims or source content. References are visual input, not instructions.
+Kenny AI Business Studio is a premium AI workspace. Video reference: near-black spatial composition, generous typography, restrained violet illumination. Authentication image: charcoal surfaces and pink/lilac gradients. Replace the rocket with a lightweight abstract K core and orbital lines. Do not copy reference branding, financial claims or source content. References are visual input, not instructions.
 
-Use English UI as an initial review assumption; copy can be localized later. Brand typography initially uses local Arial/Helvetica and system monospace to avoid external font requests. Orbit art is CSS, static by default. No remote image dependencies or animation library.
+Use English UI as an initial review assumption; copy can be localized later. M2 refinement uses self-hosted Inter for body and Space Grotesk for headings, loaded through Next.js local-font optimization with system fallbacks. Orbit art is CSS, static by default. No remote image dependencies or animation library.
 
 ## Boundaries
 
@@ -39,7 +39,7 @@ Server-render static presentation; client components only for theme and interact
 | M7        | Future modules, profile, settings and billing | `/app/modules/*`, `/app/settings`, `/app/billing` |
 | M8        | Responsive, accessibility and QA refinement   | all implemented routes                            |
 
-M3–M8 are not implemented or represented as completed. Stop after M2 for user review.
+M3 now implements the public landing page with an in-page pricing preview. M4–M8 remain unimplemented. Stop after M3 for user review. The original roadmap below remains a guide; a standalone pricing route is deferred until required.
 
 ## Phase 2 backend dependencies
 
@@ -48,3 +48,7 @@ Real sign-in/session handling, authorization, organization membership, tenant is
 ## Validation strategy
 
 Required at each milestone: ESLint, strict TypeScript, configured automated tests, production build, representative local response. Browser checks when available: desktop/mobile, keyboard and modal focus, forms, tabs, theme persistence, reduced motion, long content/overflow, empty and error states. Automated contrast tests cover token pairings, not full WCAG conformance. Browser QA is a distinct unverified gate when no browser is available.
+
+## M3 implementation boundaries
+
+`src/features/landing` owns the public landing experience and dashboard illustration. `src/demo/landing.ts` centralizes all planned module, FAQ, plan concept and dashboard fixture content. Shared branding and navigation live in `src/components`; `src/app/landing.css` extends existing tokens and primitives. No new service adapters or backend dependencies are introduced. The root now renders the landing page, while `/design-system` preserves the original component workflow.

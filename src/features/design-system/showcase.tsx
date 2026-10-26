@@ -130,7 +130,7 @@ export function InteractiveShowcase() {
             </h3>
             <p className="muted">
               {i === 0
-                ? "Reusable primitives for the KENNY experience. Use arrow keys to explore these tabs."
+                ? "Reusable primitives for the Kenny AI Business Studio experience. Use arrow keys to explore these tabs."
                 : i === 1
                   ? "Empty state example. Your future workspace activity will appear here once a backend is connected."
                   : "Typed service boundaries are documented. No AI, billing or authentication provider is connected."}
@@ -144,6 +144,23 @@ export function InteractiveShowcase() {
         aria-labelledby="dialog-title"
         aria-describedby="dialog-description"
         onClose={() => opener.current?.focus()}
+        onKeyDown={(event) => {
+          if (event.key !== "Tab") return;
+          const items = Array.from(
+            event.currentTarget.querySelectorAll<HTMLElement>(
+              'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex="0"]',
+            ),
+          ).filter((el) => el.getClientRects().length > 0);
+          const first = items[0];
+          const last = items.at(-1);
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last?.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
+          }
+        }}
       >
         <p className="eyebrow">Component preview</p>
         <h2 id="dialog-title">A moment of clarity.</h2>

@@ -1,43 +1,79 @@
-# Phase 1 acceptance — M1 and M2 review
+# Phase 1 acceptance — M2 refinement and M3 landing
 
-Date: 2026-10-26. This is a partial Phase 1 delivery. M3–M8 await user review; no claim is made that the entire Phase 1 frontend is complete.
+Date: 2026-10-26. Product: **Kenny AI Business Studio**. M1, refined M2 and M3 are implemented. **Stop before M4 for user review.** This report supersedes the earlier M1/M2-only report retained in Git history.
 
-## M1 milestone report
+## M2 refinement report
 
-- Files: `docs/ARCHITECTURE.md`, `README.md`, `package.json`, `package-lock.json`, `tsconfig.json`, `next-env.d.ts`, `eslint.config.mjs`, `.gitignore`.
-- Features: empty repository audit; Next.js App Router + strict TypeScript foundation; documented route plan, component boundaries, backend requirements and visual direction.
-- Commands executed: `git status --short --branch`, `git ls-files`, `git ls-remote origin`, `git ls-remote --exit-code origin refs/heads/main`, `node --version`, `npm --version`, `npm install`, `npm ci --cache /workspace/.npm-cache --no-audit --no-fund`.
-- Outcomes: repository was empty; origin read succeeded with no refs; main-specific check exited 2 (missing ref). Dependency install and frozen-lock reinstall passed. Node 24.19.0 / npm 11.9.0. Installed Next.js 16.4.3 / React 19.3.1.
-- Limitations: no existing application or CI to preserve. The project now consists of new, uncommitted files; no remote push or initial commit was made. npm reports ESLint 9 upstream deprecation; current lint execution succeeds.
-- Next milestone: M2, implemented below.
+**Files changed:** `src/design-tokens/tokens.css`, `src/app/{layout.tsx,globals.css,design-system/page.tsx}`, `src/components/brand/brand.tsx`, `src/components/ui/{button-link.tsx,icon.tsx}`, `src/demo/design-system.ts`, `src/features/design-system/showcase.tsx`, dependency manifest/lockfile, `tests/foundation.test.mjs`, and `docs/M2_REFINEMENT.md`.
 
-## M2 milestone report
+**Implemented:** shared full product branding; preserved K symbol; violet-blue gradients; semantic glass/glow/input-boundary tokens; self-hosted Inter body and Space Grotesk headings; reliable system fallbacks; consistent button/link styling; SVG icons; improved modal keyboard focus containment. Existing component examples and typed future service contracts are preserved.
 
-- Files: `src/design-tokens/tokens.css`; `src/app/{layout.tsx,globals.css,page.tsx,design-system/page.tsx}`; `src/components/ui/{button.tsx,card.tsx,field.tsx}`; `src/components/brand/orbit.tsx`; `src/components/providers/theme-provider.tsx`; `src/features/design-system/showcase.tsx`; `src/demo/design-system.ts`; `src/types/services.ts`; `src/services/README.md`; `src/lib/README.md`; `tests/foundation.test.mjs`; this report.
-- Features: semantic dark/light tokens; system typography; responsive showcase; K core/orbit brand concept replacing the rocket; buttons, cards, labeled form field, status, static loading skeleton, empty state, keyboard tabs and native modal; persistent theme toggle; reduced motion and slow-update overrides; explicit demo disclosure and future service interfaces.
-- Commands executed: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npx --no-install prettier --write ...`, `npx --no-install prettier --check src tests docs README.md package.json tsconfig.json eslint.config.mjs`, `npm run start`, Python local HTTP checks.
-- Outcomes: final lint passed; strict typecheck passed; 4/4 automated tests passed (dark/light semantic text/status contrast across canvas, surface and raised backgrounds, plus gradient button endpoints at >=4.5:1). Production build passed and prerendered `/`, `/design-system`, and not-found. Formatting passed for source/config/docs. A first format invocation also targeted `.gitignore` and returned an unsupported-parser error; a corrected invocation excluded it and passed.
-- Initial failures resolved: Button ref typing and test support for three-digit hex colors. Required checks rerun after correction.
-- Functional HTTP checks passed: `/design-system` returns 200 with expected heading and demo disclosure; `/` resolves to `/design-system`; unknown route returns 404.
-- Runtime: production server started on port 3000 for internal validation. New tasks must restart it; no browser preview link is provided.
-- Next milestone: M3 public landing/pricing, only after user review.
+**Commands:** `npm install` for Fontsource dependencies and browser test tools; `npm run lint`; `npm run typecheck`; `npm test`; `npm run build`; `npm run test:browser`; `npm run format:check`.
 
-## Pending browser verification
+**Outcomes:** required checks pass. Six token tests cover text/status/blue colors >=4.5:1 on canvas, surface and raised backgrounds, gradient button endpoints >=4.5:1, and focus/input boundaries >=3:1 in both themes. Browser regression covers the existing dialog, form, tabs, empty state and themes. See typography evaluation in `docs/M2_REFINEMENT.md`.
 
-No browser automation tool was available. Desktop/mobile appearance, actual dialog focus/escape/return, form feedback, keyboard tabs, theme persistence, screen-reader behavior, reduced-motion emulation, long-content overflow and small-screen clipping remain unverified in a browser. No screenshot, full WCAG 2.2 AA conformance, Core Web Vitals or end-to-end interaction pass is claimed. The CSS and semantic patterns support these goals but do not replace testing.
+**Limits:** automated contrast and axe checks do not establish complete WCAG 2.2 AA conformance. The fonts contain normal Latin glyphs; other scripts fall back to installed system fonts. Primary WOFF2 payload is 70,544 bytes total, before HTTP compression. Font licenses are included under `public/fonts`.
 
-Sidebar, dropdowns, production auth, organization onboarding, dashboards, AI workspace, future modules, billing and settings are not implemented yet; their relevant checks are unrun, not passed. Runtime error/loading flows for real services belong to later integration work.
+**Next:** M3, implemented below.
 
-## Reusable environment configuration
+## M3 milestone report
 
-Saved both `install_script` and `start_skill` in the environment configuration draft. Install instructions were exercised with `npm ci` and all required quality commands. Production startup and representative local HTTP checks were exercised. No credentials or extra network destinations were added. Draft persistence was confirmed with `status: saved`; it does not publish or apply changes. Review/save in environment settings, then publish when ready. Restoration in a fresh task has not been tested.
+**Files added:**
 
-## User review
+- `src/features/landing/{landing-page.tsx,ai-orb.tsx,dashboard-preview.tsx}`.
+- `src/demo/landing.ts`, containing explicit planned-module, plan-concept, FAQ and dashboard fixtures.
+- `src/components/layout/site-header.tsx`, `src/app/landing.css`, `src/app/icon.svg`.
+- `playwright.config.ts`, `tests/browser/landing.spec.ts`.
+- `public/fonts/LICENSE-Inter.txt`, `public/fonts/LICENSE-Space-Grotesk.txt`.
 
-Review the K core/orbit direction, violet/rose palette, light theme, typography and component treatment. English interface copy and system fonts are initial assumptions. M3 is intentionally paused. Backend dependencies are documented in `docs/ARCHITECTURE.md` and `src/services/README.md`.
+**Files updated:** `src/app/page.tsx`, `next.config.ts`, `README.md`, `docs/ARCHITECTURE.md`, this report, manifest and lockfile. `AGENTS.md` was generated by Next.js during development and is retained as requested by its instructions.
 
-## Preview follow-up
+**Implemented:**
 
-On user request, added optional static export configuration (`next.config.ts`) and GitHub Pages workflow (`.github/workflows/pages.yml`). The root now renders the same showcase directly instead of redirecting, to support static hosting. Prior redirect results above describe the earlier build. Remote publication is blocked: current Git read requests fail for missing usable HTTPS authentication and GitHub API requests return Forbidden. No remote write or public deployment was performed. Presence of `GH_TOKEN` was checked without reading or printing its value; presence did not establish usable access.
+- Responsive navigation with mobile disclosure, Escape/outside dismissal and focus handling.
+- Futuristic hero, clear concept-exploration CTAs and K-inspired CSS orb. Finite transform/opacity motion, pause control, reduced-motion and slow-update overrides; no WebGL or animation library.
+- Interactive illustrative dashboard with keyboard-accessible Overview, Creative studio and Workflows tabs. This is a landing illustration, not an implemented M5 application.
+- Overview of 12 proposed/planned modules; how it works; founder, creative-team and growing-business use cases.
+- Pricing concepts with no invented prices, usage limits, trial promises or checkout. Native keyboard-operable FAQ, closing section and footer.
+- Dark/light rendering throughout, local fonts, semantic headings, skip link, accessible labels and visible focus.
 
-Static preview validation: lint, typecheck, 4/4 tests and `KENNY_PAGES=1 npm run build` passed. Both exported HTML routes contain the expected heading and all referenced local JS/CSS assets exist. GitHub Actions execution and public URL remain unverified.
+**Routes:** `/` is the M3 landing. `/design-system` preserves the M2 showcase. Pricing is an in-page preview, not a separate `/pricing` route. Pages deployment adds `/KENNY/` to both routes.
+
+**Commands and final outcomes:**
+
+| Check                         | Outcome                                                                     |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| `npm run lint`                | Passed                                                                      |
+| `npm run typecheck`           | Passed                                                                      |
+| `npm test`                    | 6 passed; 0 failed/skipped                                                  |
+| `npm run format:check`        | Passed                                                                      |
+| `npm run build`               | Passed; routes prerendered                                                  |
+| `npm run test:browser`        | 4 scenarios passed; 0 failed/skipped, against an isolated production server |
+| `KENNY_PAGES=1 npm run build` | See deployment verification note below                                      |
+
+**Chromium browser coverage:**
+
+1. Desktop: CTA anchor, 12 module cards, keyboard tabs (arrows/Home/End), FAQ Enter, theme toggle/persistence across reload, primary font loading, motion pause and no uncaught page errors.
+2. Mobile: menu open/close, Escape and return focus, section navigation, outside dismissal; no horizontal page overflow at 320, 390, 768 and 1024px; reduced-motion CSS; long-heading wrapping; light/dark screenshots.
+3. M2 regression: native dialog initial/Tab focus, Escape and return focus, keyboard tabs, empty state, invalid email and successful demo validation, small-screen layout.
+4. Font failure: blocked font requests leave content and theme navigation usable at small width.
+
+Axe scans use WCAG 2 A/AA, 2.1 AA and 2.2 AA tags. No violations were found in the tested landing desktop themes, mobile light view, and design-system desktop themes. This is bounded automated coverage, not an accessibility certification.
+
+**Visual evidence:** screenshots under `/workspace/artifacts/kenny-m3/`: desktop and mobile landing in both themes, plus mobile design-system light. Desktop and mobile captures were reviewed for hierarchy, spacing and clipping. Screenshots are generated artifacts outside the checkout, not source files.
+
+**Failures investigated and resolved:** unsupported Fontsource subset import replaced by `next/font/local`; native dialog Tab focus escape corrected; test default color scheme made explicit; font-loading assertion updated to inspect loaded primary faces rather than unavailable system fallback font files; stale production-server reuse disabled; navigation target sizes improved. No assertions or accessibility rules were disabled to pass.
+
+**Known limitations/unrun checks:** Safari, Firefox, actual mobile hardware, screen readers, throttled low-power hardware, full assistive-technology audit, and measured field Core Web Vitals remain untested. No real provider/network error flows exist yet. No AI, authentication, payments, storage, authorization or tenant isolation is implemented. Module descriptions and plan concepts remain subject to product review. Backend requirements remain documented in `src/services/README.md`.
+
+**Next milestone:** M4 authentication and organization onboarding screens, only after review. No M4 work is included.
+
+## Reusable environment instructions
+
+Updated `start_skill` in the environment configuration draft for M3 routes, checks, browser setup and the M4 review stop. Save was confirmed; it does not apply or publish the cloud environment. The user can review/save and publish that draft in environment settings when desired. This is separate from the GitHub Pages website deployment. Existing installation commands remain valid.
+
+## Deployment verification
+
+`KENNY_PAGES=1 npm run build` passed. The exported website was served under the real `/KENNY/` prefix and checked in Chromium: both routes, local fonts/scripts/styles, dashboard tab switching, mobile navigation, design-system navigation and the modal passed. No failed HTTP resources or uncaught page errors were observed in that static-host smoke check.
+
+Local acceptance and public deployment are distinct. The final delivery reports the GitHub Actions deployment status and preview URL after publication. Do not infer a new live revision solely from an existing URL. The existing Pages workflow performs its own required build checks on `main`; browser validation above ran locally against this implementation.

@@ -1,2 +1,4 @@
-// Render directly so the review page also works on static hosts.
-export { default } from "./design-system/page";
+import { LandingPage } from "@/features/landing/landing-page";
+export default function Home() {
+  return <LandingPage />;
+}

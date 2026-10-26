@@ -4,7 +4,7 @@ export const swatches = [
   { name: "Surface", token: "--surface" },
   { name: "Raised", token: "--raised" },
   { name: "Accent", token: "--accent" },
-  { name: "Rose", token: "--pink" },
+  { name: "Blue", token: "--blue" },
   { name: "Success", token: "--success" },
 ] as const;
 export const principles = [
