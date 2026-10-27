@@ -87,7 +87,7 @@ export function DashboardHome() {
           <QuickActionCard
             href="/app/website-builder"
             title="Build a new presence"
-            description="Website Builder · Coming soon"
+            description="Website Builder · Local demo"
             icon="website"
           />
           <QuickActionCard
@@ -135,7 +135,7 @@ export function DashboardHome() {
               value={String(
                 plannedModules.filter((m) => m.group !== "ACCOUNT").length,
               )}
-              detail="1 prototype · 12 planned"
+              detail="13 frontend tool prototypes"
               icon="sparkle"
             />
           </section>
@@ -147,7 +147,7 @@ export function DashboardHome() {
                     <p className="eyebrow">YOUR CREATIVE & BUSINESS TOOLKIT</p>
                     <h2>One studio. Many possibilities.</h2>
                   </div>
-                  <DemoBadge>Preview & planned</DemoBadge>
+                  <DemoBadge>Frontend prototypes</DemoBadge>
                 </div>
                 <p className="panel-description">
                   Choose a module to see its direction. No AI generation is
@@ -180,7 +180,7 @@ export function DashboardHome() {
                 {empty ? (
                   <EmptyState
                     title="A little room for your next idea."
-                    description="This empty demo workspace has no sample tasks. Explore the planned workspace or switch back to Kenny Studio."
+                    description="This empty demo workspace has no sample tasks. Explore the workspace prototype or switch back to Kenny Studio."
                     href="/app/workspace"
                     action="Explore AI Workspace"
                   />
@@ -188,7 +188,7 @@ export function DashboardHome() {
                   <TaskList tasks={demoTasks} />
                 )}
                 <p className="panel-footnote">
-                  Task links open planned module pages. No task execution or
+                  Task links open local module prototypes. No task execution or
                   synchronization occurs.
                 </p>
               </Card>
@@ -255,7 +255,7 @@ export function DashboardHome() {
                   ))
                 )}
                 <Link className="studio-text-link" href="/app/workspace">
-                  Explore the planned workspace <Icon name="diagonal" />
+                  Explore the workspace prototype <Icon name="diagonal" />
                 </Link>
               </Card>
               <Card className="approval-panel">

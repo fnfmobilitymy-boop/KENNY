@@ -183,7 +183,7 @@ export const plannedModules = [
   },
   {
     slug: "billing",
-    availability: "planned",
+    availability: "prototype",
     name: "Billing",
     group: "ACCOUNT",
     icon: "billing",
@@ -196,7 +196,7 @@ export const plannedModules = [
   },
   {
     slug: "settings",
-    availability: "planned",
+    availability: "prototype",
     name: "Settings",
     group: "ACCOUNT",
     icon: "settings",

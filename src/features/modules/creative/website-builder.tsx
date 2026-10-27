@@ -56,7 +56,15 @@ export function WebsiteBuilder() {
                       e.preventDefault();
                       const invalid = validateLocalName(name);
                       setError(invalid || "");
-                      if (invalid) return;
+                      if (invalid) {
+                        const form = e.currentTarget;
+                        requestAnimationFrame(() =>
+                          form
+                            .querySelector<HTMLElement>('[aria-invalid="true"]')
+                            ?.focus(),
+                        );
+                        return;
+                      }
                       const id = `local-${projects.length}`;
                       setProjects((old) => [
                         ...old,

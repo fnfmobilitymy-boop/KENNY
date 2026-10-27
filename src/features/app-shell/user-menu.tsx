@@ -18,7 +18,7 @@ export function UserMenu() {
           </button>
           <Link role="menuitem" tabIndex={-1} href="/app/settings">
             <Icon name="settings" />
-            Workspace settings · Coming soon
+            Workspace settings · Local demo
           </Link>
           <Link role="menuitem" tabIndex={-1} href="/login">
             Open login UI

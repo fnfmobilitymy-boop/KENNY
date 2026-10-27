@@ -1,5 +1,5 @@
-import type { PlannedModule } from "@/types/dashboard";
-import { ComingSoon } from "./coming-soon";
+import type { ComponentType } from "react";
+import type { ModuleSlug, PlannedModule } from "@/types/dashboard";
 import { WebsiteBuilder } from "./creative/website-builder";
 import { ImageStudio } from "./creative/image-studio";
 import { VideoStudio } from "./creative/video-studio";
@@ -12,8 +12,12 @@ import { Booking } from "./operations/booking";
 import { Ecommerce } from "./operations/ecommerce";
 import { Automations } from "./operations/automations";
 import { Analytics } from "./operations/analytics";
+import { Billing } from "./account/billing";
+import { Settings } from "./account/settings";
 import "./module-workspaces.css";
-const modules = {
+const modules: Record<Exclude<ModuleSlug, "workspace">, ComponentType> = {
+  billing: Billing,
+  settings: Settings,
   booking: Booking,
   ecommerce: Ecommerce,
   automations: Automations,
@@ -29,5 +33,6 @@ const modules = {
 };
 export function ModuleRouter({ module }: { module: PlannedModule }) {
   const Component = modules[module.slug as keyof typeof modules];
-  return Component ? <Component /> : <ComingSoon module={module} />;
+  if (!Component) throw new Error("Module route has no prototype renderer.");
+  return <Component />;
 }

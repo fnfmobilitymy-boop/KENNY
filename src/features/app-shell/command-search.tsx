@@ -102,7 +102,7 @@ export function CommandSearch() {
         </label>
         <p className="command-result-count" role="status">
           {results.length} {results.length === 1 ? "result" : "results"} ·
-          Planned modules open Coming Soon pages.
+          Modules open local frontend prototypes. No AI service is connected.
         </p>
         <ul
           className="command-results"

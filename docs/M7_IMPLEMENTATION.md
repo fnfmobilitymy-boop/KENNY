@@ -45,3 +45,11 @@ Booking provides fixed November week/month views, appointment/empty lists, sampl
 Changed: `src/features/modules/operations/*`, `src/demo/modules/operations.ts`, shared CSS, registry/catalog and targeted browser tests.
 
 Executed: lint/typecheck/unit/build and targeted Operations Chromium. All passed; 28 units and four Operations browser tests. Test selectors were scoped to the workflow panel to distinguish its validation alert from Next.js route announcements. No checks were disabled. All stock, calendar, workflow and analytical records remain sample/local only.
+
+## Group D — Billing & Settings
+
+Billing reuses the existing Individual/Team/Business plan concepts, with local comparison/period selection and no invented prices, finalized allowances, checkout or card fields. Current plan, usage, methods and history explicitly have no data connected. Settings includes Profile, Workspace details, Appearance, Notifications, Team and roles, Security, Integrations and Billing entry. Editable fields are local-only; role labels assign no permission. Security/account actions and integrations are disabled with visible reasons. The shared theme toggle remains the sole persistent preference. Settings tabs keep drafts mounted in memory while switching sections.
+
+Changed: `src/features/modules/account/*`, `src/demo/modules/account.ts`, registry/catalog, shared styles, dashboard/search/user-menu labels and browser expectations reflecting actual prototype availability. The module registry now requires all fourteen non-workspace slugs at compile time. Website concept validation additionally returns focus to its invalid field.
+
+Executed: lint/typecheck/unit/build and targeted Account Chromium. All passed; 28 units and two Account browser tests. The no-card-input assertion was scoped to the Billing module to exclude the app shell's hidden global search field. No application or test was disabled. Final QA below will revalidate integration labels and the focus refinement against a fresh build.

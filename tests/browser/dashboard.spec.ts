@@ -116,7 +116,7 @@ test("desktop sidebar collapse persists across routes, every planned route resol
       ).toBeVisible();
     else
       await expect(
-        page.getByText("Coming soon · Frontend shell", { exact: true }),
+        page.getByText("DEMO · Frontend prototype", { exact: true }),
       ).toBeVisible();
     await expect(
       page
@@ -158,7 +158,7 @@ test("mobile drawer supports Escape, focus containment, navigation and expanded 
   await expect(open).toHaveAttribute("aria-expanded", "false");
   await open.click();
   await drawer
-    .getByRole("link", { name: "AI Image Studio · Coming soon", exact: true })
+    .getByRole("link", { name: "AI Image Studio · Demo", exact: true })
     .click();
   await expect(page).toHaveURL(/\/app\/image-studio$/);
   await expect(drawer).not.toBeVisible();

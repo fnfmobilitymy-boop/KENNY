@@ -470,3 +470,116 @@ test("Operations: analytics filters, fictional chart/table data and no export or
     page.getByRole("button", { name: "Export report · Not connected" }),
   ).toBeDisabled();
 });
+
+test("Account: billing compares proposed directions without prices, cards or checkout", async ({
+  page,
+}) => {
+  await page.goto("/app/billing");
+  await page
+    .getByLabel("Plan direction to compare", { exact: true })
+    .selectOption("Business");
+  await page
+    .getByLabel("Billing period concept", { exact: true })
+    .selectOption("Annual concept");
+  await expect(page.getByRole("status")).toContainText(
+    "Business · Annual concept",
+  );
+  await expect(page.getByRole("status")).toContainText(
+    "does not change any subscription",
+  );
+  await expect(
+    page.getByRole("heading", { name: "No billing records connected." }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Upgrade plan · Not connected" }),
+  ).toBeDisabled();
+  await expect(
+    page.getByRole("button", { name: "Manage payment method · Not connected" }),
+  ).toBeDisabled();
+  await expect(page.locator(".module-demo input")).toHaveCount(0);
+  await expect(
+    page.locator(".billing-plans article[data-selected=true]"),
+  ).toContainText("Business");
+  expect(await page.locator(".billing-plans").innerText()).not.toMatch(
+    /[$£€]\s*\d/,
+  );
+});
+test("Account: settings validate local drafts, expose all sections and reuse the real theme control", async ({
+  page,
+}) => {
+  await page.goto("/app/settings");
+  await page.getByLabel("Demo display name", { exact: true }).fill("");
+  await page.getByLabel("Demo email address", { exact: true }).fill("invalid");
+  await page.getByRole("button", { name: "Check local profile draft" }).click();
+  await expect(
+    page.getByLabel("Demo display name", { exact: true }),
+  ).toBeFocused();
+  await expect(
+    page.getByLabel("Demo email address", { exact: true }),
+  ).toHaveAttribute("aria-invalid", "true");
+  await page
+    .getByLabel("Demo display name", { exact: true })
+    .fill("Local Example");
+  await page
+    .getByLabel("Demo email address", { exact: true })
+    .fill("sample@example.invalid");
+  await page.getByRole("button", { name: "Check local profile draft" }).click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "Local profile draft checked" }),
+  ).toBeVisible();
+  await page
+    .getByRole("tab", { name: "Workspace details", exact: true })
+    .click();
+  await page
+    .getByLabel("Local workspace name", { exact: true })
+    .fill("Local concept workspace");
+  await expect(
+    page.getByRole("tabpanel", { name: "Workspace details" }),
+  ).toContainText("No organization or global workspace identity is updated");
+  await page.getByRole("tab", { name: "Appearance", exact: true }).click();
+  const appearance = page.getByRole("region", {
+    name: "Appearance",
+    exact: true,
+  });
+  await appearance
+    .getByRole("button", { name: "Switch to light theme" })
+    .click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await page
+    .getByLabel("Local density preview", { exact: true })
+    .selectOption("Compact");
+  await expect(page.locator(".density-preview")).toHaveAttribute(
+    "data-density",
+    "Compact",
+  );
+  await page.getByRole("tab", { name: "Notifications", exact: true }).click();
+  await page.getByRole("checkbox", { name: "Weekly digest preview" }).check();
+  await page.getByRole("tab", { name: "Team and roles", exact: true }).click();
+  await page
+    .getByLabel("Morgan role concept", { exact: true })
+    .selectOption("Viewer concept");
+  await expect(page.getByRole("table")).toContainText("Viewer concept");
+  await page.getByRole("tab", { name: "Security", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Delete account · Not connected" }),
+  ).toBeDisabled();
+  await expect(page.getByRole("tabpanel", { name: "Security" })).toContainText(
+    "cannot be verified",
+  );
+  await page.getByRole("tab", { name: "Integrations", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Connect AI provider · Not connected" }),
+  ).toBeDisabled();
+  await page.getByRole("tab", { name: "Billing entry", exact: true }).click();
+  await page.getByRole("link", { name: "Open Billing preview" }).click();
+  await expect(page).toHaveURL(/\/app\/billing$/);
+  await page.goto("/app/settings");
+  await expect(
+    page.getByLabel("Demo display name", { exact: true }),
+  ).toHaveValue("Demo visitor");
+  expect(
+    await page.evaluate(() =>
+      JSON.stringify({ ...localStorage, ...sessionStorage }),
+    ),
+  ).not.toContain("Local Example");
+});

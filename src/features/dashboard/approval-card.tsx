@@ -70,7 +70,7 @@ export function ApprovalCard({ approval }: { approval: DemoApproval }) {
             href={`/app/${approval.module}`}
             onClick={() => dialog.current?.close()}
           >
-            View planned module
+            Explore module prototype
           </Link>
         </div>
       </dialog>
