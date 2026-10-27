@@ -29,3 +29,11 @@ C: Booking, E-Commerce, Automations, Analytics.
 D: Billing and Settings.
 
 Full regression, accessibility/responsive audit, screenshots and deployment evidence will be appended after actual checks.
+
+## Group B — Growth Studio
+
+Marketing has campaign/draft catalogs, a fixed November calendar, channel selection, live local post preview, checklist and local scheduling-label dialog. Nothing is queued or published. SEO & Ads has an unsubmitted URL, fictional keyword table/filter, editable content with a literal word count, SEO checklist, Ads draft controls and illustrative bounded budget arithmetic; no crawl/ranking/performance claim. Sales Agent has disconnected channels, fictional inbox, fixed response templates, unsaved behavior controls and local approval/reject/handoff labels. CRM has fictional contacts, search/stage/sort, list and keyboard-tabbed kanban views, local stage changes, sample follow-up timeline and disconnected import/export.
+
+Changed: `src/features/modules/growth/*`, `src/demo/modules/growth.ts`, registry/catalog, shared CSS, targeted browser tests and current Playwright artifact directory.
+
+Executed: lint/typecheck/unit/build, targeted Growth Chromium. Build/typecheck and 28 units passed; four Growth browser tests passed. Initial browser locator matched two live regions; it now targets the Ads panel. No application behavior or assertion was removed. Lint initially reported imports reserved for later QA but not yet used; those unused imports were removed. No live channels, database or service is connected.

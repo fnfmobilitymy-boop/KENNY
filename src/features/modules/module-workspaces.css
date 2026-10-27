@@ -761,3 +761,107 @@
     scroll-behavior: auto !important;
   }
 }
+/* Growth workspaces */
+.content-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+.content-calendar button {
+  padding: 12px 6px;
+  min-height: 92px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--raised);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  text-align: center;
+}
+.content-calendar button[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.content-calendar span {
+  display: block;
+  font-size: 0.61rem;
+  line-height: 1.7;
+  margin-top: 10px;
+  color: var(--muted);
+}
+.content-post-preview,
+.sales-conversation {
+  border: 1px solid var(--border);
+  background: var(--raised);
+  padding: 20px;
+  border-radius: 12px;
+}
+.channel-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.channel-cards > div {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.channel-cards strong {
+  font-size: 0.82rem;
+  display: block;
+  margin-bottom: 12px;
+}
+.channel-cards .tool-disconnected .button {
+  font-size: 0.69rem;
+}
+.crm-pipeline {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.crm-pipeline > section {
+  padding: 16px;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 0;
+}
+.crm-pipeline button {
+  width: 100%;
+  padding: 16px;
+  text-align: left;
+  font: inherit;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.crm-pipeline button[aria-pressed="true"] {
+  border-color: var(--accent);
+}
+.crm-pipeline button strong {
+  font-size: 0.8rem;
+  display: block;
+}
+.crm-pipeline button span {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 8px;
+  line-height: 1.7;
+}
+@media (max-width: 650px) {
+  .content-calendar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .content-calendar button {
+    min-height: 72px;
+  }
+  .crm-pipeline {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

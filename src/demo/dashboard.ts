@@ -92,7 +92,7 @@ export const plannedModules = [
   },
   {
     slug: "marketing",
-    availability: "planned",
+    availability: "prototype",
     name: "AI Marketing Studio",
     group: "GROW",
     icon: "marketing",
@@ -105,7 +105,7 @@ export const plannedModules = [
   },
   {
     slug: "seo-ads",
-    availability: "planned",
+    availability: "prototype",
     name: "AI SEO & Ads",
     group: "GROW",
     icon: "search",
@@ -118,7 +118,7 @@ export const plannedModules = [
   },
   {
     slug: "sales",
-    availability: "planned",
+    availability: "prototype",
     name: "AI Sales Agent",
     group: "GROW",
     icon: "sales",
@@ -131,7 +131,7 @@ export const plannedModules = [
   },
   {
     slug: "crm",
-    availability: "planned",
+    availability: "prototype",
     name: "AI CRM",
     group: "GROW",
     icon: "contacts",
