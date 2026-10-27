@@ -332,3 +332,141 @@ test("Growth: CRM search/filter/sort, keyboard tabs, pipeline and local stages r
     page.getByLabel("Selected lead stage", { exact: true }),
   ).toHaveValue("New");
 });
+
+test("Operations: booking calendar views, empty dates, availability and fictional conflict comparison", async ({
+  page,
+}) => {
+  await page.goto("/app/booking");
+  await expect(
+    page.getByRole("status").filter({ hasText: "Sample conflict:" }),
+  ).toBeVisible();
+  await page.getByLabel("Conflict preview time", { exact: true }).fill("11:00");
+  await expect(
+    page
+      .getByRole("status")
+      .filter({ hasText: "not a live availability check" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Tue 3 Empty", exact: true }).click();
+  await expect(
+    page.getByText("No fictional appointments on this date.", { exact: true }),
+  ).toBeVisible();
+  await page.getByLabel("Calendar view", { exact: true }).selectOption("Month");
+  await page.getByRole("button", { name: "Nov 15 Empty", exact: true }).click();
+  await expect(
+    page.getByLabel("Availability day", { exact: true }),
+  ).toHaveValue("2026-11-15");
+  await page.getByLabel("Local opening time", { exact: true }).fill("18:00");
+  await expect(
+    page.getByRole("status").filter({ hasText: "earlier than closing" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Create real booking · Not connected" }),
+  ).toBeDisabled();
+});
+test("Operations: ecommerce catalog/editor, invalid stock, sample orders and disconnected commerce", async ({
+  page,
+}) => {
+  await page.goto("/app/ecommerce");
+  await page
+    .getByLabel("Search sample products", { exact: true })
+    .fill("Forma");
+  await page
+    .getByRole("button", {
+      name: /Forma desk object Fictional creative object/,
+    })
+    .click();
+  await page
+    .getByLabel("Product name", { exact: true })
+    .fill("Local sample object");
+  await page.getByLabel("Illustrative stock count", { exact: true }).fill("20");
+  await expect(page.locator(".tool-metrics")).toContainText("37");
+  await page.getByLabel("Illustrative stock count", { exact: true }).fill("-1");
+  await expect(page.locator(".tool-metrics")).toContainText("Invalid draft");
+  await expect(
+    page.getByLabel("Illustrative stock count", { exact: true }),
+  ).toHaveAttribute("aria-invalid", "true");
+  await page.getByRole("tab", { name: "Sample orders", exact: true }).focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(
+    page.getByRole("tabpanel", { name: "Store connections" }),
+  ).toContainText("Payments · Not connected");
+  await expect(
+    page.getByRole("button", { name: "Publish product · Not connected" }),
+  ).toBeDisabled();
+  await page.reload();
+  await expect(page.getByLabel("Product name", { exact: true })).toHaveValue(
+    "Orbit notebook",
+  );
+});
+test("Operations: automation node inspection, validation and prewritten log never execute", async ({
+  page,
+}) => {
+  await page.goto("/app/automations");
+  await page
+    .getByRole("button", { name: "Trigger Sample inquiry", exact: true })
+    .click();
+  await page.getByLabel("Trigger selection", { exact: true }).selectOption("");
+  await page
+    .getByRole("button", { name: "Show sample log · Demo only" })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Workflow canvas" }).getByRole("alert"),
+  ).toContainText("Choose a trigger.");
+  await expect(
+    page.getByRole("heading", { name: "No sample log selected." }),
+  ).toBeVisible();
+  await page
+    .getByLabel("Trigger selection", { exact: true })
+    .selectOption("Sample inquiry");
+  await page
+    .getByRole("button", { name: "Human review Required preview", exact: true })
+    .click();
+  await page
+    .getByRole("checkbox", { name: "Include human review preview" })
+    .uncheck();
+  await page.getByRole("button", { name: "Validate local draft" }).click();
+  await expect(
+    page.getByRole("region", { name: "Workflow canvas" }).getByRole("alert"),
+  ).toContainText("human review");
+  await page
+    .getByRole("checkbox", { name: "Include human review preview" })
+    .check();
+  await page
+    .getByRole("button", { name: "Show sample log · Demo only" })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Sample execution log" }),
+  ).toContainText("SIMULATED");
+  await expect(page.getByRole("status")).toContainText(
+    "No actual workflow executed",
+  );
+  await page
+    .getByRole("button", { name: "Action Create a review draft", exact: true })
+    .click();
+  await page
+    .getByLabel("Action selection", { exact: true })
+    .selectOption("Prepare reminder text");
+  await expect(
+    page.getByRole("heading", { name: "No sample log selected." }),
+  ).toBeVisible();
+});
+test("Operations: analytics filters, fictional chart/table data and no export or live performance", async ({
+  page,
+}) => {
+  await page.goto("/app/analytics");
+  await expect(page.locator(".tool-metrics")).toContainText("368");
+  await page.getByLabel("Sample date range", { exact: true }).selectOption("3");
+  await expect(page.locator(".tool-metrics")).toContainText("184");
+  await page
+    .getByLabel("Sample metric filter", { exact: true })
+    .selectOption("Sample review events");
+  await expect(page.locator(".tool-metric")).toHaveCount(1);
+  await expect(page.locator(".tool-metric")).toContainText("27");
+  await expect(
+    page.getByRole("img", { name: /Sample review events, fictional values/ }),
+  ).toBeVisible();
+  await expect(page.getByRole("table")).toContainText("Nov 6, 2026");
+  await expect(
+    page.getByRole("button", { name: "Export report · Not connected" }),
+  ).toBeDisabled();
+});

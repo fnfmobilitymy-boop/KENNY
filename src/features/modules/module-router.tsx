@@ -8,8 +8,16 @@ import { Marketing } from "./growth/marketing";
 import { SeoAds } from "./growth/seo-ads";
 import { SalesAgent } from "./growth/sales";
 import { Crm } from "./growth/crm";
+import { Booking } from "./operations/booking";
+import { Ecommerce } from "./operations/ecommerce";
+import { Automations } from "./operations/automations";
+import { Analytics } from "./operations/analytics";
 import "./module-workspaces.css";
 const modules = {
+  booking: Booking,
+  ecommerce: Ecommerce,
+  automations: Automations,
+  analytics: Analytics,
   marketing: Marketing,
   "seo-ads": SeoAds,
   sales: SalesAgent,

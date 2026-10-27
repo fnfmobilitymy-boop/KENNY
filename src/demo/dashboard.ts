@@ -25,7 +25,7 @@ export const plannedModules = [
   },
   {
     slug: "analytics",
-    availability: "planned",
+    availability: "prototype",
     name: "Analytics",
     group: "OVERVIEW",
     icon: "insights",
@@ -144,7 +144,7 @@ export const plannedModules = [
   },
   {
     slug: "booking",
-    availability: "planned",
+    availability: "prototype",
     name: "AI Booking",
     group: "MANAGE",
     icon: "calendar",
@@ -157,7 +157,7 @@ export const plannedModules = [
   },
   {
     slug: "ecommerce",
-    availability: "planned",
+    availability: "prototype",
     name: "AI E-Commerce",
     group: "MANAGE",
     icon: "commerce",
@@ -170,7 +170,7 @@ export const plannedModules = [
   },
   {
     slug: "automations",
-    availability: "planned",
+    availability: "prototype",
     name: "AI Automations",
     group: "MANAGE",
     icon: "workflow",

@@ -37,3 +37,11 @@ Marketing has campaign/draft catalogs, a fixed November calendar, channel select
 Changed: `src/features/modules/growth/*`, `src/demo/modules/growth.ts`, registry/catalog, shared CSS, targeted browser tests and current Playwright artifact directory.
 
 Executed: lint/typecheck/unit/build, targeted Growth Chromium. Build/typecheck and 28 units passed; four Growth browser tests passed. Initial browser locator matched two live regions; it now targets the Ads panel. No application behavior or assertion was removed. Lint initially reported imports reserved for later QA but not yet used; those unused imports were removed. No live channels, database or service is connected.
+
+## Group C — Business Operations
+
+Booking provides fixed November week/month views, appointment/empty lists, sample details, availability/reminder drafts and interval conflict comparison. Month-date and availability selections stay consistent. No calendar sync or booking creation. E-Commerce provides fictional catalog/search, local name/category/stock editor, copy preview, sample orders and disconnected store/payment/shipping states. Invalid stock counts are disclosed rather than shown as valid inventory. Automations provides per-workflow in-memory drafts, connected visual node layout, node inspection, validation (including human review) and explicit prewritten simulated log, with no event processing. Analytics provides fixed fictional metric series, range/metric filtering, a readable chart plus accessible data table and disconnected sources/export.
+
+Changed: `src/features/modules/operations/*`, `src/demo/modules/operations.ts`, shared CSS, registry/catalog and targeted browser tests.
+
+Executed: lint/typecheck/unit/build and targeted Operations Chromium. All passed; 28 units and four Operations browser tests. Test selectors were scoped to the workflow panel to distinguish its validation alert from Next.js route announcements. No checks were disabled. All stock, calendar, workflow and analytical records remain sample/local only.

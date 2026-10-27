@@ -865,3 +865,124 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+/* Operations workspaces */
+.booking-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+.booking-calendar button {
+  min-height: 90px;
+  padding: 12px 6px;
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.booking-calendar button[aria-pressed="true"] {
+  border-color: var(--accent);
+}
+.booking-calendar button span {
+  display: block;
+  font-size: 0.62rem;
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.workflow-canvas {
+  display: flex;
+  align-items: stretch;
+  gap: 28px;
+  padding: 36px 8px;
+  background: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 16px 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+.workflow-node {
+  position: relative;
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 14px;
+  text-align: left;
+  color: var(--text);
+  background: var(--surface);
+  font: inherit;
+  cursor: pointer;
+}
+.workflow-node[aria-pressed="true"] {
+  border-color: var(--accent);
+}
+.workflow-node:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -29px;
+  top: 50%;
+  width: 28px;
+  border-top: 1px solid var(--accent);
+  pointer-events: none;
+}
+.workflow-node svg {
+  width: 20px;
+  color: var(--accent);
+}
+.workflow-node strong {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.workflow-node small {
+  font-size: 0.66rem;
+  line-height: 1.6;
+}
+.tool-validation {
+  padding: 16px 30px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+}
+.analytics-controls {
+  margin-bottom: 12px;
+}
+.analytics-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px 0;
+}
+.analytics-chart text {
+  font-family: inherit;
+}
+@media (max-width: 650px) {
+  .booking-calendar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .booking-calendar[data-view="Month"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .booking-calendar button {
+    min-height: 75px;
+  }
+  .workflow-canvas {
+    flex-direction: column;
+    padding: 20px 8px;
+  }
+  .workflow-node:not(:last-child)::after {
+    right: auto;
+    top: auto;
+    left: 50%;
+    bottom: -29px;
+    width: 0;
+    height: 28px;
+    border-top: 0;
+    border-left: 1px solid var(--accent);
+  }
+}
