@@ -22,13 +22,13 @@ Changed: `src/features/modules/creative/*`, shared primitives/artwork/CSS, `src/
 
 Executed: lint, typecheck, unit tests, production build, targeted Chromium. Results: all passed; 28 unit tests, four Creative browser tests. Initial lint rejected a render-prop callback capturing a dialog ref; dialog content now uses normal React children and closes through its submit event. No lint rule/test was disabled. Group remains frontend-only; detailed cross-width/theme QA follows after all modules.
 
-## Remaining groups
+## Remaining group sequence from the original plan
 
 B: Marketing, SEO & Ads, Sales Agent, CRM.
 C: Booking, E-Commerce, Automations, Analytics.
 D: Billing and Settings.
 
-Full regression, accessibility/responsive audit, screenshots and deployment evidence will be appended after actual checks.
+All groups and completed QA are documented below; deployment evidence is recorded only after actual public verification.
 
 ## Group B — Growth Studio
 
@@ -96,3 +96,13 @@ The dedicated M7 run passed all 23 cases, including all fourteen modules at eigh
 The static export helper is `node scripts/verify-static-modules.mjs <internal-export-base-url>`. Serve a fresh `out` export under `/KENNY/` first; the helper checks fourteen module routes, related-link prefixes, representative local interactions, mobile drawer navigation, eleven preserved routes, page errors, failed HTTP and external requests. The report and final deployment evidence are recorded in `PHASE_1_ACCEPTANCE.md` after actual checks finish. Local test artifacts are `/workspace/artifacts/kenny-m7/`.
 
 No Safari/Firefox, physical devices, actual mobile keyboards or manual screen-reader session was run. Automated scans do not guarantee complete WCAG conformance. Public-browser proxy-CA trust is separate from public HTTPS verification; TLS verification is never disabled.
+
+## Verified application deployment
+
+M7 application commit `0e5987e2b21de5213ad458381bbf042af0b1ceb3` was pushed to `fnfmobilitymy-boop/KENNY` on `main` and deployed successfully by [Actions run 40442861605](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40442861605). Tested application source fingerprint: `8a444ac48bbd3213cfd5723bf3fb06ce0038e705`.
+
+Actual public HTTPS checks passed for all fourteen purpose-built M7 module routes, preserved landing/design system, seven M4/legal routes, M5 dashboard, M6 workspace and **29 referenced static assets**. Every asset path uses `/KENNY/_next/` and returned HTTP 200. Each M7 route was checked for its own content signature and absence of the old shell. Normal and cache-busted responses matched for all fourteen modules, the landing and workspace. Public metadata matched both the exact SHA and local committed `src` tree. No stale module response was observed; Pages advertises a 600-second cache lifetime.
+
+Review [Website Builder](https://fnfmobilitymy-boop.github.io/KENNY/app/website-builder/), [CRM](https://fnfmobilitymy-boop.github.io/KENNY/app/crm/), [Automations](https://fnfmobilitymy-boop.github.io/KENNY/app/automations/) and [Billing](https://fnfmobilitymy-boop.github.io/KENNY/app/billing/). All other modules are reachable from the preserved app navigation.
+
+This deployment evidence is recorded in a documentation-only follow-up commit. That follow-up can update the public SHA while keeping the tested application source fingerprint unchanged. `/KENNY/deployment.json` and the latest successful Actions run identify the current revision. Evidence: `/workspace/artifacts/kenny-m7/public-deployment-application.json`. Public interactive browser checks remain unverified separately from successful actual HTTPS and local Chromium checks.

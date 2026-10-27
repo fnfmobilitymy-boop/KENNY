@@ -52,7 +52,7 @@ Tests initially exposed ambiguous global locators (multiple status/alert regions
 | Oversized document-input follow-up | Passed after bounded arithmetic guard; oversized input now shows Invalid amount |
 | `KENNY_PAGES=1 npm run build` | Passed; 28 static routes generated with `/KENNY` and trailing slashes |
 | Static-export smoke | Passed: 14 M7 + 11 preserved routes, representative actions/mobile navigation; zero page errors, HTTP failures or external requests |
-| Public deployment verification | Pending deployment |
+| Public deployment verification | Passed: exact M7 SHA/source tree, 14 distinct prototypes, preserved routes, 29 assets and normal/fresh cache checks |
 
 The full suite covers 320, 375, 430, 768, 1024, 1280, 1440 and 1920 px, both themes and reduced motion across all fourteen modules. All modules' empty/loading/error controls are checked at 320/1440; axe scans run on every module in both themes at those widths. Additional checks cover mobile dialog Escape/focus, all Settings tabs, long unbroken content, local interactions, no persistent content and no external requests. Desktop/mobile screenshots were visually inspected.
 
@@ -82,7 +82,15 @@ Physical devices, actual mobile keyboards, Safari/Firefox and manual screen-read
 
 ## Deployment
 
-Not deployed yet. M7 is held locally until full QA completes. Preserve `.github/workflows/pages.yml`, static export and `/KENNY` basePath. Exact application SHA, source fingerprint, successful Actions run and public route/asset checks will be recorded after publishing. No M8 or real backend work is included.
+M7 application commit `0e5987e2b21de5213ad458381bbf042af0b1ceb3` was pushed to `fnfmobilitymy-boop/KENNY` on `main` and deployed successfully by [Actions run 40442861605](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40442861605). Tested application source fingerprint: `8a444ac48bbd3213cfd5723bf3fb06ce0038e705`.
+
+Actual public HTTPS checks passed for all fourteen purpose-built M7 module routes, preserved landing/design system, seven M4/legal routes, M5 dashboard, M6 workspace and **29 referenced static assets**. Every asset path uses `/KENNY/_next/` and returned HTTP 200. Each M7 route was checked for its own content signature and absence of the old shell. Normal and cache-busted responses matched for all fourteen modules, the landing and workspace. Public metadata matched both the exact SHA and local committed `src` tree. No stale module response was observed; Pages advertises a 600-second cache lifetime.
+
+Review [Website Builder](https://fnfmobilitymy-boop.github.io/KENNY/app/website-builder/), [CRM](https://fnfmobilitymy-boop.github.io/KENNY/app/crm/), [Automations](https://fnfmobilitymy-boop.github.io/KENNY/app/automations/) and [Billing](https://fnfmobilitymy-boop.github.io/KENNY/app/billing/). All other modules are reachable from the preserved app navigation.
+
+This deployment evidence is recorded in a documentation-only follow-up commit. That follow-up can update the public SHA while keeping the tested application source fingerprint unchanged. `/KENNY/deployment.json` and the latest successful Actions run identify the current revision. Evidence: `/workspace/artifacts/kenny-m7/public-deployment-application.json`. Public interactive browser checks remain unverified separately from successful actual HTTPS and local Chromium checks.
+
+The existing hosting workflow, static export, base path, dependencies and M6 engine are unchanged. No M8 or backend work is included.
 
 
 ## Environment configuration
