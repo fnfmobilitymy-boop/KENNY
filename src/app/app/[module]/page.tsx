@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { plannedModules } from "@/demo/dashboard";
-import { ComingSoon } from "@/features/modules/coming-soon";
+import { ModuleRouter } from "@/features/modules/module-router";
 export const dynamicParams = false;
 export function generateStaticParams() {
   return plannedModules
@@ -16,7 +16,7 @@ export async function generateMetadata({
   const { module } = await params;
   const info = plannedModules.find((m) => m.slug === module);
   return {
-    title: `${info?.name || "Module"} — Kenny AI Business Studio · Coming soon`,
+    title: `${info?.name || "Module"} — Kenny AI Business Studio · Local demo prototype`,
   };
 }
 export default async function ModulePage({
@@ -27,5 +27,5 @@ export default async function ModulePage({
   const { module } = await params;
   const info = plannedModules.find((m) => m.slug === module);
   if (!info) notFound();
-  return <ComingSoon module={info} />;
+  return <ModuleRouter module={info} />;
 }

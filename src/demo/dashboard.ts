@@ -39,7 +39,7 @@ export const plannedModules = [
   },
   {
     slug: "website-builder",
-    availability: "planned",
+    availability: "prototype",
     name: "AI Website Builder",
     group: "CREATE",
     icon: "website",
@@ -53,7 +53,7 @@ export const plannedModules = [
   },
   {
     slug: "image-studio",
-    availability: "planned",
+    availability: "prototype",
     name: "AI Image Studio",
     group: "CREATE",
     icon: "image",
@@ -66,7 +66,7 @@ export const plannedModules = [
   },
   {
     slug: "video-studio",
-    availability: "planned",
+    availability: "prototype",
     name: "AI Video Studio",
     group: "CREATE",
     icon: "video",
@@ -79,7 +79,7 @@ export const plannedModules = [
   },
   {
     slug: "documents",
-    availability: "planned",
+    availability: "prototype",
     name: "AI Documents",
     group: "CREATE",
     icon: "knowledge",
