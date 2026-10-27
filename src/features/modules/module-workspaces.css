@@ -1048,3 +1048,20 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.website-preview[data-style="Minimal"] {
+  background: var(--surface);
+  padding: 36px;
+}
+.website-preview[data-style="Minimal"] h3 {
+  font-weight: 400;
+  letter-spacing: -0.05em;
+}
+.website-preview[data-style="Minimal"] .sample-vector {
+  max-height: 120px;
+  opacity: 0.85;
+}
+.module-state-toolbar .tool-field {
+  flex-direction: row;
+  margin: 0;
+}

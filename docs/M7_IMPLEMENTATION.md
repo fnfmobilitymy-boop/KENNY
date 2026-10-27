@@ -53,3 +53,46 @@ Billing reuses the existing Individual/Team/Business plan concepts, with local c
 Changed: `src/features/modules/account/*`, `src/demo/modules/account.ts`, registry/catalog, shared styles, dashboard/search/user-menu labels and browser expectations reflecting actual prototype availability. The module registry now requires all fourteen non-workspace slugs at compile time. Website concept validation additionally returns focus to its invalid field.
 
 Executed: lint/typecheck/unit/build and targeted Account Chromium. All passed; 28 units and two Account browser tests. The no-card-input assertion was scoped to the Billing module to exclude the app shell's hidden global search field. No application or test was disabled. Final QA below will revalidate integration labels and the focus refinement against a fresh build.
+
+## Reviewable commits and final refinement
+
+- A: `f65520a` — Creative Studio and shared module architecture.
+- B: `6b2c5bd` — Growth Studio.
+- C: `78a4892` — Business Operations.
+- D: `14dae9a` — Billing, Settings and navigation integration.
+
+Subsequent QA refinement centralizes remaining seed copy, document defaults, website copy and workflow/post/product draft factories in the group fixtures. Post/product drafts stay associated with their selected item; factories return independent state. Minimal website styling has a distinct local presentation, and video selection identifies the selected fixed storyboard. M6 code remains unchanged.
+
+## File map
+
+| Concern | Files |
+| --- | --- |
+| Route selection | `src/app/app/[module]/page.tsx`, `src/features/modules/module-router.tsx` |
+| Shared module UI | `src/features/modules/shared/{module-ui,sample-art}.tsx`, `src/features/modules/module-workspaces.css` |
+| Creative | `src/features/modules/creative/{website-builder,image-studio,video-studio,documents}.tsx` |
+| Growth | `src/features/modules/growth/{marketing,seo-ads,sales,crm}.tsx` |
+| Operations | `src/features/modules/operations/{booking,ecommerce,automations,analytics}.tsx` |
+| Account | `src/features/modules/account/{billing,settings}.tsx` |
+| Demo fixtures | `src/demo/modules/{creative,growth,operations,account}.ts` |
+| Models and pure transitions | `src/types/modules.ts`, `src/lib/module-state.ts` |
+| Navigation integration | `src/demo/dashboard.ts`, app-shell command search/user menu, dashboard home/approval links |
+| Tests | `tests/module-state.test.mjs`, `tests/browser/modules.spec.ts`, updated M5 route/label assertions in `tests/browser/dashboard.spec.ts`, Playwright artifact directory |
+| Deployment | existing workflow unchanged; `scripts/{write-deployment-metadata.mjs,verify-public-deployment.py}` identify/verify M7; `scripts/verify-static-modules.mjs` checks a locally served Pages export |
+| Reports | README, current acceptance, architecture, this guide and archived M6 acceptance |
+
+## State, accessibility and future services
+
+Feature state is React memory. Shared primitives do not call services or persist module content. Immutable CRM transitions, bounded budget arithmetic, document totals, interval overlap, name validation and independent draft factories have unit coverage. Settings panels remain mounted while their tabs change; module unmount/reload clears drafts. Preview-state examples are deliberate UI states, never a failed-request fallback. Local edits do not rename the global illustrative workspace or change real entitlements.
+
+Native dialogs reuse focus trapping and return focus to their trigger on close/Escape; invalid concept/profile fields receive focus. Tabs use roving tabIndex with Arrow/Home/End keys and associated panels. Form fields are labeled, local notices use polite status regions, workflow issues use an alert, and tables have captions/headers plus named focusable horizontal-scroll regions. Tables may scroll within their own region; the page must not overflow. Mobile stacks panels and workflow nodes, retains touch-friendly controls and the shared navigation drawer. Charts expose equivalent table values. Both themes and reduced motion use existing tokens/preferences. Fixed vector studies are hand-authored examples, never generated assets.
+
+`ModuleServiceContract<TRequest,TResult>` and future request/artifact models intentionally have no implementation. Production work must establish real user/workspace authorization, validated persistence, provider connections, approvals, file safety, background jobs, error reporting and billing enforcement on the server. No provider is assumed and fixtures must never become a production fallback. Security/account/billing controls cannot enforce policy in the frontend.
+
+
+## Final QA evidence
+
+The dedicated M7 run passed all 23 cases, including all fourteen modules at eight widths, both themes, reduced motion, selected states, keyboard dialogs/tabs, long content and axe scans. The subsequent full production-browser run passed all 72 cases (49 preserved + 23 M7). After that pass, a reproduced arithmetic overflow in oversized document input was bounded to the supported input ranges; all 29 units, lint/typecheck/format/build and a targeted document Chromium test were rerun and passed. No unrelated app code changed after that full run. A fresh Pages build also passed.
+
+The static export helper is `node scripts/verify-static-modules.mjs <internal-export-base-url>`. Serve a fresh `out` export under `/KENNY/` first; the helper checks fourteen module routes, related-link prefixes, representative local interactions, mobile drawer navigation, eleven preserved routes, page errors, failed HTTP and external requests. The report and final deployment evidence are recorded in `PHASE_1_ACCEPTANCE.md` after actual checks finish. Local test artifacts are `/workspace/artifacts/kenny-m7/`.
+
+No Safari/Firefox, physical devices, actual mobile keyboards or manual screen-reader session was run. Automated scans do not guarantee complete WCAG conformance. Public-browser proxy-CA trust is separate from public HTTPS verification; TLS verification is never disabled.

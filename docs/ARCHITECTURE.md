@@ -65,3 +65,8 @@ Authentication uses a static route-group layout and feature client components; o
 ## M6 frontend workspace extension
 
 `/app/workspace` is an explicit static route inside the existing app layout; dynamic module generation excludes it. Fourteen future module shells remain unchanged. `src/features/workspace` owns interactive local UI; `src/demo/workspace.ts` contains independent fixed samples; `src/lib/workspace-state.ts` implements pure transitions/validation; `src/types/workspace.ts` defines thread/message/task/output/attachment/approval and provider-neutral future contracts. No service implementation or dependency is added. Browser storage is never used for workspace content. See `docs/M6_IMPLEMENTATION.md` for the current boundary and QA evidence; preceding milestone sections are historical.
+
+
+## M7 module architecture
+
+Fourteen feature components under `src/features/modules/{creative,growth,operations,account}` replace the generic shell, selected by a server registry requiring every non-workspace module slug. Shared `module-ui.tsx` primitives use existing buttons/fields/tokens/native dialog focus support. Fixtures live by group under `src/demo/modules`; pure validation/filter/calculation helpers in `src/lib/module-state.ts`; generic future contracts in `src/types/modules.ts` remain unimplemented. All module state is memory-only; the existing global theme preference is the sole persistent exception. M6's explicit route and conversation engine are unchanged. See `docs/M7_IMPLEMENTATION.md` for component and service boundaries.

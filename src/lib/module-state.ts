@@ -35,6 +35,8 @@ export function documentTotal(quantity: number, unitAmount: number) {
   return Number.isFinite(quantity) &&
     Number.isFinite(unitAmount) &&
     quantity >= 0 &&
+    quantity <= 9999 &&
+    unitAmount <= 999999 &&
     unitAmount >= 0
     ? Math.round(quantity * unitAmount * 100) / 100
     : null;

@@ -5,6 +5,8 @@ import {
   campaigns,
   calendarDays,
   marketingDrafts,
+  marketingDraftSample,
+  createMarketingDrafts,
 } from "@/demo/modules/growth";
 import {
   ModuleFrame,
@@ -23,11 +25,13 @@ export function Marketing() {
   const [post, setPost] = useState("post-1");
   const [channel, setChannel] = useState("LinkedIn");
   const [day, setDay] = useState("Mon 2");
-  const [draft, setDraft] = useState(
-    "A thoughtful start. A fictional creative practice explores what it means to build with intention.",
-  );
-  const [date, setDate] = useState("2026-11-02");
-  const [time, setTime] = useState("09:00");
+  const [drafts, setDrafts] = useState(createMarketingDrafts);
+  const draft = drafts[post];
+  function setDraft(value: string) {
+    setDrafts((old) => ({ ...old, [post]: value }));
+  }
+  const [date, setDate] = useState(marketingDraftSample.date);
+  const [time, setTime] = useState(marketingDraftSample.time);
   const [notice, setNotice] = useState(
     "Draft only. No account connected and nothing scheduled or published.",
   );
@@ -60,7 +64,7 @@ export function Marketing() {
               onSelect={(id) => {
                 setPost(id);
                 setNotice(
-                  "Sample draft selected. The local editor remains unsaved and nothing was loaded from a service.",
+                  "Local draft selected. Each post draft stays in memory; nothing was loaded from a service.",
                 );
               }}
             />

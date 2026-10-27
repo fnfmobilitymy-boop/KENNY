@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
-import { sampleProducts, sampleOrders } from "@/demo/modules/operations";
+import {
+  sampleProducts,
+  sampleOrders,
+  createProductCopies,
+} from "@/demo/modules/operations";
 import {
   ModuleFrame,
   Panel,
@@ -19,9 +23,11 @@ export function Ecommerce() {
   const [products, setProducts] = useState([...sampleProducts]);
   const [selected, setSelected] = useState("product-1");
   const [query, setQuery] = useState("");
-  const [description, setDescription] = useState(
-    "SAMPLE — An everyday object, considered with care. Fictional product copy for a local demo.",
-  );
+  const [descriptions, setDescriptions] = useState(createProductCopies);
+  const description = descriptions[selected];
+  function setDescription(value: string) {
+    setDescriptions((old) => ({ ...old, [selected]: value }));
+  }
   const product = products.find((p) => p.id === selected)!;
   function edit<K extends keyof SampleProduct>(
     key: K,

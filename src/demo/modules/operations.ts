@@ -100,3 +100,29 @@ export const bookingMonthDays = Array.from({ length: 30 }, (_, i) => ({
   id: `2026-11-${String(i + 1).padStart(2, "0")}`,
   label: `Nov ${i + 1}`,
 }));
+
+export const productCopySample: string =
+  "SAMPLE — An everyday object, considered with care. Fictional product copy for a local demo.";
+export function createWorkflowDrafts(): Record<
+  string,
+  { trigger: string; action: string; review: boolean }
+> {
+  return {
+    "flow-1": {
+      trigger: "Sample inquiry",
+      action: "Create a review draft",
+      review: true,
+    },
+    "flow-2": {
+      trigger: "Sample content draft",
+      action: "Prepare reminder text",
+      review: true,
+    },
+  };
+}
+
+export function createProductCopies(): Record<string, string> {
+  return Object.fromEntries(
+    sampleProducts.map((p) => [p.id, productCopySample]),
+  );
+}

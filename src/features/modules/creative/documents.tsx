@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
-import { documentTemplates, documentSamples } from "@/demo/modules/creative";
+import {
+  documentTemplates,
+  documentSamples,
+  sampleDocumentDraft,
+} from "@/demo/modules/creative";
 import { documentTotal } from "@/lib/module-state";
 import {
   ModuleFrame,
@@ -15,13 +19,13 @@ import {
 export function Documents() {
   const [template, setTemplate] = useState("Proposal");
   const [selected, setSelected] = useState("doc-1");
-  const [recipient, setRecipient] = useState("Fictional client");
-  const [subject, setSubject] = useState("Creative direction exploration");
-  const [quantity, setQuantity] = useState("1");
-  const [amount, setAmount] = useState("100");
-  const [notes, setNotes] = useState(
-    "Sample scope: discovery, a concept review and a written direction.",
+  const [recipient, setRecipient] = useState(sampleDocumentDraft.recipient);
+  const [subject, setSubject] = useState(sampleDocumentDraft.subject);
+  const [quantity, setQuantity] = useState(
+    String(sampleDocumentDraft.quantity),
   );
+  const [amount, setAmount] = useState(String(sampleDocumentDraft.unitAmount));
+  const [notes, setNotes] = useState(sampleDocumentDraft.notes);
   const total = documentTotal(Number(quantity), Number(amount));
   return (
     <ModuleFrame

@@ -1,6 +1,6 @@
 # Kenny AI Business Studio
 
-Next.js App Router + React + strict TypeScript frontend. M1–M5 and the M6 AI Workspace frontend prototype are implemented. **Stop after M6; M7 requires user review.** No authentication, AI, payments or backend service is connected.
+Next.js App Router + React + strict TypeScript frontend. M1–M7 are implemented, including AI Workspace and fourteen purpose-built module prototypes. **Stop after M7; M8 requires user review.** No authentication, AI, payments or backend service is connected.
 
 ## Run locally
 
@@ -27,7 +27,7 @@ npm run dev
 | `/onboarding`        | Eight-step in-memory organization setup and completion preview                 |
 | `/terms`, `/privacy` | Clearly marked legal placeholders; not final legal documents                   |
 
-M5 adds `/app` with a shared responsive shell. `/app/workspace` is now the M6 interactive prototype. The other fourteen module routes remain **Coming Soon**:
+M5 adds `/app` with a shared responsive shell. `/app/workspace` is now the M6 interactive prototype. M7 implements the other fourteen routes as explicitly local **frontend prototypes**:
 
 - Overview: `/app/analytics`.
 - Create: `/app/website-builder`, `/app/image-studio`, `/app/video-studio`, `/app/documents`.
@@ -48,7 +48,7 @@ npm run build
 npm run test:browser
 ```
 
-Use a normal production build before browser tests or `npm run start`. Playwright starts an isolated production server on port 3100; do not reuse a stale server while rebuilding. Chromium defaults to `/usr/bin/chromium`; override `CHROMIUM_PATH` on other machines. Missing browsers must be reported as an unrun check. Screenshots are in `/workspace/artifacts/kenny-m4/`; M5 dashboard captures and M5 traces/results are under `/workspace/artifacts/kenny-m5/`; current M6 captures and test results are under `/workspace/artifacts/kenny-m6/`. The preserved M3 suite writes landing screenshots to `/workspace/artifacts/kenny-m3/`.
+Use a normal production build before browser tests or `npm run start`. Playwright starts an isolated production server on port 3100; do not reuse a stale server while rebuilding. Chromium defaults to `/usr/bin/chromium`; override `CHROMIUM_PATH` on other machines. Missing browsers must be reported as an unrun check. Screenshots are in `/workspace/artifacts/kenny-m4/`; M5 dashboard captures and M5 traces/results are under `/workspace/artifacts/kenny-m5/`; M6 captures are under `/workspace/artifacts/kenny-m6/`; current M7 screenshots/results are under `/workspace/artifacts/kenny-m7/`. The preserved M3 suite writes landing screenshots to `/workspace/artifacts/kenny-m3/`.
 
 M4 browser coverage includes 320, 375, 430, 768, 1024 and 1440px, local validation, password visibility, disconnected-action feedback, verification states, wizard forward/backward/review editing, optional interests, theme rendering and accessibility scans. Unit tests exercise format/selection validation and both-theme contrast.
 
@@ -66,13 +66,13 @@ Routes and static layouts live in `src/app`; shared brand/UI/layout components i
 
 [Website](https://fnfmobilitymy-boop.github.io/KENNY/) · [Login](https://fnfmobilitymy-boop.github.io/KENNY/login/) · [Onboarding](https://fnfmobilitymy-boop.github.io/KENNY/onboarding/)
 
-The preserved workflow deploys `main` from `fnfmobilitymy-boop/KENNY`. `KENNY_PAGES=1 npm run build` generates static `out/` with `/KENNY` base path. The workflow writes `deployment.json` identifying its exact SHA, application source tree and M6 milestone before artifact upload. Inspect that marker and the successful Actions run rather than assuming an existing URL serves the latest code.
+The preserved workflow deploys `main` from `fnfmobilitymy-boop/KENNY`. `KENNY_PAGES=1 npm run build` generates static `out/` with `/KENNY` base path. The workflow writes `deployment.json` identifying its exact SHA, application source tree and M7 milestone before artifact upload. Inspect that marker and the successful Actions run rather than assuming an existing URL serves the latest code.
 
 ```sh
 python3 scripts/verify-public-deployment.py <full-successful-deployment-sha>
 ```
 
-The verifier checks the M3 landing, M4 routes, M5 dashboard, the M6 workspace, fourteen planned module shells, referenced static assets, cache-busted responses and exact M6 revision metadata through the configured HTTPS proxy. Direct public-host checks require `fnfmobilitymy-boop.github.io` to be allowed in the environment network settings. A pending allowlist draft does not establish public verification. Deployment API evidence, local static-browser checks and actual public HTTP checks are reported separately in the acceptance report.
+The verifier checks the M3 landing, M4 routes, M5 dashboard, the M6 workspace, fourteen M7 module prototypes, referenced static assets, cache-busted responses and exact M7 revision metadata through the configured HTTPS proxy. Direct public-host checks require `fnfmobilitymy-boop.github.io` to be allowed in the environment network settings. A pending allowlist draft does not establish public verification. Deployment API evidence, local static-browser checks and actual public HTTP checks are reported separately in the acceptance report.
 
 See [M4 implementation](docs/M4_IMPLEMENTATION.md), [acceptance results](PHASE_1_ACCEPTANCE.md), [architecture](docs/ARCHITECTURE.md), [historical M3 audit](docs/M3_DEPLOYMENT_AUDIT.md), and [backend requirements](src/services/README.md).
 
@@ -112,3 +112,14 @@ M6 application commit `fe28e74fc01bb2b0d8abf55367e271c897c746fa` was pushed to `
 Actual public HTTPS verification passed for [AI Workspace](https://fnfmobilitymy-boop.github.io/KENNY/app/workspace/), exact M6 commit/source metadata, preserved landing/design system, seven M4/legal routes, M5 dashboard, all fourteen planned module shells and **28 referenced static assets**. All asset paths use `/KENNY/_next/` and returned HTTP 200. Normal and cache-busted landing/workspace responses matched; Pages advertised a 600-second cache lifetime. No stale-shell response was observed. Source metadata was compared with the local committed source tree, not merely checked for a SHA-shaped string.
 
 The application was tested before that commit; no application code changed after the passing 49-test production-browser run. This evidence is recorded by a subsequent documentation-only commit, which can update the public commit SHA without changing the application source fingerprint. Consult `/KENNY/deployment.json` and the latest successful Actions run for the current deployment revision. Public verification output is `/workspace/artifacts/kenny-m6/public-deployment-application.json`.
+
+
+## M7 complete module review
+
+[Website Builder](https://fnfmobilitymy-boop.github.io/KENNY/app/website-builder/) · [CRM](https://fnfmobilitymy-boop.github.io/KENNY/app/crm/) · [Billing](https://fnfmobilitymy-boop.github.io/KENNY/app/billing/) · [Settings](https://fnfmobilitymy-boop.github.io/KENNY/app/settings/).
+
+All fourteen former module shells now have separate, purpose-built interactive prototypes. Creative includes website concepts, fixed vector asset inspection/favorites, video storyboards and live local document templates. Growth includes campaign/calendar drafts, SEO/Ads planning, disconnected sales inbox/human-review concepts and local CRM list/kanban interactions. Operations includes calendar/conflict examples, fictional commerce editor/orders, inspectable workflow nodes with a prewritten sample log, and filterable fictional analytics with a data-table alternative. Account includes proposed-plan comparison and eight Settings sections.
+
+All examples are fictional DEMO. Drafts, favorites, schedules, statuses, roles and approvals are unsaved local state. No actual generation, crawl, social post, booking, order, workflow, invoice, payment or security change occurs. Backend actions are disabled with visible Not connected explanations. No card, credential or API-key entry is implemented. Only the existing theme preference persists. Switching Settings tabs preserves local drafts; leaving/reloading a module clears it. Do not enter sensitive information. Preview state controls expose static empty/loading/error examples, never a silent substitute for a failed backend.
+
+See [M7 implementation](docs/M7_IMPLEMENTATION.md) for the four reviewable groups, architecture and changed files; [current acceptance](PHASE_1_ACCEPTANCE.md) for actual command results, screenshots and deployment evidence. Historical M6 results are preserved in `docs/M6_ACCEPTANCE_HISTORY.md`. No dependencies, M6 conversation logic, static export configuration or hosting workflow were replaced.

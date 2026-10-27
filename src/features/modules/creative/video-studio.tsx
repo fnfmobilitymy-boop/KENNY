@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
-import { videoProjects, videoClips } from "@/demo/modules/creative";
+import {
+  videoProjects,
+  videoClips,
+  videoCaptionSample,
+} from "@/demo/modules/creative";
 import {
   ModuleFrame,
   Panel,
@@ -17,7 +21,7 @@ export function VideoStudio() {
   const [prompt, setPrompt] = useState("");
   const [format, setFormat] = useState("16:9");
   const [duration, setDuration] = useState("18 seconds");
-  const [caption, setCaption] = useState("A quieter kind of launch");
+  const [caption, setCaption] = useState(videoCaptionSample);
   const item = videoClips.find((c) => c.id === clip)!;
   return (
     <ModuleFrame
@@ -71,6 +75,10 @@ export function VideoStudio() {
           title="Storyboard, not playback"
           kicker="FIXED SAMPLE / NO VIDEO FILE"
         >
+          <p className="tool-mini-badge">
+            {videoProjects.find((p) => p.id === project)?.name} · Fixed
+            storyboard
+          </p>
           <div className="video-placeholder">
             <SampleArt
               name={item.name}

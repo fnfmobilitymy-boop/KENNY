@@ -1,4 +1,4 @@
-import type { SampleItem } from "@/types/modules";
+import type { DocumentDraft, SampleItem } from "@/types/modules";
 export const websiteProjects: readonly SampleItem[] = [
   {
     id: "site-1",
@@ -83,3 +83,26 @@ export const documentSamples: readonly SampleItem[] = [
     detail: "Illustrative line items · Sample",
   },
 ];
+
+export const sampleDocumentDraft: DocumentDraft = {
+  recipient: "Fictional client",
+  subject: "Creative direction exploration",
+  quantity: 1,
+  unitAmount: 100,
+  notes: "Sample scope: discovery, a concept review and a written direction.",
+};
+export const videoCaptionSample: string = "A quieter kind of launch";
+export const websiteSampleCopy = {
+  Home: {
+    heading: "Make space for the meaningful.",
+    body: "A fictional creative practice shaping identities, digital experiences and everyday objects.",
+  },
+  About: {
+    heading: "A practice built with intention.",
+    body: "A fictional creative practice shaping identities, digital experiences and everyday objects.",
+  },
+  Contact: {
+    heading: "Start a thoughtful conversation.",
+    body: "Contact form placeholder — no form submission or external link.",
+  },
+} as const;

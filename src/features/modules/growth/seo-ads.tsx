@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { keywordSamples } from "@/demo/modules/growth";
+import { keywordSamples, seoDraftSample } from "@/demo/modules/growth";
 import { planningEstimate } from "@/lib/module-state";
 import {
   ModuleFrame,
@@ -16,13 +16,11 @@ import {
 export function SeoAds() {
   const [url, setUrl] = useState("");
   const [query, setQuery] = useState("");
-  const [text, setText] = useState(
-    "A fictional creative practice helps turn a clear business brief into a considered brand direction.",
-  );
+  const [text, setText] = useState(seoDraftSample.content);
   const [objective, setObjective] = useState("Awareness");
-  const [campaign, setCampaign] = useState("Sample search campaign");
-  const [daily, setDaily] = useState("10");
-  const [days, setDays] = useState("7");
+  const [campaign, setCampaign] = useState(seoDraftSample.campaign);
+  const [daily, setDaily] = useState(seoDraftSample.daily);
+  const [days, setDays] = useState(seoDraftSample.days);
   const estimate = planningEstimate(Number(daily), Number(days));
   const rows = keywordSamples.filter((k) =>
     k.term.includes(query.toLowerCase().trim()),

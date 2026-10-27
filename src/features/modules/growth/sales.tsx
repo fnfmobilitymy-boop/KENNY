@@ -1,7 +1,11 @@
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { salesInbox, responseTemplates } from "@/demo/modules/growth";
+import {
+  salesInbox,
+  responseTemplates,
+  agentBehaviorSample,
+} from "@/demo/modules/growth";
 import {
   ModuleFrame,
   Panel,
@@ -16,9 +20,7 @@ export function SalesAgent() {
   const [template, setTemplate] = useState("overview");
   const [tone, setTone] = useState("Professional");
   const [handoff, setHandoff] = useState("Always ask a human");
-  const [instructions, setInstructions] = useState(
-    "Keep replies concise. Do not make commitments. Ask a human to review.",
-  );
+  const [instructions, setInstructions] = useState(agentBehaviorSample);
   const [decision, setDecision] = useState("Pending local review");
   const [notice, setNotice] = useState(
     "No AI agent is operating. All conversations and replies are fixed examples.",

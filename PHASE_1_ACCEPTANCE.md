@@ -1,64 +1,90 @@
-# Phase 1 acceptance — M6 AI Workspace
+# Phase 1 acceptance — M7 full module UI architecture
 
-Date: 2026-10-26. Product: **Kenny AI Business Studio**. M1–M5 are preserved. M6 replaces only the workspace Coming Soon shell with an interactive frontend prototype. **Stop after M6; do not begin M7 without user approval.** Historical M5 evidence is retained in `docs/M5_ACCEPTANCE_HISTORY.md`.
+Date: 2026-10-27. Product: **Kenny AI Business Studio**. M1–M6 are preserved; all fourteen former M7 module placeholders now have purpose-built frontend prototypes. **Stop after M7; M8 and backend work require explicit approval.** Historical M6 evidence: `docs/M6_ACCEPTANCE_HISTORY.md`.
 
-## Delivered scope and changed files
+## Routes and delivered behavior
 
-The working route is `/app/workspace`, publicly `/KENNY/app/workspace/`. It retains the shared global sidebar, topbar, breadcrumbs, workspace selector and dark/light themes. Fourteen other planned modules retain their existing Coming Soon pages. All landing, authentication demo, onboarding and dashboard routes remain.
+| Route under `/app` | Purpose-built frontend behavior |
+| --- | --- |
+| `website-builder` | Local concept validation/list, draft brief, fixed preview, viewport/page/style controls, version descriptions; no generation/files/publish |
+| `image-studio` | Prompt/settings drafts, fixed vector gallery/detail, local favorites/filter; no image generation |
+| `video-studio` | Concept/asset browser, storyboard/timeline selection, clip inspector, local caption and audio placeholder; no video pipeline |
+| `documents` | Five templates, sample list, local editable fields and live preview; no issuance/PDF export |
+| `marketing` | Campaign/draft catalog, calendar, channel/editor/preview/checklist, local schedule label; no publishing |
+| `seo-ads` | Unsubmitted URL, fictional keyword filtering, checklist/content draft, Ads draft and bounded illustrative estimates; no crawling/account connection |
+| `sales` | Disconnected channels, sample inbox/templates, behavior drafts and local handoff/review labels; no messaging |
+| `crm` | Fictional list/detail, search/filter/sort, keyboard-tabbed pipeline and local stage changes, fixture timeline; no database/import/export |
+| `booking` | Fixed month/week calendar, appointment/empty views, availability/reminder drafts and fixture conflict checks; no bookings/sync |
+| `ecommerce` | Fictional product/search/editor/inventory/orders, local description preview and disconnected integrations; no orders/payments/stock writes |
+| `automations` | Workflow drafts, connected visual nodes, inspector, required-review validation and prewritten simulated log; no actual execution |
+| `analytics` | Fictional metrics, range/series filters, chart with accessible values table and disconnected sources/export; no real business analytics |
+| `billing` | Existing plan concepts, comparison, usage/method/history empty states and disabled upgrade; no finalized prices, cards or checkout |
+| `settings` | Profile, workspace, appearance, notifications, team/roles, security, integrations, billing entry; local drafts and disconnected account/security actions |
 
-Features include independently collapsible history/inspector, responsive modal panels, new/search/switch/rename/delete/reset conversations, local per-thread drafts, six fixed scenario previews, safe formatted samples, copy/fallback selection, Enter/Shift+Enter composition, attachment metadata previews, duplicate-submit protection, stop/retry/failure states, four inspector tabs, structured sample results and local approval decisions. Empty/search/disconnected states and destructive confirmations are explicit.
+The shared app shell, all navigation, M6 workspace, public landing, design system, auth/onboarding demos and legal placeholders remain. Public paths retain `/KENNY/` and trailing slashes. New links resolve to prototypes; old tests retain coverage with obsolete shell/link labels updated.
 
-Changed files and state architecture are listed in `docs/M6_IMPLEMENTATION.md`. Main additions are `src/app/app/workspace`, `src/features/workspace`, `src/demo/workspace.ts`, `src/types/workspace.ts`, `src/lib/workspace-state.ts` and M6 unit/browser tests. Existing catalog/sidebar/search/dashboard labels distinguish the prototype from planned tools. No packages, backend connections or hosting changes were added.
+## Architecture and changed files
 
-## Demo honesty and privacy
+See `docs/M7_IMPLEMENTATION.md` for the module/file map and group commits. New feature components are separated by Creative, Growth, Operations and Account; typed fixtures are centralized per group. Shared ModuleFrame, Panel, Catalog, Editor, Select/Input, Tabs, Checks, DemoDialog, Notice, Disconnected and TableWrap extend existing tokens/primitives. Pure helpers cover CRM, validation, budget/document arithmetic and fixture conflicts. Generic future service contracts have no implementation. M6's engine is not duplicated. No packages, backend providers or hosting settings changed.
 
-The simulator returns deterministic prewritten samples unrelated to prompt or attachment contents. Queued/running/complete/failed/canceled preview statuses never represent real AI execution. The provider is Not connected. Approval/rejection is local only and performs no action. Artifact previews create no files. No real client/business performance records are represented; Kenny Studio is an illustrative pilot workspace.
+## Reviewable group verification
 
-Prompts, conversations, drafts, attachment metadata and decisions remain only in React memory. No local/session storage or network request stores them. Only the pre-existing theme preference persists. Files are metadata only (TXT/MD/PDF, three files, 5 MB each); their contents are never read/uploaded/processed. Refreshing, leaving the route or switching demo workspaces clears this local session. No authentication, Supabase, database, billing, cloud upload, actual AI or autonomous action is implemented.
+| Group | Commands actually completed | Result |
+| --- | --- | --- |
+| A Creative | lint, typecheck, unit, build, targeted Chromium | Passed: 28 units, 4 browser cases |
+| B Growth | lint, typecheck, unit, build, targeted Chromium | Passed: 28 units, 4 browser cases |
+| C Operations | lint, typecheck, unit, build, targeted Chromium | Passed: 28 units, 4 browser cases |
+| D Account | lint, typecheck, unit, build, targeted Chromium | Passed: 28 units, 2 browser cases |
 
-## Engineering verification
+Tests initially exposed ambiguous global locators (multiple status/alert regions or hidden app search input); those were scoped without deleting assertions. Early dialog-ref lint failure was corrected using normal children and event-driven close. Final cross-module QA follows below; no unrun check is described as passed.
+
+## Full engineering checks
 
 | Command / check | Actual result |
 | --- | --- |
-| `npm run lint` | Passed |
+| `npm run lint` | Passed; includes ES-module static QA helper |
 | `npm run typecheck` | Passed |
-| `npm test` | 23 passed, 0 failed |
+| `npm test` | 29 passed, 0 failed |
 | `npm run format:check` | Passed |
-| `npm run build` | Passed; explicit static workspace + fourteen module shells |
-| Targeted M6 Chromium suite | 17 passed, 0 failed |
-| `npm run test:browser` | 49 passed, 0 failed (32 preserved M3–M5 + 17 M6) |
-| `KENNY_PAGES=1 npm run build` | Passed; `/KENNY` base path, trailing slashes and `out/` retained |
-| Pages static-host interaction check | Passed; workspace send/stop/retry, rename/delete, mobile panels/focus, 24 additional routes; 0 page errors/failed HTTP/external requests |
-| Public exact-revision/routes/assets check | Passed; exact M6 SHA/source tree, normal/fresh root and workspace, preserved routes and 28 assets |
+| `npm run build` | Passed; preserved static routes |
+| Dedicated M7 Chromium | 23 passed |
+| `npm run test:browser` | 72 passed, including all 49 M1–M6 regressions and 23 M7 cases |
+| Oversized document-input follow-up | Passed after bounded arithmetic guard; oversized input now shows Invalid amount |
+| `KENNY_PAGES=1 npm run build` | Passed; 28 static routes generated with `/KENNY` and trailing slashes |
+| Static-export smoke | Passed: 14 M7 + 11 preserved routes, representative actions/mobile navigation; zero page errors, HTTP failures or external requests |
+| Public deployment verification | Pending deployment |
 
-The initial browser pass found three M6 test failures (one ambiguous selector and two dialog-timing failures under a paused test clock). The selector was scoped and dialog opening now follows committed state in an effect. Targeted rerun passed all 17 without disabling tests. Existing M5 route assertions were updated only to recognize the now-implemented workspace; all prior scenarios remain.
+The full suite covers 320, 375, 430, 768, 1024, 1280, 1440 and 1920 px, both themes and reduced motion across all fourteen modules. All modules' empty/loading/error controls are checked at 320/1440; axe scans run on every module in both themes at those widths. Additional checks cover mobile dialog Escape/focus, all Settings tabs, long unbroken content, local interactions, no persistent content and no external requests. Desktop/mobile screenshots were visually inspected.
 
-M6 browser coverage includes all eight requested widths (320, 375, 430, 768, 1024, 1280, 1440, 1920 px), both themes, reduced motion, responsive panel collapse/drawers, focus return, axe scans at representative widths and mobile dialogs, conversation lifecycle/search/confirmation, all six fixed outputs, inspector keyboard tabs and local decisions, Enter/Shift+Enter, duplicate prevention, cancel/stale timers/retry/failure, long conversations/filenames/4,000-character input, reader-controlled scrolling, clipboard success/fallback and refresh privacy. M3–M5 regression coverage remains in the full suite. Node reports its existing typeless-package warning; it does not fail the unit suite.
+After the 72-case pass, code review reproduced an oversized document arithmetic result of `Infinity`. The helper now enforces the same quantity/amount bounds as its inputs; unit coverage includes oversized/nonfinite values. Lint/typecheck/unit/format/build were rerun; a targeted real-browser document check validates the new edge case. No unrelated source changed after the full pass. Existing Node typeless-package warnings do not fail tests.
 
-## Screenshots and review
+## Honesty, privacy and service boundary
 
-Desktop: `/workspace/artifacts/kenny-m6/workspace-1440-dark.png` and matching light capture. Mobile: `/workspace/artifacts/kenny-m6/workspace-375-dark.png` and matching light capture. Additional 1920 px screenshots, desktop Results (`workspace-results-1440-dark.png`), mobile Approvals (`workspace-approvals-375-dark.png`) and Playwright results are in the same artifact directory.
+All examples are fictional DEMO, independent of customer data. No external model/API, Supabase, storage, crawler, calendar, social, store, advertising, payment or analytics connection exists. No actual upload, generation, publish, booking, invoice issuance, order, charge, workflow execution or security action is claimed. Sample previews/logs are explicitly fixed/prewritten; failed/loading/offline states are selected UI examples, never fallbacks for actual backend errors.
 
-Review the public workspace, open History/Inspector on mobile, create/rename/delete a local conversation, enter a nonsensitive prompt and run a fixed sample, stop/retry, select Sample failure, inspect all tabs, approve/reject a local sample and try an unsupported file. Select Blank workspace for empty-state review. Reload to verify local content clears. No login is required; this is not a protected tenant workspace.
+No customer/sensitive content enters persistent browser storage. Edits, favorites, schedule labels, stages, draft configuration, role labels and approvals stay in React memory and clear on unmount/reload. Settings tabs preserve draft state while switching. Only the existing theme preference persists. No actual tenant isolation, role enforcement, security policy or subscription entitlement is implemented. Billing requests no card details, prices/allowances are unfinalized, and credit/history data is unavailable.
 
-## Limitations and unrun checks
+Future adapters require authenticated server authorization, tenant policies, input/file validation, provider contracts, action approval enforcement, metering, auditing and reliable error handling. Fixtures must never silently replace real service failures.
 
-This is a frontend foundation, not a deployed AI service. No cross-device persistence, streaming, real file parsing, generated/downloadable artifacts or server approval enforcement exists. Future contracts are typed but unimplemented. Automated axe checks and keyboard scenarios do not establish complete WCAG conformance. Physical devices, actual mobile keyboards, Safari, Firefox and manual screen-reader review have not been tested.
+## Screenshots and limitations
 
-Direct public Chromium browsing in this environment previously failed proxy-CA trust; TLS verification is not disabled. Public HTTPS/asset checks and local production/static-export browser checks are reported separately. No browser failure will be described as successful visual verification.
+Screenshots and current test artifacts: `/workspace/artifacts/kenny-m7/`.
+
+- Desktop Website Builder: `website-builder-1440-dark.png` and matching light capture.
+- Desktop CRM, Automations, Analytics, Billing and Settings: respective `*-1440-dark.png` plus light captures.
+- Mobile counterparts: respective `*-320-dark.png` plus light captures.
+- Full 72-case run: `browser-verification.log`.
+- Static Pages smoke results: `static-export-verification.json`.
+
+Screenshots were captured from the local tested production build, not represented as live-site browser screenshots. Visual inspection included desktop website composition and mobile automation nodes/light theme. Public HTTPS and local browser verification remain separate evidence.
+
+Physical devices, actual mobile keyboards, Safari/Firefox and manual screen-reader review are not tested. Automated axe/keyboard checks do not establish full WCAG conformance. Direct public-browser proxy certificate trust was a prior limitation; local production/static-browser and public HTTPS evidence will be reported separately. No TLS checks are disabled.
 
 ## Deployment
 
-M6 application commit `fe28e74fc01bb2b0d8abf55367e271c897c746fa` was pushed to `fnfmobilitymy-boop/KENNY` on `main` and deployed successfully by [Actions run 40306991141](https://github.com/fnfmobilitymy-boop/KENNY/actions/runs/40306991141). Its tested application source fingerprint is `8fc0827179281841d7e20636696942db5a9b2149`.
-
-Actual public HTTPS verification passed for [AI Workspace](https://fnfmobilitymy-boop.github.io/KENNY/app/workspace/), exact M6 commit/source metadata, preserved landing/design system, seven M4/legal routes, M5 dashboard, all fourteen planned module shells and **28 referenced static assets**. All asset paths use `/KENNY/_next/` and returned HTTP 200. Normal and cache-busted landing/workspace responses matched; Pages advertised a 600-second cache lifetime. No stale-shell response was observed. Source metadata was compared with the local committed source tree, not merely checked for a SHA-shaped string.
-
-The application was tested before that commit; no application code changed after the passing 49-test production-browser run. This evidence is recorded by a subsequent documentation-only commit, which can update the public commit SHA without changing the application source fingerprint. Consult `/KENNY/deployment.json` and the latest successful Actions run for the current deployment revision. Public verification output is `/workspace/artifacts/kenny-m6/public-deployment-application.json`.
+Not deployed yet. M7 is held locally until full QA completes. Preserve `.github/workflows/pages.yml`, static export and `/KENNY` basePath. Exact application SHA, source fingerprint, successful Actions run and public route/asset checks will be recorded after publishing. No M8 or real backend work is included.
 
 
+## Environment configuration
 
-## Local evidence and environment instructions
-
-Full Chromium run: `/tmp/kenny-m6-full-browser.log` (49 passed). Static-export report: `/workspace/artifacts/kenny-m6/static-export-verification.json`; mobile export capture: `workspace-pages-375-dark.png`. An initial static-smoke assertion matched multiple status badges; it was scoped to the chat header and rerun successfully. No application changes were needed after the final full browser run.
-
-Updated M6 cloud startup instructions were saved successfully as an environment configuration draft. This does not publish or restart the cloud environment. Review/save/publish in environment settings activates that separate configuration; it is not required for the GitHub Pages deployment. Existing install script, repository membership, network rules and credentials were preserved.
+Updated M7 startup instructions were saved as a cloud environment configuration draft. Existing installation script, repository membership, network rules and credentials were preserved. Saving this draft does not execute, activate or publish it. Review/save/publish in environment settings activates that separate configuration; GitHub Pages publication does not depend on it.

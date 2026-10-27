@@ -108,3 +108,29 @@ export const sampleFollowups = [
   "Human review suggested in fixture",
   "Follow-up draft available, not sent",
 ] as const;
+
+export const marketingDraftSample = {
+  content:
+    "A thoughtful start. A fictional creative practice explores what it means to build with intention.",
+  date: "2026-11-02",
+  time: "09:00",
+};
+export const seoDraftSample = {
+  content:
+    "A fictional creative practice helps turn a clear business brief into a considered brand direction.",
+  campaign: "Sample search campaign",
+  daily: "10",
+  days: "7",
+};
+export const agentBehaviorSample: string =
+  "Keep replies concise. Do not make commitments. Ask a human to review.";
+
+export function createMarketingDrafts(): Record<string, string> {
+  return {
+    "post-1": marketingDraftSample.content,
+    "post-2":
+      "SAMPLE — A look behind a fictional creative practice. Share one considered detail of the process.",
+    "post-3":
+      "SAMPLE — An invitation to explore a fictional idea together. No real campaign or offer is published.",
+  };
+}

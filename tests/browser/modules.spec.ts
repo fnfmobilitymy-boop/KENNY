@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 test("Creative: website projects, structure, viewport, style and honest states", async ({
   page,
 }) => {
@@ -172,6 +173,10 @@ test("Creative: all document templates, local preview calculation and no PDF iss
   expect(
     await page.evaluate(() => JSON.stringify({ ...localStorage })),
   ).not.toContain("fictional sample recipient");
+  await page.getByLabel("Illustrative quantity", { exact: true }).fill("1e308");
+  await expect(
+    page.getByRole("article", { name: "Local document preview" }),
+  ).toContainText("Invalid amount");
   await page.reload();
   await expect(page.getByLabel("Recipient label", { exact: true })).toHaveValue(
     "Fictional client",
@@ -195,6 +200,24 @@ test("Growth: campaign calendar, channel draft, checklist and local schedule dis
     .getByLabel("Post draft", { exact: true })
     .fill("A fictional local post");
   await expect(page.locator(".content-post-preview")).toContainText(
+    "A fictional local post",
+  );
+  await page
+    .getByRole("button", {
+      name: "Behind the practice Wed 4 · Draft only",
+      exact: true,
+    })
+    .click();
+  await expect(page.getByLabel("Post draft", { exact: true })).not.toHaveValue(
+    "A fictional local post",
+  );
+  await page
+    .getByRole("button", {
+      name: "Our approach Mon 2 · Draft only",
+      exact: true,
+    })
+    .click();
+  await expect(page.getByLabel("Post draft", { exact: true })).toHaveValue(
     "A fictional local post",
   );
   await page
@@ -582,4 +605,172 @@ test("Account: settings validate local drafts, expose all sections and reuse the
       JSON.stringify({ ...localStorage, ...sessionStorage }),
     ),
   ).not.toContain("Local Example");
+});
+
+const m7slugs = [
+  "website-builder",
+  "image-studio",
+  "video-studio",
+  "documents",
+  "marketing",
+  "seo-ads",
+  "sales",
+  "crm",
+  "booking",
+  "ecommerce",
+  "automations",
+  "analytics",
+  "billing",
+  "settings",
+];
+for (const width of [320, 375, 430, 768, 1024, 1280, 1440, 1920])
+  test(`Shared M7: all fourteen routes, themes, states and bounds at ${width}px`, async ({
+    page,
+  }) => {
+    test.setTimeout(240000);
+    await page.setViewportSize({ width, height: 1000 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    const failures: string[] = [];
+    const external: string[] = [];
+    page.on("pageerror", (e) => failures.push(e.message));
+    page.on("request", (r) => {
+      if (!r.url().startsWith("http://127.0.0.1:3100/")) external.push(r.url());
+    });
+    for (const slug of m7slugs) {
+      const response = await page.goto(`/app/${slug}`);
+      expect(response?.status()).toBe(200);
+      await expect(page.locator(".module-demo h1")).toBeVisible();
+      await expect(
+        page.getByText("DEMO · Frontend prototype", { exact: true }),
+      ).toBeVisible();
+      if ((await page.locator("html").getAttribute("data-theme")) === "light")
+        await page
+          .getByRole("button", { name: "Switch to dark theme", exact: true })
+          .click();
+      for (const theme of ["dark", "light"]) {
+        if (theme === "light")
+          await page
+            .getByRole("button", { name: "Switch to light theme", exact: true })
+            .click();
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth,
+          ),
+          `${slug} ${width} ${theme} overflow`,
+        ).toBe(true);
+        if ([320, 1440].includes(width)) {
+          expect(
+            (
+              await new AxeBuilder({ page })
+                .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+                .analyze()
+            ).violations,
+            `${slug} ${theme} axe`,
+          ).toEqual([]);
+          if (
+            [
+              "website-builder",
+              "crm",
+              "automations",
+              "analytics",
+              "billing",
+              "settings",
+            ].includes(slug)
+          )
+            await page.screenshot({
+              path: `/workspace/artifacts/kenny-m7/${slug}-${width}-${theme}.png`,
+              fullPage: true,
+              animations: "disabled",
+            });
+        }
+      }
+      if ([320, 1440].includes(width)) {
+        for (const state of ["empty", "loading", "error"]) {
+          await page
+            .getByLabel("Prototype state", { exact: true })
+            .selectOption(state);
+          await expect(
+            page.getByRole("region", { name: "Prototype state example" }),
+          ).toBeVisible();
+          await page
+            .getByRole("button", { name: "Restore sample view" })
+            .click();
+          await expect(page.locator(".module-demo h1")).toBeVisible();
+        }
+      }
+    }
+    expect(failures).toEqual([]);
+    expect(external).toEqual([]);
+  });
+test("Shared M7: mobile dialogs, Escape, focus return, long content and keyboard access", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 850 });
+  await page.goto("/app/website-builder");
+  const trigger = page.getByRole("button", {
+    name: "New project demo",
+    exact: true,
+  });
+  await trigger.click();
+  const dialog = page.getByRole("dialog", { name: "Name a local concept" });
+  await expect(dialog).toBeVisible();
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+        .analyze()
+    ).violations,
+  ).toEqual([]);
+  await dialog
+    .getByRole("button", { name: "Add local concept", exact: true })
+    .click();
+  await expect(dialog.getByLabel("Project name")).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(trigger).toBeFocused();
+  await page.goto("/app/documents");
+  await page
+    .getByLabel("Document subject", { exact: true })
+    .fill("LongUnbrokenSubject".repeat(8));
+  await page
+    .getByLabel("Scope or body", { exact: true })
+    .fill("LongUnbrokenContent".repeat(90));
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.goto("/app/settings");
+  for (const name of [
+    "Profile",
+    "Workspace details",
+    "Appearance",
+    "Notifications",
+    "Team and roles",
+    "Security",
+    "Integrations",
+    "Billing entry",
+  ]) {
+    await page.getByRole("tab", { name, exact: true }).click();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+  }
+  await page.getByRole("tab", { name: "Billing entry", exact: true }).focus();
+  await page.keyboard.press("Home");
+  await expect(
+    page.getByRole("tab", { name: "Profile", exact: true }),
+  ).toBeFocused();
+  await page.keyboard.press("End");
+  await expect(
+    page.getByRole("tab", { name: "Billing entry", exact: true }),
+  ).toBeFocused();
 });

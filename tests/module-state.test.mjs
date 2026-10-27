@@ -40,6 +40,9 @@ test("document and illustrative budget calculations reject nonfinite or invalid 
   assert.equal(documentTotal(3, 10.25), 30.75);
   assert.equal(documentTotal(-1, 10), null);
   assert.equal(documentTotal(1, NaN), null);
+  assert.equal(documentTotal(1e308, 1e308), null);
+  assert.equal(documentTotal(10000, 10), null);
+  assert.equal(documentTotal(2, 1000000), null);
   assert.equal(planningEstimate(12, 7), 84);
   for (const pair of [
     [-1, 7],
@@ -85,4 +88,23 @@ test("local demo names trim and bound input", () => {
   assert.ok(validateLocalName("x"));
   assert.ok(validateLocalName("a".repeat(81)));
   assert.equal(validateLocalName("  Sample concept  "), null);
+});
+
+test("module draft factories isolate local edits from fixed fixtures and other items", async () => {
+  const { createWorkflowDrafts, createProductCopies } =
+    await import("../src/demo/modules/operations.ts");
+  const { createMarketingDrafts } =
+    await import("../src/demo/modules/growth.ts");
+  const flow = createWorkflowDrafts();
+  flow["flow-1"].trigger = "Changed locally";
+  assert.equal(createWorkflowDrafts()["flow-1"].trigger, "Sample inquiry");
+  assert.equal(flow["flow-2"].trigger, "Sample content draft");
+  const copy = createProductCopies();
+  copy["product-1"] = "Local copy";
+  assert.notEqual(copy["product-2"], "Local copy");
+  assert.notEqual(createProductCopies()["product-1"], "Local copy");
+  const posts = createMarketingDrafts();
+  posts["post-1"] = "Local draft";
+  assert.notEqual(posts["post-2"], "Local draft");
+  assert.notEqual(createMarketingDrafts()["post-1"], "Local draft");
 });

@@ -1,7 +1,11 @@
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { workflowSamples, executionSample } from "@/demo/modules/operations";
+import {
+  workflowSamples,
+  executionSample,
+  createWorkflowDrafts,
+} from "@/demo/modules/operations";
 import { validateWorkflow } from "@/lib/module-state";
 import { Icon } from "@/components/ui/icon";
 import {
@@ -13,20 +17,7 @@ import {
 } from "../shared/module-ui";
 export function Automations() {
   const [selected, setSelected] = useState("flow-1");
-  const [drafts, setDrafts] = useState<
-    Record<string, { trigger: string; action: string; review: boolean }>
-  >({
-    "flow-1": {
-      trigger: "Sample inquiry",
-      action: "Create a review draft",
-      review: true,
-    },
-    "flow-2": {
-      trigger: "Sample content draft",
-      action: "Prepare reminder text",
-      review: true,
-    },
-  });
+  const [drafts, setDrafts] = useState(createWorkflowDrafts);
   const [node, setNode] = useState("trigger");
   const [errors, setErrors] = useState<string[]>([]);
   const [log, setLog] = useState(false);

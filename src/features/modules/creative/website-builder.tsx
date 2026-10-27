@@ -5,6 +5,7 @@ import {
   websiteProjects,
   websitePages,
   websiteVersions,
+  websiteSampleCopy,
 } from "@/demo/modules/creative";
 import { validateLocalName } from "@/lib/module-state";
 import {
@@ -160,16 +161,13 @@ export function WebsiteBuilder() {
                 <span>{page} · Fixed composition</span>
               </nav>
               <h3>
-                {page === "Home"
-                  ? "Make space for the meaningful."
-                  : page === "About"
-                    ? "A practice built with intention."
-                    : "Start a thoughtful conversation."}
+                {
+                  websiteSampleCopy[page as keyof typeof websiteSampleCopy]
+                    .heading
+                }
               </h3>
               <p>
-                {page === "Contact"
-                  ? "Contact form placeholder — no form submission or external link."
-                  : "A fictional creative practice shaping identities, digital experiences and everyday objects."}
+                {websiteSampleCopy[page as keyof typeof websiteSampleCopy].body}
               </p>
               <SampleArt
                 name="Website editorial study"
